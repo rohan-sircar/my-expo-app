@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { useColorScheme } from '~/lib/useColorScheme';
 
 interface StatTileProps {
   value: string;
@@ -7,10 +8,11 @@ interface StatTileProps {
 }
 
 const StatTile: React.FC<StatTileProps> = ({ value, title }) => {
+  const { isDarkColorScheme } = useColorScheme();
   return (
     <View style={styles.container}>
-      <Text style={styles.value}>{value}</Text>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.value, { color: isDarkColorScheme ? '#E4E4E7' : '#333' }]}>{value}</Text>
+      <Text style={[styles.title, { color: isDarkColorScheme ? '#E4E4E7' : '#333' }]}>{title}</Text>
     </View>
   );
 };

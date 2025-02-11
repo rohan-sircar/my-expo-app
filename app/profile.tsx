@@ -44,8 +44,12 @@ export default function Profile() {
         <View className="mb-1 flex-row items-center">
           <Avatar userId={userIdNumber} style={styles.avatarContainer} size={64} />
           <View>
-            <Text className="mb-1 text-lg font-semibold">{user.name}</Text>
-            <Text className="text-gray-500">@{user.handle}</Text>
+            <Text
+              className="mb-1 text-lg font-semibold"
+              style={{ color: isDarkColorScheme ? '#E4E4E7' : '#333' }}>
+              {user.name}
+            </Text>
+            <Text style={{ color: isDarkColorScheme ? '#E4E4E7' : '#333' }}>@{user.handle}</Text>
           </View>
         </View>
 
@@ -58,7 +62,11 @@ export default function Profile() {
           </Pressable>
         </View>
 
-        <Text className="mb-2 font-medium">About me</Text>
+        <Text
+          className="mb-2 font-medium"
+          style={{ color: isDarkColorScheme ? '#E4E4E7' : '#333' }}>
+          About me
+        </Text>
         <Text className="pr-3 text-gray-500">{user.about}</Text>
 
         <View className="mt-5 flex-row justify-between border-b border-t border-gray-200 py-5 dark:border-gray-700">
@@ -68,7 +76,11 @@ export default function Profile() {
         </View>
 
         <View className="flex-row justify-between border-b border-gray-200 px-4 py-4 dark:border-gray-700">
-          <Text className="self-center font-medium">Posts</Text>
+          <Text
+            className="self-center font-medium"
+            style={{ color: isDarkColorScheme ? '#E4E4E7' : '#333' }}>
+            Posts
+          </Text>
           <View className="flex-row">
             <TouchableOpacity
               className={`mr-3 p-1 ${listMode === 'masonry' ? 'rounded bg-gray-100 dark:bg-gray-800' : ''}`}

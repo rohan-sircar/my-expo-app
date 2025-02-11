@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { useColorScheme } from '../../lib/useColorScheme';
 import Avatar from './Avatar';
 import USERS from '../../data/users';
 import { RootStackParamList } from '../../types/navigation';
@@ -19,6 +19,7 @@ type MessageProps = {
 
 const MessageComponent: React.FC<MessageProps> = (props: MessageProps) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { isDarkColorScheme } = useColorScheme();
 
   return (
     <View style={props.masonry ? styles.masonryContainer : styles.listContainer}>
@@ -36,7 +37,9 @@ const MessageComponent: React.FC<MessageProps> = (props: MessageProps) => {
           </View>
         </TouchableOpacity>
       )}
-      <Text style={styles.messageText}>{props.message}</Text>
+      <Text style={[styles.messageText, { color: isDarkColorScheme ? '#E4E4E7' : '#333' }]}>
+        {props.message}
+      </Text>
       <View style={styles.interactionsLayout}>
         <View style={styles.interaction}>
           <Ionicons name="heart-outline" size={18} color="#aaa" style={styles.icon} />
