@@ -1,36 +1,38 @@
-import { View, StyleSheet, SafeAreaView, Dimensions } from 'react-native';
+import { View, StyleSheet, SafeAreaView, useWindowDimensions } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
 
 import POSTS from '../data/posts';
 import Message from './components/Message';
 
-const { width } = Dimensions.get('window');
+const Home = () => {
+  const { width } = useWindowDimensions();
 
-export default function Home() {
+  const dynamicStyles = StyleSheet.create({
+    wrapper: {
+      flex: 1,
+      maxWidth: 800,
+      width: '100%',
+      marginHorizontal: 'auto',
+    },
+    container: {
+      flex: 1,
+      paddingLeft: width > 600 ? 32 : 16,
+      paddingRight: width > 600 ? 32 : 16,
+    },
+  });
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.contentContainer}>
+    <SafeAreaView style={dynamicStyles.wrapper}>
+      <View style={dynamicStyles.container}>
         <FlashList
           data={POSTS}
           renderItem={({ item }) => <Message {...item} />}
           estimatedItemSize={150}
-          style={{ width: width - 32 }} // Account for horizontal padding
-          contentContainerStyle={{ paddingVertical: 16 }}
         />
       </View>
     </SafeAreaView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    paddingHorizontal: 16,
-  },
-  contentContainer: {
-    maxWidth: 1000,
-    width: '100%',
-  },
-});
+export default Home;
