@@ -1,14 +1,14 @@
-import '../global.css';
-import 'expo-dev-client';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
 import { Icon } from '@roninoss/icons';
+import 'expo-dev-client';
 import { Link, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Pressable, View, Text } from 'react-native';
+import { Pressable, SafeAreaView, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import '../global.css';
 
 import { ThemeToggle } from '~/components/ThemeToggle';
 import { cn } from '~/lib/cn';
@@ -22,7 +22,7 @@ export {
 
 export default function RootLayout() {
   useInitialAndroidBarSync();
-  const { colorScheme, isDarkColorScheme } = useColorScheme();
+  const { colorScheme, isDarkColorScheme, colors } = useColorScheme();
 
   return (
     <>
@@ -30,75 +30,65 @@ export default function RootLayout() {
         key={`root-status-bar-${isDarkColorScheme ? 'light' : 'dark'}`}
         style={isDarkColorScheme ? 'light' : 'dark'}
       />
-      {/* WRAP YOUR APP WITH ANY ADDITIONAL PROVIDERS HERE */}
-      {/* <ExampleProvider> */}
-
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
           <ActionSheetProvider>
             <NavThemeProvider value={NAV_THEME[colorScheme]}>
-              <Stack screenOptions={SCREEN_OPTIONS}>
-                <Stack.Screen name="index" options={INDEX_OPTIONS} />
-                <Stack.Screen name="modal" options={MODAL_OPTIONS} />
-                <Stack.Screen name="modal2" options={MODAL_OPTIONS} />
-              </Stack>
+              <SafeAreaView className="flex-1">
+                <View className="mx-auto w-full max-w-[800px] flex-1">
+                  <Stack
+                    screenOptions={{
+                      ...SCREEN_OPTIONS,
+                      headerStyle: {
+                        backgroundColor: colors.background,
+                      },
+                      headerTintColor: colors.foreground,
+                    }}>
+                    <Stack.Screen
+                      name="index"
+                      options={{
+                        ...INDEX_OPTIONS,
+                        headerRight: () => <SettingsIcon />,
+                      }}
+                    />
+                    <Stack.Screen
+                      name="profile"
+                      options={{
+                        title: 'Profile',
+                        headerRight: () => <ThemeToggle />,
+                      }}
+                    />
+                  </Stack>
+                </View>
+              </SafeAreaView>
             </NavThemeProvider>
           </ActionSheetProvider>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
-
-      {/* </ExampleProvider> */}
     </>
   );
 }
 
 const SCREEN_OPTIONS = {
-  animation: 'ios_from_right', // for android
+  animation: 'ios_from_right',
 } as const;
 
 const INDEX_OPTIONS = {
   headerLargeTitle: true,
-  title: 'NativeWindUI',
-  headerRight: () => <SettingsIcon />,
+  title: 'Home',
 } as const;
 
 function SettingsIcon() {
   const { colors } = useColorScheme();
   return (
-    <Link href="/modal" asChild>
+    <Link href="/profile" asChild>
       <Pressable className="opacity-80">
         {({ pressed }) => (
           <View className={cn(pressed ? 'opacity-50' : 'opacity-90')}>
-            <Icon name="cog-outline" color={colors.foreground} />
+            <Icon name="person-outline" color={colors.foreground} />
           </View>
         )}
       </Pressable>
     </Link>
   );
 }
-
-function SettingsIcon2() {
-  return (
-    <Link href="./modal2" asChild>
-      <Pressable>
-        <Text>Home</Text>
-      </Pressable>
-    </Link>
-  );
-}
-
-// function SettingsIcon2() {
-//   // const { colors } = useColorScheme();
-//   return (
-//     <Link href="/modal2" asChild>
-//       <Icon name="cog-outline" />
-//     </Link>
-//   );
-// }
-
-const MODAL_OPTIONS = {
-  presentation: 'modal',
-  animation: 'fade_from_bottom', // for android
-  title: 'Settings',
-  headerRight: () => <ThemeToggle />,
-} as const;
