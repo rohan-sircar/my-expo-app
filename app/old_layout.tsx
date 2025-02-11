@@ -6,7 +6,8 @@ import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
 import { Icon } from '@roninoss/icons';
 import { Link, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, View } from 'react-native';
+import React from 'react';
+import { Pressable, View, Text } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { ThemeToggle } from '~/components/ThemeToggle';
@@ -39,6 +40,7 @@ export default function RootLayout() {
               <Stack screenOptions={SCREEN_OPTIONS}>
                 <Stack.Screen name="index" options={INDEX_OPTIONS} />
                 <Stack.Screen name="modal" options={MODAL_OPTIONS} />
+                <Stack.Screen name="modal2" options={MODAL_OPTIONS} />
               </Stack>
             </NavThemeProvider>
           </ActionSheetProvider>
@@ -74,6 +76,25 @@ function SettingsIcon() {
     </Link>
   );
 }
+
+function SettingsIcon2() {
+  return (
+    <Link href="./modal2" asChild>
+      <Pressable>
+        <Text>Home</Text>
+      </Pressable>
+    </Link>
+  );
+}
+
+// function SettingsIcon2() {
+//   // const { colors } = useColorScheme();
+//   return (
+//     <Link href="/modal2" asChild>
+//       <Icon name="cog-outline" />
+//     </Link>
+//   );
+// }
 
 const MODAL_OPTIONS = {
   presentation: 'modal',
