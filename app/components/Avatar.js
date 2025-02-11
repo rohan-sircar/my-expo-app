@@ -1,5 +1,5 @@
-import { View, StyleSheet, Image } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { View, StyleSheet, Image } from 'react-native';
 
 import USERS from '../../data/users';
 

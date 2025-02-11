@@ -1,6 +1,6 @@
-import { View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
+import { View } from 'react-native';
 
 import POSTS from '../data/posts';
 import Message from './components/Message';

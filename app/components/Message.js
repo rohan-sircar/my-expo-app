@@ -1,9 +1,8 @@
-import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 
 import USERS from '../../data/users';
-
 import Avatar from '../components/Avatar';
 
 export default function Message({

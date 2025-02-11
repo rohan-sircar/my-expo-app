@@ -4,12 +4,13 @@ import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { useColorScheme } from '~/lib/useColorScheme';
 import POSTS from '../data/posts';
 import USERS from '../data/users';
 import Avatar from './components/Avatar';
 import Message from './components/Message';
 import StatTile from './components/StatTile';
+
+import { useColorScheme } from '~/lib/useColorScheme';
 
 interface User {
   name: string;
