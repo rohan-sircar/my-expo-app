@@ -10,6 +10,7 @@ import Avatar from './components/Avatar';
 import Message from './components/Message';
 import StatTile from './components/StatTile';
 
+import ThemeToggle from '~/components/ThemeToggle';
 import { useColorScheme } from '~/lib/useColorScheme';
 
 interface User {
@@ -60,6 +61,7 @@ export default function Profile() {
           <Pressable className="rounded-2xl bg-blue-500 px-5 py-1.5">
             <Text className="font-medium text-white">Message</Text>
           </Pressable>
+          <ThemeToggle />
         </View>
 
         <Text

@@ -4032,7 +4032,7 @@ expo-store-review@~8.0.1:
   resolved "https://registry.yarnpkg.com/expo-store-review/-/expo-store-review-8.0.1.tgz#f9d5f584ee6d1e97e7c6374dc840641a31ccfd36"
   integrity sha512-eJoZbsAsOXpyl1CEXauiMqs3z++8Qf1OMDUBEGmRj9hew+w9JbS3wvFOZpc0UXbm/NYn5YwiLfK7epQjLLKz4A==
 
-expo-system-ui@~4.0.8:
+expo-system-ui@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/expo-system-ui/-/expo-system-ui-4.0.8.tgz#6e37583ab9bfae292569919cba545ec151d1ed6d"
   integrity sha512-0AmWXJ3ObwMYxi2YGagwRQikydoUZJXLeK4A0FY1PsZpnlorSQ4IAfEVS38JmA54tf5CpP4TjBp5ZVEjRyv1rw==

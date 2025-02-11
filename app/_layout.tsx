@@ -1,19 +1,20 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Icon } from '@roninoss/icons';
 import 'expo-dev-client';
-import { Link, Stack } from 'expo-router';
+import { Stack, useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import '../global.css';
 
-import { ThemeToggle } from '~/components/ThemeToggle';
-import { cn } from '~/lib/cn';
+import ThemeToggle from '~/components/ThemeToggle';
 import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
 import { NAV_THEME } from '~/theme';
+import { RootStackParamList } from '~/types/navigation';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,7 +49,11 @@ export default function RootLayout() {
                       name="index"
                       options={{
                         ...INDEX_OPTIONS,
-                        headerRight: () => <SettingsIcon />,
+                        headerRight: () => (
+                          <View className="pr-2">
+                            <SettingsIcon />
+                          </View>
+                        ),
                       }}
                     />
                     <Stack.Screen
@@ -78,17 +83,17 @@ const INDEX_OPTIONS = {
   title: 'Home',
 } as const;
 
-function SettingsIcon() {
+const SettingsIcon: React.FC = () => {
   const { colors } = useColorScheme();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   return (
-    <Link href="./profile" asChild>
-      <Pressable className="opacity-80">
-        {({ pressed }) => (
-          <View className={cn(pressed ? 'opacity-50' : 'opacity-90')}>
-            <Icon name="person-outline" color={colors.foreground} />
-          </View>
-        )}
-      </Pressable>
-    </Link>
+    <Pressable
+      className="opacity-80"
+      onPressOut={() => navigation.navigate('profile', { userId: 0 })}>
+      <View className="opacity-90">
+        <Icon name="person-outline" color={colors.foreground} />
+      </View>
+    </Pressable>
   );
-}
+};

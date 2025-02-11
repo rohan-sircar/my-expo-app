@@ -37,7 +37,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "jsEngine": "hermes"
+      "jsEngine": "hermes",
+      "userInterfaceStyle": "light"
     }
   }
 }

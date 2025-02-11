@@ -3,9 +3,10 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useColorScheme } from '../../lib/useColorScheme';
+
 import Avatar from './Avatar';
 import USERS from '../../data/users';
+import { useColorScheme } from '../../lib/useColorScheme';
 import { RootStackParamList } from '../../types/navigation';
 
 type MessageProps = {

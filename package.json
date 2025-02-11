@@ -36,7 +36,7 @@
     "expo-router": "~4.0.6",
     "expo-status-bar": "~2.0.1",
     "expo-store-review": "~8.0.1",
-    "expo-system-ui": "~4.0.8",
+    "expo-system-ui": "^4.0.8",
     "expo-web-browser": "~14.0.2",
     "nativewind": "latest",
     "react": "18.3.1",
