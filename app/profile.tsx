@@ -32,7 +32,7 @@ export default function Profile() {
   const { userId } = useLocalSearchParams<{ userId: string }>();
   const { isDarkColorScheme } = useColorScheme();
 
-  const userIdNumber = parseInt(userId as string, 10);
+  const userIdNumber = parseInt(userId, 10);
   const userPosts = POSTS.filter((post: Post) => post.userId === userIdNumber);
   const user = USERS[userIdNumber as keyof typeof USERS] as User;
 
@@ -42,7 +42,7 @@ export default function Profile() {
     <View className="w-full flex-1 items-center">
       <View className="w-full flex-1 px-4 py-4 md:px-8">
         <View className="mb-1 flex-row items-center">
-          <Avatar userId={userId} style={styles.avatarContainer} size={64} />
+          <Avatar userId={userIdNumber} style={styles.avatarContainer} size={64} />
           <View>
             <Text className="mb-1 text-lg font-semibold">{user.name}</Text>
             <Text className="text-gray-500">@{user.handle}</Text>

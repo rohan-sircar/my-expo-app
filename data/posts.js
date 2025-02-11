@@ -1,5 +1,3 @@
-export default POSTS;
-
 const POSTS = [
   {
     message:
@@ -251,3 +249,5 @@ const POSTS = [
     replies: 2,
   },
 ];
+
+export default POSTS;

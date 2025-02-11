@@ -1,3 +1,13 @@
+export interface User {
+  name: string;
+  handle: string;
+  about: string;
+  followers: number;
+  following: number;
+  color: string;
+  avatar: any;
+}
+
 const USERS = [
   {
     name: 'Natalia Rodman',
