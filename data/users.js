@@ -6,7 +6,7 @@ export default USERS = [
     followers: 17,
     following: 11,
     color: '#FFB84C',
-    avatar: require('../assets/avatar.png')
+    avatar: require('../assets/avatar.png'),
   },
   {
     name: 'Elijah Summers',
@@ -14,7 +14,7 @@ export default USERS = [
     about: 'Passionate coder, coffee addict, and book lover.',
     followers: 312,
     following: 248,
-    color: '#2CD3E1'
+    color: '#2CD3E1',
   },
   {
     name: 'Olivia Johnson',
@@ -22,7 +22,7 @@ export default USERS = [
     about: 'UI/UX designer, nature enthusiast, and yoga practitioner.',
     followers: 754,
     following: 612,
-    color: '#F266AB'
+    color: '#F266AB',
   },
   {
     name: 'Maxwell Foster',
@@ -30,7 +30,7 @@ export default USERS = [
     about: 'Frontend developer, music lover, and travel junkie.',
     followers: 521,
     following: 398,
-    color: '#F45050'
+    color: '#F45050',
   },
   {
     name: 'Sophia Ruiz',
@@ -38,7 +38,7 @@ export default USERS = [
     about: 'Full-stack developer, foodie, and dog person.',
     followers: 1256,
     following: 873,
-    color: '#A459D1'
+    color: '#A459D1',
   },
   {
     name: 'Sebastian Lee',
@@ -46,7 +46,7 @@ export default USERS = [
     about: 'Software engineer, gamer, and anime enthusiast.',
     followers: 981,
     following: 789,
-    color: '#00AF91'
+    color: '#00AF91',
   },
   {
     name: 'Ava Chen',
@@ -54,7 +54,7 @@ export default USERS = [
     about: 'Data scientist, fitness enthusiast, and beach lover.',
     followers: 412,
     following: 268,
-    color: '#007965'
+    color: '#007965',
   },
   {
     name: 'Ethan Watson',
@@ -62,7 +62,7 @@ export default USERS = [
     about: 'Backend developer, coffee connoisseur, and soccer fan.',
     followers: 672,
     following: 521,
-    color: '#FF6000'
+    color: '#FF6000',
   },
   {
     name: 'Isabella Liu',
@@ -70,6 +70,6 @@ export default USERS = [
     about: 'Mobile app developer, photography lover, and hiker.',
     followers: 1037,
     following: 846,
-    color: '#3DB2FF'
+    color: '#3DB2FF',
   },
 ];

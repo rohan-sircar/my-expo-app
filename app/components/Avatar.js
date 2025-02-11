@@ -13,12 +13,7 @@ export default function Avatar({ userId, style, size = 36 }) {
       {USERS[userId]?.avatar ? (
         <Image source={USERS[userId].avatar} style={[styles.avatar, SIZING]} />
       ) : (
-        <View
-          style={[
-            styles.avatar,
-            SIZING,
-            { backgroundColor: USERS[userId].color },
-          ]}>
+        <View style={[styles.avatar, SIZING, { backgroundColor: USERS[userId].color }]}>
           <Ionicons
             name="person-circle-outline"
             size={(size * 2) / 3}

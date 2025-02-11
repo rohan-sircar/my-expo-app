@@ -36,21 +36,11 @@ export default function Message({
       <Text style={styles.messageText}>{message}</Text>
       <View style={styles.interactionsLayout}>
         <View style={styles.interaction}>
-          <Ionicons
-            name="heart-outline"
-            size={18}
-            color="#aaa"
-            style={styles.icon}
-          />
+          <Ionicons name="heart-outline" size={18} color="#aaa" style={styles.icon} />
           <Text style={styles.secondary}>{likes}</Text>
         </View>
         <View style={styles.interaction}>
-          <Ionicons
-            name="ios-chatbox-outline"
-            size={18}
-            color="#aaa"
-            style={styles.icon}
-          />
+          <Ionicons name="ios-chatbox-outline" size={18} color="#aaa" style={styles.icon} />
           <Text style={styles.secondary}>{replies}</Text>
         </View>
       </View>
