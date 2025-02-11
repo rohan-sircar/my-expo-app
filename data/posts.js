@@ -1,4 +1,6 @@
-export default POSTS = [
+export default POSTS;
+
+const POSTS = [
   {
     message:
       'Concept: bioengineering single-serving sizes of produce.\n\nI simply cannot finish an entire napa cabbage on my own!!!',

@@ -1,4 +1,4 @@
-export default USERS = [
+const USERS = [
   {
     name: 'Natalia Rodman',
     handle: 'natrod',
@@ -73,3 +73,5 @@ export default USERS = [
     color: '#3DB2FF',
   },
 ];
+
+export default USERS;
