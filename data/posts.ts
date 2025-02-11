@@ -1,4 +1,11 @@
-const POSTS = [
+export interface Post {
+  message: string;
+  userId: number;
+  likes: number;
+  replies: number;
+}
+
+const POSTS: Post[] = [
   {
     message:
       'Concept: bioengineering single-serving sizes of produce.\n\nI simply cannot finish an entire napa cabbage on my own!!!',

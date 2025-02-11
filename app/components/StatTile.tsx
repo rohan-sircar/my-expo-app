@@ -1,13 +1,19 @@
+import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-export default function StatTile({ value, title }) {
+interface StatTileProps {
+  value: string;
+  title: string;
+}
+
+const StatTile: React.FC<StatTileProps> = ({ value, title }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.value}>{value}</Text>
       <Text style={styles.title}>{title}</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -25,3 +31,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default StatTile;

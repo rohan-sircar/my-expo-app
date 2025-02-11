@@ -1,51 +1,55 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import Avatar from './Avatar';
 import USERS from '../../data/users';
-import Avatar from '../components/Avatar';
+import { RootStackParamList } from '../../types/navigation';
 
-export default function Message({
-  message,
-  userId,
-  likes,
-  replies,
-  masonry = false,
-  skipHeader = false,
-}) {
-  const navigation = useNavigation();
+type MessageProps = {
+  message: string;
+  userId: number;
+  likes: number;
+  replies: number;
+  masonry?: boolean;
+  skipHeader?: boolean;
+};
+
+const MessageComponent: React.FC<MessageProps> = (props: MessageProps) => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   return (
-    <View style={masonry ? styles.masonryContainer : styles.listContainer}>
-      {!skipHeader && (
+    <View style={props.masonry ? styles.masonryContainer : styles.listContainer}>
+      {!props.skipHeader && (
         <TouchableOpacity
           activeOpacity={0.75}
           onPress={() => {
-            navigation.navigate('profile', {
-              userId,
-            });
+            navigation.navigate('profile', { userId: props.userId });
           }}
           style={styles.profileLayout}>
-          <Avatar userId={userId} style={styles.avatar} />
+          <Avatar userId={props.userId} style={styles.avatar} />
           <View>
-            <Text style={styles.name}>{USERS[userId].name}</Text>
-            <Text style={styles.secondary}>@{USERS[userId].handle}</Text>
+            <Text style={styles.name}>{USERS[props.userId].name}</Text>
+            <Text style={styles.secondary}>@{USERS[props.userId].handle}</Text>
           </View>
         </TouchableOpacity>
       )}
-      <Text style={styles.messageText}>{message}</Text>
+      <Text style={styles.messageText}>{props.message}</Text>
       <View style={styles.interactionsLayout}>
         <View style={styles.interaction}>
           <Ionicons name="heart-outline" size={18} color="#aaa" style={styles.icon} />
-          <Text style={styles.secondary}>{likes}</Text>
+          <Text style={styles.secondary}>{props.likes}</Text>
         </View>
         <View style={styles.interaction}>
-          <Ionicons name="ios-chatbox-outline" size={18} color="#aaa" style={styles.icon} />
-          <Text style={styles.secondary}>{replies}</Text>
+          <Ionicons name="chatbox-outline" size={18} color="#aaa" style={styles.icon} />
+          <Text style={styles.secondary}>{props.replies}</Text>
         </View>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   listContainer: {
@@ -53,7 +57,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingRight: 16,
     borderBottomWidth: 1,
-    borderBottomStyle: 'solid',
+    // borderBottomStyle: 'solid',
     borderBottomColor: '#ddd',
   },
   masonryContainer: {
@@ -100,3 +104,5 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
+
+export default MessageComponent;
