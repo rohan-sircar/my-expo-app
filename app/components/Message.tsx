@@ -33,7 +33,9 @@ const MessageComponent: React.FC<MessageProps> = (props: MessageProps) => {
           style={styles.profileLayout}>
           <Avatar userId={props.userId} style={styles.avatar} />
           <View>
-            <Text style={styles.name}>{USERS[props.userId].name}</Text>
+            <Text style={[styles.name, { color: isDarkColorScheme ? '#E4E4E7' : '#333' }]}>
+              {USERS[props.userId].name}
+            </Text>
             <Text style={styles.secondary}>@{USERS[props.userId].handle}</Text>
           </View>
         </TouchableOpacity>
