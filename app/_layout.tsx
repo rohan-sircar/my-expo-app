@@ -15,6 +15,8 @@ import ThemeToggle from '~/components/ThemeToggle';
 import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
 import { NAV_THEME } from '~/theme';
 import { RootStackParamList } from '~/types/navigation';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import 'setimmediate';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -24,6 +26,7 @@ export {
 export default function RootLayout() {
   useInitialAndroidBarSync();
   const { colorScheme, isDarkColorScheme, colors } = useColorScheme();
+  const queryClient = new QueryClient();
 
   return (
     <>
@@ -35,37 +38,39 @@ export default function RootLayout() {
         <BottomSheetModalProvider>
           <ActionSheetProvider>
             <NavThemeProvider value={NAV_THEME[colorScheme]}>
-              <SafeAreaView className="flex-1">
-                <View className="mx-auto w-full max-w-[800px] flex-1">
-                  <Stack
-                    screenOptions={{
-                      ...SCREEN_OPTIONS,
-                      headerStyle: {
-                        backgroundColor: colors.background,
-                      },
-                      headerTintColor: colors.foreground,
-                    }}>
-                    <Stack.Screen
-                      name="index"
-                      options={{
-                        ...INDEX_OPTIONS,
-                        headerRight: () => (
-                          <View className="pr-2">
-                            <SettingsIcon />
-                          </View>
-                        ),
-                      }}
-                    />
-                    <Stack.Screen
-                      name="profile"
-                      options={{
-                        title: 'Profile',
-                        headerRight: () => <ThemeToggle />,
-                      }}
-                    />
-                  </Stack>
-                </View>
-              </SafeAreaView>
+              <QueryClientProvider client={queryClient}>
+                <SafeAreaView className="flex-1">
+                  <View className="mx-auto w-full max-w-[800px] flex-1">
+                    <Stack
+                      screenOptions={{
+                        ...SCREEN_OPTIONS,
+                        headerStyle: {
+                          backgroundColor: colors.background,
+                        },
+                        headerTintColor: colors.foreground,
+                      }}>
+                      <Stack.Screen
+                        name="index"
+                        options={{
+                          ...INDEX_OPTIONS,
+                          headerRight: () => (
+                            <View className="pr-2">
+                              <SettingsIcon />
+                            </View>
+                          ),
+                        }}
+                      />
+                      <Stack.Screen
+                        name="profile"
+                        options={{
+                          title: 'Profile',
+                          headerRight: () => <ThemeToggle />,
+                        }}
+                      />
+                    </Stack>
+                  </View>
+                </SafeAreaView>
+              </QueryClientProvider>
             </NavThemeProvider>
           </ActionSheetProvider>
         </BottomSheetModalProvider>

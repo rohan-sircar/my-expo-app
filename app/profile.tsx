@@ -10,9 +10,8 @@ import Avatar from './components/Avatar';
 import Message from './components/Message';
 import StatTile from './components/StatTile';
 
-import ThemeToggle from '~/components/ThemeToggle';
-import { useColorScheme } from '~/lib/useColorScheme';
 import React from 'react';
+import { useColorScheme } from '~/lib/useColorScheme';
 
 interface User {
   name: string;
@@ -71,7 +70,7 @@ export default function Profile() {
         </Text>
         <Text className="pr-3 text-gray-500">{user.about}</Text>
 
-        <View className="mt-5 flex-row justify-between border-b border-t border-gray-200 py-5 dark:border-gray-700">
+        <View className="mt-5 flex-row justify-between border-t border-b border-gray-200 py-5 dark:border-gray-700">
           <StatTile title="followers" value={user.followers.toString()} />
           <StatTile title="following" value={user.following.toString()} />
           <StatTile title="posts" value={userPosts.length.toString()} />
