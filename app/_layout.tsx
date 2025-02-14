@@ -16,7 +16,6 @@ import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
 import { NAV_THEME } from '~/theme';
 import { RootStackParamList } from '~/types/navigation';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import 'setimmediate';
 
 export {
   // Catch any errors thrown by the Layout component.
