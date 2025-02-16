@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { useUserStore } from '../stores/UserStore';
+import { useColorScheme } from '~/lib/useColorScheme';
+import { cardStyle, inputStyle } from '../styles/Styles';
 
 const FetchUserDetails = () => {
+  const { colors, isDarkColorScheme } = useColorScheme();
   // local state to hold the text input value
   const [inputValue, setInputValue] = useState('');
   //   const setUserId = useUserStore((state) => state.setUserId);
@@ -26,12 +29,18 @@ const FetchUserDetails = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={cardStyle(isDarkColorScheme, colors)}>
       <TextInput
-        style={styles.input}
-        value={inputValue}
         placeholder="Enter User ID"
+        className={`h-12 rounded-lg border px-4 text-base ${
+          isDarkColorScheme
+            ? 'border-zinc-700 bg-zinc-800 text-zinc-100'
+            : 'border-gray-200 bg-white text-zinc-800'
+        }`}
+        style={inputStyle()}
         keyboardType="numeric"
+        placeholderTextColor={isDarkColorScheme ? '#71717a' : '#9ca3af'}
+        value={inputValue}
         onChangeText={handleInputChange}
       />
       <Button title="Fetch User" onPress={handleSubmit} />
@@ -40,23 +49,3 @@ const FetchUserDetails = () => {
 };
 
 export default FetchUserDetails;
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  input: {
-    height: 40,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    paddingHorizontal: 8,
-  },
-});

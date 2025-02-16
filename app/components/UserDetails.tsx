@@ -4,9 +4,12 @@ import { ActivityIndicator, View } from 'react-native';
 import { ApiUser, fetchUser, useUserStore } from '../stores/UserStore';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native';
+import { cardStyle, subCardStyle, textColor } from '../styles/Styles';
+import { useColorScheme } from '~/lib/useColorScheme';
 
 // Component that displays user details fetched via TanStack Query.
 const UserDetails = () => {
+  const { colors, isDarkColorScheme } = useColorScheme();
   // Access the userId from our zustand‑x store.
   const userId = useUserStore((state) => state.userId);
 
@@ -17,16 +20,18 @@ const UserDetails = () => {
   });
 
   return (
-    <View style={styles.section}>
-      <Text style={styles.header}>User Details for ID: {userId}</Text>
-      {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
+    <View style={[styles.section, cardStyle(isDarkColorScheme, colors)]}>
+      <Text style={[styles.header, textColor(isDarkColorScheme)]}>
+        User Details for ID: {userId}
+      </Text>
+      {isLoading && <ActivityIndicator size="large" color={colors.primary} />}
       {isError && (
         <Text style={styles.errorText}>{'Error fetching user data: ' + error?.message}</Text>
       )}
       {data && (
-        <View style={styles.userCard}>
-          <Text style={styles.userText}>Name: {data.name}</Text>
-          <Text style={styles.userText}>Email: {data.email}</Text>
+        <View style={subCardStyle(isDarkColorScheme)}>
+          <Text style={[styles.userText, textColor(isDarkColorScheme)]}>Name: {data.name}</Text>
+          <Text style={[styles.userText, textColor(isDarkColorScheme)]}>Email: {data.email}</Text>
         </View>
       )}
     </View>
@@ -48,17 +53,20 @@ const styles = StyleSheet.create({
   },
   section: {
     marginVertical: 15,
-    padding: 15,
+    padding: 20,
     backgroundColor: '#ffffff',
-    borderRadius: 8,
-    elevation: 2, // Android shadow
-    shadowColor: '#000', // iOS shadow
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
+    borderRadius: 12,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
   },
   header: {
-    fontSize: 18,
-    marginBottom: 10,
+    fontSize: 22,
+    fontWeight: '600',
+    marginBottom: 15,
+    letterSpacing: 0.5,
   },
   counter: {
     fontSize: 16,
@@ -69,17 +77,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  userCard: {
-    marginTop: 10,
-    backgroundColor: '#e8f4fd',
-    padding: 10,
-    borderRadius: 8,
-  },
   userText: {
-    fontSize: 16,
+    fontSize: 17,
+    marginVertical: 4,
+    letterSpacing: 0.3,
   },
   errorText: {
-    color: 'red',
+    color: '#dc2626',
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 10,
+    padding: 12,
+    backgroundColor: '#fef2f2',
+    borderRadius: 8,
   },
 });
 
