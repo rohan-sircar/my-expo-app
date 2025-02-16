@@ -1,10 +1,10 @@
 export type RootStackParamList = {
-  home: undefined;
+  Home: undefined;
 
-  profile: { userId: number };
+  Profile: { userId: number };
 
-  login: undefined;
-  register: undefined;
+  Login: undefined;
+  Register: undefined;
 
   // Add other screen names and their params here
 };

@@ -60,6 +60,15 @@ function HomeTabs() {
           headerRight: () => <ThemeToggle />,
         }}
       />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          title: 'Profile',
+          headerRight: () => <ThemeToggle />,
+        }}
+        initialParams={{ userId: 0 }}
+      />
     </Tab.Navigator>
   );
 }
@@ -111,14 +120,6 @@ export default function RootLayout() {
                           headerRight: () => <ThemeToggle />,
                         }}
                       /> */}
-                      <Stack.Screen
-                        name="profile"
-                        component={ProfileScreen}
-                        options={{
-                          title: 'Profile',
-                          headerRight: () => <ThemeToggle />,
-                        }}
-                      />
                     </Stack.Navigator>
                     {/* screenOptions={{
                         ...SCREEN_OPTIONS,
@@ -172,7 +173,7 @@ const SettingsIcon = () => {
   return (
     <Pressable
       className="opacity-80"
-      onPressOut={() => navigation.navigate('profile', { userId: 0 })}>
+      onPressOut={() => navigation.navigate('Profile', { userId: 0 })}>
       <View className="opacity-90">
         <Icon name="person-outline" color={colors.foreground} />
       </View>

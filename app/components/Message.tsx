@@ -28,7 +28,7 @@ const MessageComponent: React.FC<MessageProps> = (props: MessageProps) => {
         <TouchableOpacity
           activeOpacity={0.75}
           onPress={() => {
-            navigation.navigate('profile', { userId: props.userId });
+            navigation.navigate('Profile', { userId: props.userId });
           }}
           style={styles.profileLayout}>
           <Avatar userId={props.userId} style={styles.avatar} />

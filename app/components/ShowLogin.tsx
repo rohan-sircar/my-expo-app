@@ -30,14 +30,14 @@ const ShowLogin = () => {
         className="text-strong mb-3 text-white"
         variant="primary"
         style={{ backgroundColor: colors.primary }}
-        onPress={() => navigation.navigate('login')}>
+        onPress={() => navigation.navigate('Login')}>
         <Text style={{ color: '#E4E4E7' }}>Login</Text>
       </Button>
       <Button
         className="text-strong mb-3 text-white"
         variant="primary"
         style={{ backgroundColor: colors.primary }}
-        onPress={() => navigation.navigate('register')}>
+        onPress={() => navigation.navigate('Register')}>
         <Text style={{ color: '#E4E4E7' }}>Register</Text>
       </Button>
     </View>
