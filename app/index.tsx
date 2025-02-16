@@ -7,6 +7,7 @@ import Message from './components/Message';
 import CounterControls from './components/CounterControls';
 import UserDetails from './components/UserDetails';
 import FetchUserDetails from './components/FetchUserDetails';
+import ShowLogin from './components/ShowLogin';
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <CounterControls />
       <FetchUserDetails />
       <UserDetails />
+      <ShowLogin />
       <FlashList
         data={POSTS}
         renderItem={({ item }) => <Message {...item} />}

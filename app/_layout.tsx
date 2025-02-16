@@ -9,6 +9,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Text } from 'react-native';
 import '../global.css';
 
 import ThemeToggle from '~/components/ThemeToggle';
@@ -24,13 +25,14 @@ export {
 
 import { onlineManager } from '@tanstack/react-query';
 import * as Network from 'expo-network';
+// import LoginScreen from './screens/LoginScreen';
 
-onlineManager.setEventListener((setOnline) => {
-  const eventSubscription = Network.addNetworkStateListener((state) => {
-    setOnline(!!state.isConnected);
-  });
-  return eventSubscription.remove;
-});
+// onlineManager.setEventListener((setOnline) => {
+//   const eventSubscription = Network.addNetworkStateListener((state) => {
+//     setOnline(!!state.isConnected);
+//   });
+//   return eventSubscription.remove;
+// });
 
 export default function RootLayout() {
   useInitialAndroidBarSync();
@@ -70,6 +72,20 @@ export default function RootLayout() {
                         }}
                       />
                       <Stack.Screen
+                        name="login"
+                        options={{
+                          title: 'Login',
+                          headerRight: () => <ThemeToggle />,
+                        }}
+                      />
+                      <Stack.Screen
+                        name="register"
+                        options={{
+                          title: 'Register',
+                          headerRight: () => <ThemeToggle />,
+                        }}
+                      />
+                      <Stack.Screen
                         name="profile"
                         options={{
                           title: 'Profile',
@@ -97,7 +113,7 @@ const INDEX_OPTIONS = {
   title: 'Home',
 } as const;
 
-const SettingsIcon: React.FC = () => {
+const SettingsIcon = () => {
   const { colors } = useColorScheme();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
