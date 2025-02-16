@@ -26,6 +26,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ControlsScreen from './screens/ControlsScreen';
 import { useUserStore } from './stores/UserStore';
+import { LogoutButton } from '~/components/LogoutButton';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -38,7 +39,15 @@ function HomeTabs() {
         name="Home"
         component={HomeScreen}
         options={{
-          headerRight: () => <ThemeToggle />,
+          headerRight: () => (
+            <View className="flex flex-row items-center gap-3 pr-2">
+              <ThemeToggle />
+              {loggedIn && <SettingsIcon />}
+              {/* Placeholder for third button - add icon component here later */}
+              {/* <View className="h-8 w-8 rounded-full bg-gray-300/20" /> */}
+              {loggedIn && <LogoutButton />}
+            </View>
+          ),
         }}
       />
       {loggedIn ? (
@@ -106,8 +115,11 @@ export default function RootLayout() {
                           ...SCREEN_OPTIONS,
                           ...INDEX_OPTIONS,
                           headerRight: () => (
-                            <View className="pr-2">
+                            <View className="flex flex-row items-center gap-3 pr-2">
+                              <ThemeToggle />
                               <SettingsIcon />
+                              {/* Placeholder for third button - add icon component here later */}
+                              <View className="h-8 w-8 rounded-full bg-gray-300/20" />
                             </View>
                           ),
                         }}
@@ -149,7 +161,11 @@ const SettingsIcon = () => {
   return (
     <Pressable
       className="opacity-80"
-      onPressOut={() => navigation.navigate('Profile', { userId: userId })}>
+      onPress={() => {
+        if (userId) {
+          navigation.navigate('Profile', { userId });
+        }
+      }}>
       <View className="opacity-90">
         <Icon name="person-outline" color={colors.foreground} />
       </View>

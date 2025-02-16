@@ -16,7 +16,7 @@ const ThemeToggle: React.FC = () => {
         key={`toggle-${colorScheme}`}
         entering={ZoomInRotate}>
         <Pressable
-          onPressOut={toggleColorScheme}
+          onPress={toggleColorScheme}
           className="p-2 opacity-80" // Add padding for touch area
           hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
           android_ripple={{ borderless: true }}>
