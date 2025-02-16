@@ -4,6 +4,7 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import * as Style from '../styles/Styles';
+import { useUserStore } from '../stores/UserStore';
 
 const LoginScreen = () => {
   const { colors, isDarkColorScheme } = useColorScheme();
@@ -35,7 +36,11 @@ const LoginScreen = () => {
 
         <View>
           <Button style={styles.blueButton}>
-            <Text style={styles.buttonText}>Sign In</Text>
+            <Text
+              style={styles.buttonText}
+              onPress={() => useUserStore.setState({ loggedIn: true })}>
+              Sign In
+            </Text>
           </Button>
           <TouchableOpacity>
             <Text

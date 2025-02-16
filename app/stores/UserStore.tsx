@@ -8,6 +8,7 @@ export interface ApiUser {
 
 export interface UserStore {
   userId: number;
+  loggedIn: boolean;
   setUserId: (newUserId: number) => void;
   increment: () => void;
   decrement: () => void;
@@ -16,6 +17,7 @@ export interface UserStore {
 // --- Setup zustand for local state (counter representing userId) ---
 export const useUserStore = create<UserStore>((set, get) => ({
   userId: 1,
+  loggedIn: false,
   setUserId: (newUserId: number) => set({ userId: newUserId }),
   increment: () => set({ userId: get().userId + 1 }),
   decrement: () => set({ userId: get().userId > 1 ? get().userId - 1 : 1 }),

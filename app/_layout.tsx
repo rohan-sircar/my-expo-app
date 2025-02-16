@@ -25,11 +25,13 @@ import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ControlsScreen from './screens/ControlsScreen';
+import { useUserStore } from './stores/UserStore';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 function HomeTabs() {
+  const { userId, loggedIn } = useUserStore();
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -39,35 +41,41 @@ function HomeTabs() {
           headerRight: () => <ThemeToggle />,
         }}
       />
-      <Tab.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{
-          headerRight: () => <ThemeToggle />,
-        }}
-      />
-      <Tab.Screen
-        name="Register"
-        component={RegisterScreen}
-        options={{
-          headerRight: () => <ThemeToggle />,
-        }}
-      />
+      {loggedIn ? (
+        <Tab.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            title: 'Profile',
+            headerRight: () => <ThemeToggle />,
+          }}
+          initialParams={{ userId: userId }}
+        />
+      ) : (
+        <Tab.Group>
+          <Tab.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{
+              headerRight: () => <ThemeToggle />,
+            }}
+          />
+          <Tab.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{
+              headerRight: () => <ThemeToggle />,
+            }}
+          />
+        </Tab.Group>
+      )}
+
       <Tab.Screen
         name="Controls"
         component={ControlsScreen}
         options={{
           headerRight: () => <ThemeToggle />,
         }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          title: 'Profile',
-          headerRight: () => <ThemeToggle />,
-        }}
-        initialParams={{ userId: 0 }}
       />
     </Tab.Navigator>
   );
@@ -95,6 +103,7 @@ export default function RootLayout() {
                       <Stack.Screen
                         name="index"
                         options={{
+                          ...SCREEN_OPTIONS,
                           ...INDEX_OPTIONS,
                           headerRight: () => (
                             <View className="pr-2">
@@ -104,22 +113,6 @@ export default function RootLayout() {
                         }}
                         component={HomeTabs}
                       />
-                      {/* <Stack.Screen
-                        name="login"
-                        component={LoginScreen}
-                        options={{
-                          title: 'Login',
-                          headerRight: () => <ThemeToggle />,
-                        }}
-                      />
-                      <Stack.Screen
-                        name="register"
-                        component={RegisterScreen}
-                        options={{
-                          title: 'Register',
-                          headerRight: () => <ThemeToggle />,
-                        }}
-                      /> */}
                     </Stack.Navigator>
                     {/* screenOptions={{
                         ...SCREEN_OPTIONS,
@@ -130,24 +123,6 @@ export default function RootLayout() {
                       }}> */}
                   </View>
                 </SafeAreaView>
-                {/* <SafeAreaView className="flex-1 pb-4">
-                  <View className="mx-auto w-full max-w-[800px] flex-1">
-                    <Tabs
-                      screenOptions={({ route }) => ({
-                        tabBarActiveTintColor: colors.primary,
-                        tabBarInactiveTintColor: colors.foreground,
-                        tabBarStyle: { borderTopWidth: 0 },
-                        headerShown: route.name === '(tabs)',
-                      })}>
-                      <Tabs.Screen
-                        name="(tabs)"
-                        options={{
-                          headerShown: false,
-                        }}
-                      />
-                    </Tabs>
-                  </View>
-                </SafeAreaView> */}
               </QueryClientProvider>
             </NavThemeProvider>
           </ActionSheetProvider>
@@ -167,13 +142,14 @@ const INDEX_OPTIONS = {
 } as const;
 
 const SettingsIcon = () => {
+  const { userId } = useUserStore();
   const { colors } = useColorScheme();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
     <Pressable
       className="opacity-80"
-      onPressOut={() => navigation.navigate('Profile', { userId: 0 })}>
+      onPressOut={() => navigation.navigate('Profile', { userId: userId })}>
       <View className="opacity-90">
         <Icon name="person-outline" color={colors.foreground} />
       </View>
