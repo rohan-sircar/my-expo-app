@@ -4,33 +4,19 @@ import { useRoute, RouteProp } from '@react-navigation/native';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import POSTS from '../data/posts';
-import USERS from '../data/users';
-import Avatar from './components/Avatar';
-import Message from './components/Message';
-import StatTile from './components/StatTile';
+import POSTS, { Post } from '../../data/posts';
+import USERS from '../../data/users';
+import Avatar from '../components/Avatar';
+import Message from '../components/Message';
+import StatTile from '../components/StatTile';
+import * as Style from '~/app/styles/Styles';
 
 import React from 'react';
 import { useColorScheme } from '~/lib/useColorScheme';
 
-interface User {
-  name: string;
-  handle: string;
-  about: string;
-  followers: number;
-  following: number;
-}
-
-interface Post {
-  message: string;
-  userId: number;
-  likes: number;
-  replies: number;
-}
-
 type ProfileRouteParams = { userId: string };
 
-export default function Profile() {
+export default function ProfileScreen() {
   const [listMode, setListMode] = useState<'list' | 'masonry'>('list');
   const route = useRoute<RouteProp<{ ProfileRoute: ProfileRouteParams }, 'ProfileRoute'>>();
 
@@ -39,7 +25,9 @@ export default function Profile() {
 
   const userIdNumber = parseInt(userId, 10);
   const userPosts = POSTS.filter((post: Post) => post.userId === userIdNumber);
-  const user = USERS[userIdNumber as keyof typeof USERS] as User;
+  const user = USERS.find((user) => user.userId === userIdNumber);
+
+  console.log('user', user);
 
   if (!user) return null;
 

@@ -20,7 +20,7 @@ import { NAV_THEME } from '~/theme';
 import { RootStackParamList } from '~/types/navigation';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Profile from './profile';
+import ProfileScreen from './screens/ProfileScreen';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
@@ -113,7 +113,7 @@ export default function RootLayout() {
                       /> */}
                       <Stack.Screen
                         name="profile"
-                        component={Profile}
+                        component={ProfileScreen}
                         options={{
                           title: 'Profile',
                           headerRight: () => <ThemeToggle />,
