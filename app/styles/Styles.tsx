@@ -38,10 +38,6 @@ export function textColor(isDarkColorScheme: boolean) {
   };
 }
 
-export function getCardBackground(isDarkColorScheme: boolean) {
-  return isDarkColorScheme ? 'bg-zinc-800' : 'bg-white';
-}
-
 export function getHeadingTextColor(isDarkColorScheme: boolean) {
   return isDarkColorScheme ? 'text-zinc-100' : 'text-zinc-800';
 }

@@ -3,6 +3,7 @@ import { Button } from '~/components/nativewindui/Button';
 import { useColorScheme } from '~/lib/useColorScheme';
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import * as Style from '../styles/Styles';
 
 const RegisterScreen = () => {
   const { colors, isDarkColorScheme } = useColorScheme();
@@ -10,9 +11,8 @@ const RegisterScreen = () => {
   return (
     <View className="flex-1 items-center justify-center px-4">
       <View
-        className={`w-full max-w-[380px] rounded-xl p-6 shadow-lg ${
-          isDarkColorScheme ? 'bg-zinc-800' : 'bg-white'
-        }`}>
+        className={`w-full max-w-[380px] rounded-xl p-6 shadow-lg`}
+        style={Style.cardStyle(isDarkColorScheme, colors)}>
         <View>
           <Text
             className={`mb-6 text-center text-xl font-semibold ${
@@ -30,7 +30,8 @@ const RegisterScreen = () => {
                 ? 'border-zinc-700 bg-zinc-800 text-zinc-100'
                 : 'border-gray-200 bg-white text-zinc-800'
             }`}
-            placeholderTextColor={isDarkColorScheme ? '#71717a' : '#9ca3af'}
+            style={Style.inputStyle()}
+            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme)}
           />
           <TextInput
             placeholder="Password"
@@ -40,7 +41,8 @@ const RegisterScreen = () => {
                 ? 'border-zinc-700 bg-zinc-800 text-zinc-100'
                 : 'border-gray-200 bg-white text-zinc-800'
             }`}
-            placeholderTextColor={isDarkColorScheme ? '#71717a' : '#9ca3af'}
+            style={Style.inputStyle()}
+            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme)}
           />
           <TextInput
             placeholder="Confirm Password"
@@ -50,12 +52,13 @@ const RegisterScreen = () => {
                 ? 'border-zinc-700 bg-zinc-800 text-zinc-100'
                 : 'border-gray-200 bg-white text-zinc-800'
             }`}
-            placeholderTextColor={isDarkColorScheme ? '#71717a' : '#9ca3af'}
+            style={Style.inputStyle()}
+            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme)}
           />
         </View>
 
         <View>
-          <Button style={styles.blueButton}>
+          <Button className="h-12" style={styles.blueButton}>
             <Text style={styles.buttonText}>Register</Text>
           </Button>
         </View>
@@ -68,9 +71,8 @@ const RegisterScreen = () => {
           </View>
           <View className="relative flex flex-row justify-center">
             <Text
-              className={`bg-inherit px-4 text-sm ${
-                isDarkColorScheme ? 'bg-zinc-800 text-zinc-400' : 'bg-white text-zinc-500'
-              }`}>
+              className={`bg-inherit px-4 text-sm`}
+              style={{ backgroundColor: colors.card, color: colors.foreground }}>
               or continue with
             </Text>
           </View>

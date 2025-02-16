@@ -12,7 +12,8 @@ const LoginScreen = () => {
   return (
     <View className={`flex-1 items-center justify-center px-4`}>
       <View
-        className={`w-full max-w-[380px] rounded-xl p-6 shadow-lg ${Style.getCardBackground(isDarkColorScheme)}`}>
+        className={`w-full max-w-[380px] rounded-xl p-6 shadow-lg`}
+        style={Style.cardStyle(isDarkColorScheme, colors)}>
         <View>
           <Text
             className={`mb-6 text-center text-xl font-semibold ${Style.getHeadingTextColor(isDarkColorScheme)}`}>
@@ -24,18 +25,20 @@ const LoginScreen = () => {
           <TextInput
             placeholder="Email"
             className={Style.getInputStyles(isDarkColorScheme)}
+            style={Style.inputStyle()}
             placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme)}
           />
           <TextInput
             placeholder="Password"
             secureTextEntry
             className={Style.getInputStyles(isDarkColorScheme)}
+            style={Style.inputStyle()}
             placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme)}
           />
         </View>
 
         <View>
-          <Button style={styles.blueButton}>
+          <Button className="h-12" style={styles.blueButton}>
             <Text
               style={styles.buttonText}
               onPress={() => useUserStore.setState({ loggedIn: true })}>
@@ -56,7 +59,8 @@ const LoginScreen = () => {
           </View>
           <View className="relative flex flex-row justify-center">
             <Text
-              className={`bg-inherit px-4 text-sm ${Style.getSecondaryTextColor(isDarkColorScheme)} ${Style.getCardBackground(isDarkColorScheme)}`}>
+              className={`bg-inherit px-4 text-sm`}
+              style={{ backgroundColor: colors.card, color: colors.foreground }}>
               or continue with
             </Text>
           </View>
