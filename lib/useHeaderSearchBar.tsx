@@ -1,4 +1,4 @@
-import { useNavigation } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { SearchBarProps } from 'react-native-screens';
 

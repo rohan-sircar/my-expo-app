@@ -1,38 +1,68 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ThemeProvider as NavThemeProvider, useNavigation } from '@react-navigation/native';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 import { Icon } from '@roninoss/icons';
 import 'expo-dev-client';
-import { Stack, useNavigation } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Text } from 'react-native';
 import '../global.css';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ThemeToggle from '~/components/ThemeToggle';
 import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
 import { NAV_THEME } from '~/theme';
 import { RootStackParamList } from '~/types/navigation';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Profile from './profile';
+import HomeScreen from './screens/HomeScreen';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import ControlsScreen from './screens/ControlsScreen';
 
-import { onlineManager } from '@tanstack/react-query';
-import * as Network from 'expo-network';
-// import LoginScreen from './screens/LoginScreen';
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-// onlineManager.setEventListener((setOnline) => {
-//   const eventSubscription = Network.addNetworkStateListener((state) => {
-//     setOnline(!!state.isConnected);
-//   });
-//   return eventSubscription.remove;
-// });
+function HomeTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerRight: () => <ThemeToggle />,
+        }}
+      />
+      <Tab.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          headerRight: () => <ThemeToggle />,
+        }}
+      />
+      <Tab.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{
+          headerRight: () => <ThemeToggle />,
+        }}
+      />
+      <Tab.Screen
+        name="Controls"
+        component={ControlsScreen}
+        options={{
+          headerRight: () => <ThemeToggle />,
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
 
 export default function RootLayout() {
   useInitialAndroidBarSync();
@@ -52,14 +82,7 @@ export default function RootLayout() {
               <QueryClientProvider client={queryClient}>
                 <SafeAreaView className="flex-1">
                   <View className="mx-auto w-full max-w-[800px] flex-1">
-                    <Stack
-                      screenOptions={{
-                        ...SCREEN_OPTIONS,
-                        headerStyle: {
-                          backgroundColor: colors.background,
-                        },
-                        headerTintColor: colors.foreground,
-                      }}>
+                    <Stack.Navigator>
                       <Stack.Screen
                         name="index"
                         options={{
@@ -70,9 +93,11 @@ export default function RootLayout() {
                             </View>
                           ),
                         }}
+                        component={HomeTabs}
                       />
-                      <Stack.Screen
+                      {/* <Stack.Screen
                         name="login"
+                        component={LoginScreen}
                         options={{
                           title: 'Login',
                           headerRight: () => <ThemeToggle />,
@@ -80,21 +105,48 @@ export default function RootLayout() {
                       />
                       <Stack.Screen
                         name="register"
+                        component={RegisterScreen}
                         options={{
                           title: 'Register',
                           headerRight: () => <ThemeToggle />,
                         }}
-                      />
+                      /> */}
                       <Stack.Screen
                         name="profile"
+                        component={Profile}
                         options={{
                           title: 'Profile',
                           headerRight: () => <ThemeToggle />,
                         }}
                       />
-                    </Stack>
+                    </Stack.Navigator>
+                    {/* screenOptions={{
+                        ...SCREEN_OPTIONS,
+                        headerStyle: {
+                          backgroundColor: colors.background,
+                        },
+                        headerTintColor: colors.foreground,
+                      }}> */}
                   </View>
                 </SafeAreaView>
+                {/* <SafeAreaView className="flex-1 pb-4">
+                  <View className="mx-auto w-full max-w-[800px] flex-1">
+                    <Tabs
+                      screenOptions={({ route }) => ({
+                        tabBarActiveTintColor: colors.primary,
+                        tabBarInactiveTintColor: colors.foreground,
+                        tabBarStyle: { borderTopWidth: 0 },
+                        headerShown: route.name === '(tabs)',
+                      })}>
+                      <Tabs.Screen
+                        name="(tabs)"
+                        options={{
+                          headerShown: false,
+                        }}
+                      />
+                    </Tabs>
+                  </View>
+                </SafeAreaView> */}
               </QueryClientProvider>
             </NavThemeProvider>
           </ActionSheetProvider>
@@ -110,7 +162,7 @@ const SCREEN_OPTIONS = {
 
 const INDEX_OPTIONS = {
   headerLargeTitle: true,
-  title: 'Home',
+  headerShown: false,
 } as const;
 
 const SettingsIcon = () => {

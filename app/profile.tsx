@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { FlashList, MasonryFlashList } from '@shopify/flash-list';
-import { useLocalSearchParams } from 'expo-router';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -28,9 +28,13 @@ interface Post {
   replies: number;
 }
 
+type ProfileRouteParams = { userId: string };
+
 export default function Profile() {
   const [listMode, setListMode] = useState<'list' | 'masonry'>('list');
-  const { userId } = useLocalSearchParams<{ userId: string }>();
+  const route = useRoute<RouteProp<{ ProfileRoute: ProfileRouteParams }, 'ProfileRoute'>>();
+
+  const { userId } = route.params;
   const { isDarkColorScheme } = useColorScheme();
 
   const userIdNumber = parseInt(userId, 10);
@@ -70,7 +74,7 @@ export default function Profile() {
         </Text>
         <Text className="pr-3 text-gray-500">{user.about}</Text>
 
-        <View className="mt-5 flex-row justify-between border-t border-b border-gray-200 py-5 dark:border-gray-700">
+        <View className="mt-5 flex-row justify-between border-b border-t border-gray-200 py-5 dark:border-gray-700">
           <StatTile title="followers" value={user.followers.toString()} />
           <StatTile title="following" value={user.following.toString()} />
           <StatTile title="posts" value={userPosts.length.toString()} />

@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import { useNavigation } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '~/types/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColorScheme } from '~/lib/useColorScheme';
