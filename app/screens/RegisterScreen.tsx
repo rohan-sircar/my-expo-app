@@ -6,13 +6,13 @@ import { StyleSheet } from 'react-native';
 import * as Style from '../styles/Styles';
 
 const RegisterScreen = () => {
-  const { colors, isDarkColorScheme } = useColorScheme();
+  const { colors, isDarkColorScheme, accentSet } = useColorScheme();
 
   return (
     <View className="flex-1 items-center justify-center px-4">
       <View
         className={`w-full max-w-[380px] rounded-xl p-6 shadow-lg`}
-        style={Style.cardStyle(isDarkColorScheme, colors)}>
+        style={Style.cardStyle(isDarkColorScheme, colors, accentSet)}>
         <View>
           <Text
             className={`mb-6 text-center text-xl font-semibold ${
@@ -22,44 +22,36 @@ const RegisterScreen = () => {
           </Text>
         </View>
 
+        {/* ${
+              isDarkColorScheme
+                ? 'border-zinc-700 bg-zinc-800 text-zinc-100'
+                : 'border-gray-200 bg-white text-zinc-800' */}
         <View className="mb-6 gap-4">
           <TextInput
             placeholder="Email"
-            className={`h-12 rounded-lg border px-4 text-base ${
-              isDarkColorScheme
-                ? 'border-zinc-700 bg-zinc-800 text-zinc-100'
-                : 'border-gray-200 bg-white text-zinc-800'
-            }`}
-            style={Style.inputStyle()}
-            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme)}
+            className={`h-12 rounded-lg border px-4 text-base`}
+            style={Style.inputStyle(isDarkColorScheme, accentSet)}
+            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme, accentSet)}
           />
           <TextInput
             placeholder="Password"
             secureTextEntry
-            className={`h-12 rounded-lg border px-4 text-base ${
-              isDarkColorScheme
-                ? 'border-zinc-700 bg-zinc-800 text-zinc-100'
-                : 'border-gray-200 bg-white text-zinc-800'
-            }`}
-            style={Style.inputStyle()}
-            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme)}
+            className={`h-12 rounded-lg border px-4 text-base`}
+            style={Style.inputStyle(isDarkColorScheme, accentSet)}
+            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme, accentSet)}
           />
           <TextInput
             placeholder="Confirm Password"
             secureTextEntry
-            className={`h-12 rounded-lg border px-4 text-base ${
-              isDarkColorScheme
-                ? 'border-zinc-700 bg-zinc-800 text-zinc-100'
-                : 'border-gray-200 bg-white text-zinc-800'
-            }`}
-            style={Style.inputStyle()}
-            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme)}
+            className={`h-12 rounded-lg border px-4 text-base`}
+            style={Style.inputStyle(isDarkColorScheme, accentSet)}
+            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme, accentSet)}
           />
         </View>
 
         <View>
-          <Button className="h-12" style={styles.blueButton}>
-            <Text style={styles.buttonText}>Register</Text>
+          <Button className="h-12" style={Style.formButton(isDarkColorScheme, accentSet)}>
+            <Text style={Style.formButtonText(isDarkColorScheme, accentSet)}>Register</Text>
           </Button>
         </View>
 
@@ -79,14 +71,9 @@ const RegisterScreen = () => {
         </View>
 
         <View className="gap-4">
-          <Button
-            className={`h-12 w-full flex-row items-center justify-center rounded-lg border ${
-              isDarkColorScheme ? 'border-zinc-700 bg-zinc-800' : 'border-gray-200 bg-white'
-            }`}>
+          <Button className={Style.getSocialButtonStyles(isDarkColorScheme, accentSet)}>
             <Text
-              className={`text-base font-medium ${
-                isDarkColorScheme ? 'text-zinc-100' : 'text-zinc-800'
-              }`}>
+              className={`text-base font-medium ${Style.getHeadingTextColor(isDarkColorScheme, accentSet)}`}>
               Sign in with Google
             </Text>
           </Button>
@@ -98,20 +85,5 @@ const RegisterScreen = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  blueButton: {
-    backgroundColor: 'blue',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
 
 export default RegisterScreen;

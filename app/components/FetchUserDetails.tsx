@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Text } from 'react-native';
 import { useUserStore } from '../stores/UserStore';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { cardStyle, inputStyle } from '../styles/Styles';
+import { Button } from '~/components/nativewindui/Button';
+import * as Style from '../styles/Styles';
 
 const FetchUserDetails = () => {
-  const { colors, isDarkColorScheme } = useColorScheme();
+  const { colors, isDarkColorScheme, accentSet } = useColorScheme();
   // local state to hold the text input value
   const [inputValue, setInputValue] = useState('');
   //   const setUserId = useUserStore((state) => state.setUserId);
@@ -29,21 +31,25 @@ const FetchUserDetails = () => {
   };
 
   return (
-    <View style={cardStyle(isDarkColorScheme, colors)}>
+    <View className="mb-6 gap-4" style={cardStyle(isDarkColorScheme, colors, accentSet)}>
       <TextInput
-        placeholder="Enter User ID"
-        className={`h-12 rounded-lg border px-4 text-base ${
-          isDarkColorScheme
-            ? 'border-zinc-700 bg-zinc-800 text-zinc-100'
-            : 'border-gray-200 bg-white text-zinc-800'
-        }`}
-        style={inputStyle()}
         keyboardType="numeric"
-        placeholderTextColor={isDarkColorScheme ? '#71717a' : '#9ca3af'}
+        placeholder="Enter User ID"
+        secureTextEntry
+        className={`h-12 rounded-lg border px-4 text-base`}
+        style={Style.inputStyle(isDarkColorScheme, accentSet)}
+        placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme, accentSet)}
         value={inputValue}
         onChangeText={handleInputChange}
       />
-      <Button title="Fetch User" onPress={handleSubmit} />
+      <View>
+        <Button
+          className="h-12"
+          style={Style.formButton(isDarkColorScheme, accentSet)}
+          onPress={handleSubmit}>
+          <Text style={Style.formButtonText(isDarkColorScheme, accentSet)}>Fetch user</Text>
+        </Button>
+      </View>
     </View>
   );
 };

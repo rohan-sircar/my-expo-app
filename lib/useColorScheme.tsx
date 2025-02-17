@@ -1,52 +1,59 @@
 import * as NavigationBar from 'expo-navigation-bar';
 import { useColorScheme as useNativewindColorScheme } from 'nativewind';
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { Platform } from 'react-native';
+import { AccentColorSet, COLORS, AccentColors } from '~/theme/colors';
+import { useAccentColor } from './useAccentColor';
 
-import { COLORS } from '~/theme/colors';
+interface ColorSchemeHook {
+  colorScheme: 'light' | 'dark';
+  isDarkColorScheme: boolean;
+  setColorScheme: (colorScheme: 'light' | 'dark') => void;
+  toggleColorScheme: () => void;
+  colors: any;
+  accentSet: AccentColorSet;
+  setAccentColor: (color: keyof typeof AccentColors) => void;
+}
 
-function useColorScheme() {
-  const { colorScheme, setColorScheme: setNativeWindColorScheme } = useNativewindColorScheme();
+function useColorScheme(): ColorSchemeHook {
+  const { colorScheme: nativeWindColorScheme, setColorScheme: setNativeWindColorScheme } =
+    useNativewindColorScheme();
+  const { accentColor, accentSet, setAccentColor } = useAccentColor();
 
-  async function setColorScheme(colorScheme: 'light' | 'dark') {
+  const colorScheme = nativeWindColorScheme ?? 'light';
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      setNavigationBar(colorScheme);
+    }
+  }, [colorScheme]);
+
+  const setColorScheme = (colorScheme: 'light' | 'dark') => {
     setNativeWindColorScheme(colorScheme);
     if (Platform.OS === 'android') {
-      try {
-        await setNavigationBar(colorScheme);
-      } catch (error) {
-        console.error('useColorScheme.tsx", "setColorScheme', error);
-      }
+      setNavigationBar(colorScheme);
     }
-  }
+  };
 
-  function toggleColorScheme() {
-    return setColorScheme(colorScheme === 'light' ? 'dark' : 'light');
-  }
+  const toggleColorScheme = () => {
+    setColorScheme(colorScheme === 'light' ? 'dark' : 'light');
+  };
+
+  const colors = {
+    ...COLORS[colorScheme],
+    accent: accentSet,
+  };
 
   return {
-    colorScheme: colorScheme ?? 'light',
+    colorScheme,
     isDarkColorScheme: colorScheme === 'dark',
     setColorScheme,
     toggleColorScheme,
-    colors: COLORS[colorScheme ?? 'light'],
+    colors,
+    accentSet,
+    setAccentColor,
   };
 }
-
-/**
- * Set the Android navigation bar color based on the color scheme.
- */
-function useInitialAndroidBarSync() {
-  const { colorScheme } = useColorScheme();
-  React.useEffect(() => {
-    if (Platform.OS === 'android') {
-      setNavigationBar(colorScheme).catch((error) => {
-        console.error('useColorScheme.tsx", "useInitialColorScheme', error);
-      });
-    }
-  }, []);
-}
-
-export { useColorScheme, useInitialAndroidBarSync };
 
 function setNavigationBar(colorScheme: 'light' | 'dark') {
   return Promise.all([
@@ -55,3 +62,16 @@ function setNavigationBar(colorScheme: 'light' | 'dark') {
     NavigationBar.setBackgroundColorAsync(colorScheme === 'dark' ? '#00000030' : '#ffffff80'),
   ]);
 }
+
+function useInitialAndroidBarSync() {
+  const { colorScheme } = useColorScheme();
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      setNavigationBar(colorScheme).catch((error) => {
+        console.error('useColorScheme.tsx", "useInitialColorScheme', error);
+      });
+    }
+  }, [colorScheme]);
+}
+
+export { useColorScheme, useInitialAndroidBarSync };

@@ -1,39 +1,41 @@
-import { forwardRef } from 'react';
-import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
+// import React from 'react';
+// import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+// import { useColorScheme } from '~/lib/useColorScheme';
 
-type ButtonProps = {
-  title?: string;
-} & TouchableOpacityProps;
+// interface ButtonProps {
+//   title: string;
+//   onPress: () => void;
+//   style?: any;
+// }
 
-export const Button = forwardRef<View, ButtonProps>(({ title, ...touchableProps }, ref) => {
-  return (
-    <TouchableOpacity ref={ref} {...touchableProps} style={[styles.button, touchableProps.style]}>
-      <Text style={styles.buttonText}>{title}</Text>
-    </TouchableOpacity>
-  );
-});
+// const Button: React.FC<ButtonProps> = ({ title, onPress, style }) => {
+//   const { colors, accentSet } = useColorScheme();
 
-const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#6366F1',
-    borderRadius: 24,
-    elevation: 5,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      height: 2,
-      width: 0,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-});
+//   return (
+//     <TouchableOpacity
+//       style={[
+//         styles.button,
+//         style,
+//         { backgroundColor: accentSet.base, borderColor: accentSet.border },
+//       ]}
+//       onPress={onPress}
+//       activeOpacity={0.7}>
+//       <Text style={[styles.text, { color: accentSet.textOnAccent }]}>{title}</Text>
+//     </TouchableOpacity>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   button: {
+//     padding: 10,
+//     borderRadius: 8,
+//     borderWidth: 1,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   text: {
+//     fontSize: 16,
+//   },
+// });
+
+// export default Button;

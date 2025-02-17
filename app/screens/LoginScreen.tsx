@@ -7,16 +7,16 @@ import * as Style from '../styles/Styles';
 import { useUserStore } from '../stores/UserStore';
 
 const LoginScreen = () => {
-  const { colors, isDarkColorScheme } = useColorScheme();
+  const { colors, isDarkColorScheme, accentSet } = useColorScheme();
 
   return (
     <View className={`flex-1 items-center justify-center px-4`}>
       <View
         className={`w-full max-w-[380px] rounded-xl p-6 shadow-lg`}
-        style={Style.cardStyle(isDarkColorScheme, colors)}>
+        style={Style.cardStyle(isDarkColorScheme, colors, accentSet)}>
         <View>
           <Text
-            className={`mb-6 text-center text-xl font-semibold ${Style.getHeadingTextColor(isDarkColorScheme)}`}>
+            className={`mb-6 text-center text-xl font-semibold ${Style.getHeadingTextColor(isDarkColorScheme, accentSet)}`}>
             Sign in to your account
           </Text>
         </View>
@@ -24,30 +24,30 @@ const LoginScreen = () => {
         <View className="mb-6 gap-4">
           <TextInput
             placeholder="Email"
-            className={Style.getInputStyles(isDarkColorScheme)}
-            style={Style.inputStyle()}
-            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme)}
+            className={`h-12 rounded-lg border px-4 text-base`}
+            style={Style.inputStyle(isDarkColorScheme, accentSet)}
+            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme, accentSet)}
           />
           <TextInput
             placeholder="Password"
             secureTextEntry
-            className={Style.getInputStyles(isDarkColorScheme)}
-            style={Style.inputStyle()}
-            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme)}
+            className={`h-12 rounded-lg border px-4 text-base`}
+            style={Style.inputStyle(isDarkColorScheme, accentSet)}
+            placeholderTextColor={Style.getPlaceholderColor(isDarkColorScheme, accentSet)}
           />
         </View>
 
         <View>
-          <Button className="h-12" style={styles.blueButton}>
+          <Button className="h-12" style={Style.formButton(isDarkColorScheme, accentSet)}>
             <Text
-              style={styles.buttonText}
+              style={Style.formButtonText(isDarkColorScheme, accentSet)}
               onPress={() => useUserStore.setState({ loggedIn: true })}>
               Sign In
             </Text>
           </Button>
           <TouchableOpacity>
             <Text
-              className={`mt-4 text-center text-sm ${Style.getSecondaryTextColor(isDarkColorScheme)}`}>
+              className={`mt-4 text-center text-sm ${Style.getSecondaryTextColor(isDarkColorScheme, accentSet)}`}>
               Forgot Password?
             </Text>
           </TouchableOpacity>
@@ -55,7 +55,9 @@ const LoginScreen = () => {
 
         <View className="relative my-6">
           <View className="absolute inset-0 flex items-center justify-center">
-            <View className={`h-[1px] w-full ${Style.getDividerColor(isDarkColorScheme)}`} />
+            <View
+              className={`h-[1px] w-full ${Style.getDividerColor(isDarkColorScheme, accentSet)}`}
+            />
           </View>
           <View className="relative flex flex-row justify-center">
             <Text
@@ -67,9 +69,9 @@ const LoginScreen = () => {
         </View>
 
         <View className="gap-4">
-          <Button className={Style.getSocialButtonStyles(isDarkColorScheme)}>
+          <Button className={Style.getSocialButtonStyles(isDarkColorScheme, accentSet)}>
             <Text
-              className={`text-base font-medium ${Style.getHeadingTextColor(isDarkColorScheme)}`}>
+              className={`text-base font-medium ${Style.getHeadingTextColor(isDarkColorScheme, accentSet)}`}>
               Sign in with Google
             </Text>
           </Button>
@@ -82,19 +84,19 @@ const LoginScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  blueButton: {
-    backgroundColor: 'blue',
-    paddingVertical: 16,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
+// const styles = StyleSheet.create({
+//   blueButton: {
+//     backgroundColor: 'blue',
+//     paddingVertical: 16,
+//     paddingHorizontal: 24,
+//     borderRadius: 8,
+//     justifyContent: 'center',
+//   },
+//   buttonText: {
+//     color: 'white',
+//     fontSize: 16,
+//     fontWeight: 'bold',
+//   },
+// });
 
 export default LoginScreen;

@@ -1,4 +1,29 @@
 import { Platform } from 'react-native';
+import Color from 'color';
+
+export interface AccentColorSet {
+  base: string;
+  hover: string;
+  active: string;
+  disabled: string;
+  textOnAccent: string;
+  textMuted: string;
+  border: string;
+  focus: string;
+  shadow: string;
+  bgSubtle: string;
+  bgHover: string;
+  bgActive: string;
+}
+
+export interface AccentColors {
+  blue: AccentColorSet;
+  red: AccentColorSet;
+  orange: AccentColorSet;
+  yellow: AccentColorSet;
+  green: AccentColorSet;
+  purple: AccentColorSet;
+}
 
 const IOS_SYSTEM_COLORS = {
   white: 'rgb(255, 255, 255)',
@@ -72,4 +97,40 @@ const ANDROID_COLORS = {
 
 const COLORS = Platform.OS === 'ios' ? IOS_SYSTEM_COLORS : ANDROID_COLORS;
 
-export { COLORS };
+export const BaseAccentColors = {
+  blue: 'rgb(0,0,255)',
+  red: 'rgb(255,0,0)',
+  orange: 'rgb(255,140,0)',
+  yellow: 'rgb(255,215,0)',
+  green: 'rgb(40,167,69)',
+  purple: 'rgb(37, 13, 62)',
+};
+
+const AccentColors = {
+  blue: generateAccentSet(BaseAccentColors.blue),
+  red: generateAccentSet(BaseAccentColors.red),
+  orange: generateAccentSet(BaseAccentColors.orange),
+  yellow: generateAccentSet(BaseAccentColors.yellow),
+  green: generateAccentSet(BaseAccentColors.green),
+  purple: generateAccentSet(BaseAccentColors.purple),
+};
+
+function generateAccentSet(baseColor: string): AccentColorSet {
+  const color = new Color(baseColor);
+  return {
+    base: baseColor,
+    hover: color.lighten(0.1).hex(),
+    active: color.darken(0.1).hex(),
+    disabled: color.alpha(0.5).hex(),
+    textOnAccent: color.lighten(0.5).hex(),
+    textMuted: color.lighten(0.3).hex(),
+    border: color.lighten(0.15).hex(),
+    focus: color.lighten(0.2).hex(),
+    shadow: color.darken(0.2).hex(),
+    bgSubtle: color.lighten(0.05).hex(),
+    bgHover: color.lighten(0.1).hex(),
+    bgActive: color.darken(0.15).hex(),
+  };
+}
+
+export { COLORS, AccentColors };

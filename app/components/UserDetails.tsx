@@ -9,7 +9,7 @@ import { useColorScheme } from '~/lib/useColorScheme';
 
 // Component that displays user details fetched via TanStack Query.
 const UserDetails = () => {
-  const { colors, isDarkColorScheme } = useColorScheme();
+  const { colors, isDarkColorScheme, accentSet } = useColorScheme();
   // Access the userId from our zustand‑x store.
   const userId = useUserStore((state) => state.userId);
 
@@ -20,7 +20,7 @@ const UserDetails = () => {
   });
 
   return (
-    <View style={[styles.section, cardStyle(isDarkColorScheme, colors)]}>
+    <View style={[styles.section, cardStyle(isDarkColorScheme, colors, accentSet)]}>
       <Text style={[styles.header, textColor(isDarkColorScheme)]}>
         User Details for ID: {userId}
       </Text>
@@ -29,7 +29,7 @@ const UserDetails = () => {
         <Text style={styles.errorText}>{'Error fetching user data: ' + error?.message}</Text>
       )}
       {data && (
-        <View style={subCardStyle(isDarkColorScheme)}>
+        <View style={subCardStyle(isDarkColorScheme, accentSet)}>
           <Text style={[styles.userText, textColor(isDarkColorScheme)]}>Name: {data.name}</Text>
           <Text style={[styles.userText, textColor(isDarkColorScheme)]}>Email: {data.email}</Text>
         </View>

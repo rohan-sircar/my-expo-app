@@ -1,5 +1,6 @@
-// import { StyleSheet } from 'react-native';
-export function cardStyle(isDarkColorScheme: boolean, colors: any) {
+import { AccentColorSet } from '~/theme/colors';
+
+export function cardStyle(isDarkColorScheme: boolean, colors: any, accentSet: AccentColorSet) {
   return {
     padding: 16,
     borderRadius: 8,
@@ -12,7 +13,7 @@ export function cardStyle(isDarkColorScheme: boolean, colors: any) {
   };
 }
 
-export function subCardStyle(isDarkColorScheme: boolean) {
+export function subCardStyle(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
   return {
     marginTop: 16,
     backgroundColor: isDarkColorScheme ? '#1e293b' : '#f8fafc',
@@ -23,12 +24,16 @@ export function subCardStyle(isDarkColorScheme: boolean) {
   };
 }
 
-export function inputStyle() {
+export function inputStyle(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
   return {
-    height: 40,
-    marginBottom: 12,
+    height: 48, // h-12
+    borderRadius: 8, // rounded-lg
     borderWidth: 1,
-    paddingHorizontal: 8,
+    paddingHorizontal: 16, // px-4
+    fontSize: 16, // text-base
+    borderColor: isDarkColorScheme ? accentSet.border : '#e2e8f0', // border-zinc-700 or border-gray-200 with accent
+    backgroundColor: isDarkColorScheme ? '#27272a' : '#ffffff', // bg-zinc-800 or bg-white
+    color: isDarkColorScheme ? '#f4f4f5' : '#27272a', // text-zinc-100 or text-zinc-800
   };
 }
 
@@ -38,32 +43,44 @@ export function textColor(isDarkColorScheme: boolean) {
   };
 }
 
-export function getHeadingTextColor(isDarkColorScheme: boolean) {
+export function formButton(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
+  return {
+    backgroundColor: accentSet.base,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    justifyContent: 'center' as const,
+  };
+}
+
+export function formButtonText(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
+  return {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold' as const,
+  };
+}
+
+export function getHeadingTextColor(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
   return isDarkColorScheme ? 'text-zinc-100' : 'text-zinc-800';
 }
 
-export function getInputStyles(isDarkColorScheme: boolean) {
-  return `h-12 rounded-lg border px-4 text-base ${
-    isDarkColorScheme
-      ? 'border-zinc-700 bg-zinc-800 text-zinc-100'
-      : 'border-gray-200 bg-white text-zinc-800'
-  }`;
-}
-
-export function getSecondaryTextColor(isDarkColorScheme: boolean) {
+export function getSecondaryTextColor(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
   return isDarkColorScheme ? 'text-zinc-400' : 'text-zinc-500';
 }
 
-export function getDividerColor(isDarkColorScheme: boolean) {
+export function getDividerColor(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
   return isDarkColorScheme ? 'bg-zinc-700' : 'bg-gray-200';
 }
 
-export function getSocialButtonStyles(isDarkColorScheme: boolean) {
+export function getSocialButtonStyles(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
   return `h-12 w-full flex-row items-center justify-center rounded-lg border ${
-    isDarkColorScheme ? 'border-zinc-700 bg-zinc-800' : 'border-gray-200 bg-white'
+    isDarkColorScheme
+      ? `border-${accentSet.border} bg-${accentSet.bgSubtle}`
+      : `border-gray-200 bg-white`
   }`;
 }
 
-export function getPlaceholderColor(isDarkColorScheme: boolean) {
+export function getPlaceholderColor(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
   return isDarkColorScheme ? '#71717a' : '#9ca3af';
 }

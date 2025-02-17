@@ -1,26 +1,40 @@
 import React from 'react';
-import { Button, View } from 'react-native';
+import { View } from 'react-native';
 import { useUserStore } from '../stores/UserStore';
 import { Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { cardStyle, textColor } from '../styles/Styles';
 import { useColorScheme } from '~/lib/useColorScheme';
+import { Button } from '~/components/nativewindui/Button';
+import * as Style from '../styles/Styles';
 
 // --- Component to manage the counter using zustand ---
 const CounterControls = () => {
-  const { colors, isDarkColorScheme } = useColorScheme();
+  const { colors, isDarkColorScheme, accentSet } = useColorScheme();
   const userId = useUserStore((state) => state.userId);
   const increment = useUserStore((state) => state.increment);
   const decrement = useUserStore((state) => state.decrement);
 
   return (
-    <View style={[styles.section, cardStyle(isDarkColorScheme, colors)]}>
+    <View style={[styles.section, cardStyle(isDarkColorScheme, colors, accentSet)]}>
       <Text style={[styles.header, textColor(isDarkColorScheme)]}>Manage User ID</Text>
       <Text style={[styles.counter, textColor(isDarkColorScheme)]}>Current User ID: {userId}</Text>
       <View style={styles.buttonContainer}>
-        <Button title="Decrement" onPress={decrement} />
+        {/* <Button title="Decrement" onPress={decrement} /> */}
+        <Button
+          className="h-12"
+          style={Style.formButton(isDarkColorScheme, accentSet)}
+          onPress={decrement}>
+          <Text style={Style.formButtonText(isDarkColorScheme, accentSet)}>Decrement</Text>
+        </Button>
         <View style={styles.buttonSpacer} />
-        <Button title="Increment" onPress={increment} />
+        {/* <Button title="Increment" onPress={increment} /> */}
+        <Button
+          className="h-12"
+          style={Style.formButton(isDarkColorScheme, accentSet)}
+          onPress={increment}>
+          <Text style={Style.formButtonText(isDarkColorScheme, accentSet)}>Increment</Text>
+        </Button>
       </View>
     </View>
   );
