@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { View, TextInput, Text } from 'react-native';
 import { useUserStore } from '../stores/UserStore';
 import { useColorScheme } from '~/lib/useColorScheme';
-import { cardStyle, inputStyle } from '../styles/Styles';
 import { Button } from '~/components/nativewindui/Button';
 import * as Style from '../styles/Styles';
+import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 
 const FetchUserDetails = () => {
-  const { colors, isDarkColorScheme, accentSet } = useColorScheme();
+  const { colors, isDarkColorScheme } = useColorScheme();
+  const { accentColor } = useAccentColor();
+  const accentSet = getAccentSet(accentColor);
   // local state to hold the text input value
   const [inputValue, setInputValue] = useState('');
   //   const setUserId = useUserStore((state) => state.setUserId);
@@ -31,7 +33,7 @@ const FetchUserDetails = () => {
   };
 
   return (
-    <View className="mb-6 gap-4" style={cardStyle(isDarkColorScheme, colors, accentSet)}>
+    <View className="mb-6 gap-4" style={Style.cardStyle(isDarkColorScheme, colors, accentSet)}>
       <TextInput
         keyboardType="numeric"
         placeholder="Enter User ID"

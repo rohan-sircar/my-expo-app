@@ -6,10 +6,13 @@ import { StyleSheet } from 'react-native';
 import { Text } from 'react-native';
 import { cardStyle, subCardStyle, textColor } from '../styles/Styles';
 import { useColorScheme } from '~/lib/useColorScheme';
+import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 
 // Component that displays user details fetched via TanStack Query.
 const UserDetails = () => {
-  const { colors, isDarkColorScheme, accentSet } = useColorScheme();
+  const { colors, isDarkColorScheme } = useColorScheme();
+  const { accentColor } = useAccentColor();
+  const accentSet = getAccentSet(accentColor);
   // Access the userId from our zustand‑x store.
   const userId = useUserStore((state) => state.userId);
 

@@ -1,47 +1,44 @@
-import { useState, useEffect } from 'react';
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AccentColors, AccentColorSet } from '~/theme/colors';
+import { AccentColors } from '~/theme/colors';
 
-interface AccentColorHook {
-  accentColor: keyof typeof AccentColors;
-  accentSet: AccentColorSet;
-  setAccentColor: (color: keyof typeof AccentColors) => void;
+export enum AccentColorType {
+  BLUE = 'blue',
+  GREEN = 'green',
+  ORANGE = 'orange',
+  PURPLE = 'purple',
+  RED = 'red',
+  YELLOW = 'yellow',
 }
 
-const ACCENT_KEY = 'userAccentColor';
+export const accentColorTypeKeys: AccentColorType[] = Object.values(
+  AccentColorType
+) as AccentColorType[];
 
-function useAccentColor(): AccentColorHook {
-  const [accentColor, setAccentColor] = useState<keyof typeof AccentColors>('blue');
+export const ACCENT_KEY = 'ACCENT_COLOR';
 
-  useEffect(() => {
-    const loadAccentColor = async () => {
-      try {
-        const storedColor = await AsyncStorage.getItem(ACCENT_KEY);
-        if (storedColor && Object.keys(AccentColors).includes(storedColor)) {
-          setAccentColor(storedColor as keyof typeof AccentColors);
-        }
-      } catch (error) {
-        console.error('Error loading accent color:', error);
-      }
-    };
+interface AccentColorState {
+  readonly accentColor: AccentColorType;
+  setAccentColor: (color: AccentColorType) => void;
+}
 
-    loadAccentColor();
-  }, []);
-
-  const saveAccentColor = async (color: keyof typeof AccentColors) => {
-    try {
-      await AsyncStorage.setItem(ACCENT_KEY, color);
-      setAccentColor(color);
-    } catch (error) {
-      console.error('Error saving accent color:', error);
+export const useAccentColor = create<AccentColorState>()(
+  persist(
+    (set) => ({
+      accentColor: AccentColorType.BLUE,
+      setAccentColor: (color: AccentColorType) => {
+        set({ accentColor: color });
+      },
+    }),
+    {
+      name: ACCENT_KEY,
+      storage: createJSONStorage(() => AsyncStorage),
     }
-  };
+  )
+);
 
-  return {
-    accentColor,
-    accentSet: AccentColors[accentColor],
-    setAccentColor: saveAccentColor,
-  };
-}
-
-export { useAccentColor };
+// Helper function to get an accent color set.
+export const getAccentSet = (color: AccentColorType) => {
+  return AccentColors.get(color)!;
+};

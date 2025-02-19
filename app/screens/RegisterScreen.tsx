@@ -2,11 +2,13 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Button } from '~/components/nativewindui/Button';
 import { useColorScheme } from '~/lib/useColorScheme';
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import * as Style from '../styles/Styles';
+import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 
 const RegisterScreen = () => {
-  const { colors, isDarkColorScheme, accentSet } = useColorScheme();
+  const { colors, isDarkColorScheme } = useColorScheme();
+  const { accentColor } = useAccentColor();
+  const accentSet = getAccentSet(accentColor);
 
   return (
     <View className="flex-1 items-center justify-center px-4">
@@ -21,11 +23,6 @@ const RegisterScreen = () => {
             Create a new account
           </Text>
         </View>
-
-        {/* ${
-              isDarkColorScheme
-                ? 'border-zinc-700 bg-zinc-800 text-zinc-100'
-                : 'border-gray-200 bg-white text-zinc-800' */}
         <View className="mb-6 gap-4">
           <TextInput
             placeholder="Email"

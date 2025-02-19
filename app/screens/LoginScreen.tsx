@@ -5,9 +5,12 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import * as Style from '../styles/Styles';
 import { useUserStore } from '../stores/UserStore';
+import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 
 const LoginScreen = () => {
-  const { colors, isDarkColorScheme, accentSet } = useColorScheme();
+  const { colors, isDarkColorScheme } = useColorScheme();
+  const { accentColor } = useAccentColor();
+  const accentSet = getAccentSet(accentColor);
 
   return (
     <View className={`flex-1 items-center justify-center px-4`}>
@@ -83,20 +86,5 @@ const LoginScreen = () => {
     </View>
   );
 };
-
-// const styles = StyleSheet.create({
-//   blueButton: {
-//     backgroundColor: 'blue',
-//     paddingVertical: 16,
-//     paddingHorizontal: 24,
-//     borderRadius: 8,
-//     justifyContent: 'center',
-//   },
-//   buttonText: {
-//     color: 'white',
-//     fontSize: 16,
-//     fontWeight: 'bold',
-//   },
-// });
 
 export default LoginScreen;

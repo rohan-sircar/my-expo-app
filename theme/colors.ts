@@ -1,29 +1,7 @@
 import { Platform } from 'react-native';
 import Color from 'color';
-
-export interface AccentColorSet {
-  base: string;
-  hover: string;
-  active: string;
-  disabled: string;
-  textOnAccent: string;
-  textMuted: string;
-  border: string;
-  focus: string;
-  shadow: string;
-  bgSubtle: string;
-  bgHover: string;
-  bgActive: string;
-}
-
-export interface AccentColors {
-  blue: AccentColorSet;
-  red: AccentColorSet;
-  orange: AccentColorSet;
-  yellow: AccentColorSet;
-  green: AccentColorSet;
-  purple: AccentColorSet;
-}
+import { AccentColorType } from '~/lib/useAccentColor';
+import { Map as ImmutableMap } from 'immutable';
 
 const IOS_SYSTEM_COLORS = {
   white: 'rgb(255, 255, 255)',
@@ -97,6 +75,21 @@ const ANDROID_COLORS = {
 
 const COLORS = Platform.OS === 'ios' ? IOS_SYSTEM_COLORS : ANDROID_COLORS;
 
+export interface AccentColorSet {
+  readonly base: string;
+  readonly hover: string;
+  readonly active: string;
+  readonly disabled: string;
+  readonly textOnAccent: string;
+  readonly textMuted: string;
+  readonly border: string;
+  readonly focus: string;
+  readonly shadow: string;
+  readonly bgSubtle: string;
+  readonly bgHover: string;
+  readonly bgActive: string;
+}
+
 export const BaseAccentColors = {
   blue: 'rgb(0,0,255)',
   red: 'rgb(255,0,0)',
@@ -106,14 +99,14 @@ export const BaseAccentColors = {
   purple: 'rgb(37, 13, 62)',
 };
 
-const AccentColors = {
-  blue: generateAccentSet(BaseAccentColors.blue),
-  red: generateAccentSet(BaseAccentColors.red),
-  orange: generateAccentSet(BaseAccentColors.orange),
-  yellow: generateAccentSet(BaseAccentColors.yellow),
-  green: generateAccentSet(BaseAccentColors.green),
-  purple: generateAccentSet(BaseAccentColors.purple),
-};
+const AccentColors = ImmutableMap<AccentColorType, AccentColorSet>([
+  [AccentColorType.BLUE, generateAccentSet(BaseAccentColors.blue)],
+  [AccentColorType.RED, generateAccentSet(BaseAccentColors.red)],
+  [AccentColorType.ORANGE, generateAccentSet(BaseAccentColors.orange)],
+  [AccentColorType.YELLOW, generateAccentSet(BaseAccentColors.yellow)],
+  [AccentColorType.GREEN, generateAccentSet(BaseAccentColors.green)],
+  [AccentColorType.PURPLE, generateAccentSet(BaseAccentColors.purple)],
+]);
 
 function generateAccentSet(baseColor: string): AccentColorSet {
   const color = new Color(baseColor);

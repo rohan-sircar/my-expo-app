@@ -26,12 +26,8 @@ export function subCardStyle(isDarkColorScheme: boolean, accentSet: AccentColorS
 
 export function inputStyle(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
   return {
-    height: 48, // h-12
-    borderRadius: 8, // rounded-lg
     borderWidth: 1,
-    paddingHorizontal: 16, // px-4
-    fontSize: 16, // text-base
-    borderColor: isDarkColorScheme ? accentSet.border : '#e2e8f0', // border-zinc-700 or border-gray-200 with accent
+    borderColor: accentSet.border, // border-zinc-700 or border-gray-200 with accent
     backgroundColor: isDarkColorScheme ? '#27272a' : '#ffffff', // bg-zinc-800 or bg-white
     color: isDarkColorScheme ? '#f4f4f5' : '#27272a', // text-zinc-100 or text-zinc-800
   };

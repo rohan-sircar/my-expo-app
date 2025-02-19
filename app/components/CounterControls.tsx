@@ -7,10 +7,16 @@ import { cardStyle, textColor } from '../styles/Styles';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { Button } from '~/components/nativewindui/Button';
 import * as Style from '../styles/Styles';
+import { accentColorTypeKeys, getAccentSet, useAccentColor } from '~/lib/useAccentColor';
+import AccentColorButton from '~/components/AccentColorButton';
+import { BaseAccentColors } from '~/theme/colors';
+import { AccentColorType } from '~/lib/useAccentColor';
 
 // --- Component to manage the counter using zustand ---
 const CounterControls = () => {
-  const { colors, isDarkColorScheme, accentSet } = useColorScheme();
+  const { colors, isDarkColorScheme } = useColorScheme();
+  const { accentColor } = useAccentColor();
+  const accentSet = getAccentSet(accentColor);
   const userId = useUserStore((state) => state.userId);
   const increment = useUserStore((state) => state.increment);
   const decrement = useUserStore((state) => state.decrement);
@@ -35,6 +41,12 @@ const CounterControls = () => {
           onPress={increment}>
           <Text style={Style.formButtonText(isDarkColorScheme, accentSet)}>Increment</Text>
         </Button>
+        {/* <AccentColorButton color="blue" /> */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          {accentColorTypeKeys.map((colorKey) => (
+            <AccentColorButton key={colorKey} color={colorKey} />
+          ))}
+        </View>
       </View>
     </View>
   );
