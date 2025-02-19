@@ -1,6 +1,5 @@
 import { Platform } from 'react-native';
 import Color from 'color';
-import { AccentColorType } from '~/lib/useAccentColor';
 import { Map as ImmutableMap } from 'immutable';
 
 const IOS_SYSTEM_COLORS = {
@@ -88,6 +87,15 @@ export interface AccentColorSet {
   readonly bgSubtle: string;
   readonly bgHover: string;
   readonly bgActive: string;
+}
+
+export enum AccentColorType {
+  BLUE = 'blue',
+  GREEN = 'green',
+  ORANGE = 'orange',
+  PURPLE = 'purple',
+  RED = 'red',
+  YELLOW = 'yellow',
 }
 
 export const BaseAccentColors = {

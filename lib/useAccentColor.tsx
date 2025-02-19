@@ -1,16 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AccentColors } from '~/theme/colors';
-
-export enum AccentColorType {
-  BLUE = 'blue',
-  GREEN = 'green',
-  ORANGE = 'orange',
-  PURPLE = 'purple',
-  RED = 'red',
-  YELLOW = 'yellow',
-}
+import { AccentColors, AccentColorType } from '~/theme/colors';
 
 export const accentColorTypeKeys: AccentColorType[] = Object.values(
   AccentColorType
