@@ -30,6 +30,7 @@ import { useUserStore } from './stores/UserStore';
 import { LogoutButton } from '~/components/LogoutButton';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import * as Style from './styles/Styles';
+import { TabButton } from '~/components/TabButton';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -47,6 +48,14 @@ function HomeTabs() {
         tabBarStyle: {
           backgroundColor: colors.background,
         },
+        tabBarButton: (props) => (
+          <TabButton
+            active={props.accessibilityState?.selected}
+            onPress={props.onPress}
+            style={props.style}>
+            {props.children}
+          </TabButton>
+        ),
       }}>
       <Tab.Screen
         name="Home"
@@ -114,6 +123,7 @@ export default function RootLayout() {
   useInitialAndroidBarSync();
   const { colorScheme, isDarkColorScheme, colors } = useColorScheme();
   const queryClient = new QueryClient();
+  const { userId, loggedIn } = useUserStore();
 
   return (
     <>
@@ -137,9 +147,8 @@ export default function RootLayout() {
                           headerRight: () => (
                             <View className="flex flex-row items-center gap-3 pr-2">
                               <ThemeToggle />
-                              <SettingsIcon />
-                              {/* Placeholder for third button - add icon component here later */}
-                              <View className="h-8 w-8 rounded-full bg-gray-300/20" />
+                              {loggedIn && <SettingsIcon />}
+                              {loggedIn && <LogoutButton />}
                             </View>
                           ),
                         }}

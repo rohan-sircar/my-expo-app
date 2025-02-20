@@ -89,3 +89,27 @@
     }
   }
 }
+
+@layer utilities {
+  .web-ripple {
+    @apply relative overflow-hidden;
+  }
+
+  .web-ripple-element {
+    @apply pointer-events-none absolute block rounded-[50%];
+    position: absolute;
+    animation: ripple-effect 600ms linear forwards;
+    z-index: 0;
+  }
+
+  @keyframes ripple-effect {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(4);
+      opacity: 0;
+    }
+  }
+}

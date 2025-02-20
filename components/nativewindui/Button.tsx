@@ -6,9 +6,10 @@ import { Platform, Pressable, PressableProps, View, ViewStyle } from 'react-nati
 import { TextClassContext } from '~/components/nativewindui/Text';
 import { cn } from '~/lib/cn';
 import { useColorScheme } from '~/lib/useColorScheme';
+import { useWebRipple } from '~/lib/useWebRipple';
 import { COLORS } from '~/theme/colors';
 
-const buttonVariants = cva('flex-row items-center justify-center gap-2', {
+const buttonVariants = cva('flex-row items-center justify-center gap-2 web:web-ripple', {
   variants: {
     variant: {
       primary: 'ios:active:opacity-80 bg-primary',
@@ -123,6 +124,7 @@ const Button = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonProps>
     ref
   ) => {
     const { colorScheme } = useColorScheme();
+    const webRippleProps = useWebRipple();
 
     return (
       <TextClassContext.Provider value={buttonTextVariants({ variant, size })}>
@@ -142,6 +144,7 @@ const Button = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonProps>
             ref={ref}
             style={style}
             android_ripple={ANDROID_RIPPLE[colorScheme][variant]}
+            {...webRippleProps}
             {...props}
           />
         </Root>
