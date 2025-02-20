@@ -43,7 +43,7 @@ function HomeTabs() {
     <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: colors.text,
-        tabBarActiveBackgroundColor: accentSet.bgSubtle,
+        tabBarActiveBackgroundColor: accentSet.bgNavTab,
         tabBarStyle: {
           backgroundColor: colors.background,
         },

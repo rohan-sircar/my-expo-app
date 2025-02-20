@@ -38,7 +38,7 @@ const IOS_SYSTEM_COLORS = {
     card: 'rgb(255, 255, 255)',
     destructive: 'rgb(255, 56, 43)',
     primary: 'rgb(0, 123, 254)',
-    text: '#333',
+    text: 'rgb(51, 51, 51)',
   },
   dark: {
     grey6: 'rgb(21, 21, 24)',
@@ -53,7 +53,7 @@ const IOS_SYSTEM_COLORS = {
     card: 'rgb(28, 28, 30)',
     destructive: 'rgb(254, 67, 54)',
     primary: 'rgb(3, 133, 255)',
-    text: '#E4E4E7',
+    text: 'rgb(228, 228, 231)',
   },
 };
 
@@ -73,7 +73,7 @@ const ANDROID_COLORS = {
     card: 'rgb(255, 255, 255)',
     destructive: 'rgb(186, 26, 26)',
     primary: 'rgb(0, 112, 233)',
-    text: '#333',
+    text: 'rgb(51, 51, 51)',
   },
   dark: {
     grey6: 'rgb(16, 19, 27)',
@@ -88,7 +88,7 @@ const ANDROID_COLORS = {
     card: 'rgb(16, 19, 27)',
     destructive: 'rgb(147, 0, 10)',
     primary: 'rgb(3, 133, 255)',
-    text: '#E4E4E7',
+    text: 'rgb(228, 228, 231)',
   },
 };
 
@@ -109,6 +109,7 @@ export type AccentColorSet = {
   readonly bgActive: string;
   readonly iconActive: string;
   readonly iconMuted: string;
+  readonly bgNavTab: string;
 };
 
 export enum AccentColorType {
@@ -149,10 +150,11 @@ function generateAccentSet(baseColor: string): AccentColorSet {
     focus: color.lighten(0.2).hex(),
     shadow: color.darken(0.2).hex(),
     bgSubtle: color.lighten(0.05).hex(),
-    bgHover: color.lighten(0.1).hex(),
+    bgHover: color.lighten(0.4).hex(),
     bgActive: color.darken(0.15).hex(),
     iconActive: color.lighten(0.1).hex(),
     iconMuted: color.lighten(0.5).alpha(0.5).hex(),
+    bgNavTab: color.lighten(0.4).hex(),
   };
 }
 
