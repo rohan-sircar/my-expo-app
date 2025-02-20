@@ -124,7 +124,7 @@ export const BaseAccentColors = {
   blue: 'rgb(0,0,255)',
   red: 'rgb(255,0,0)',
   orange: 'rgb(255,140,0)',
-  yellow: 'rgb(255,215,0)',
+  yellow: 'rgb(217, 183, 0)',
   green: 'rgb(40,167,69)',
   purple: 'rgb(37, 13, 62)',
 };
