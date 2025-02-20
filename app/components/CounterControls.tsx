@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { useUserStore } from '../stores/UserStore';
 import { Text } from 'react-native';
 import { StyleSheet } from 'react-native';
-import { cardStyle, textColor } from '../styles/Styles';
+import { cardStyle } from '../styles/Styles';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { Button } from '~/components/nativewindui/Button';
 import * as Style from '../styles/Styles';
@@ -21,8 +21,8 @@ const CounterControls = () => {
 
   return (
     <View style={[styles.section, cardStyle(isDarkColorScheme, colors, accentSet)]}>
-      <Text style={[styles.header, textColor(isDarkColorScheme)]}>Manage User ID</Text>
-      <Text style={[styles.counter, textColor(isDarkColorScheme)]}>Current User ID: {userId}</Text>
+      <Text style={[styles.header, { color: colors.text }]}>Manage User ID</Text>
+      <Text style={[styles.counter, { color: colors.text }]}>Current User ID: {userId}</Text>
       <View style={styles.buttonContainer}>
         <Button
           className="h-12"

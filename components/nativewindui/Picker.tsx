@@ -3,6 +3,7 @@ import { View } from 'react-native';
 
 import { cn } from '~/lib/cn';
 import { useColorScheme } from '~/lib/useColorScheme';
+import React from 'react';
 
 export function Picker<T>({
   mode = 'dropdown',

@@ -42,7 +42,7 @@ function HomeTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: Style.textColor(isDarkColorScheme).color,
+        tabBarActiveTintColor: colors.text,
         tabBarActiveBackgroundColor: accentSet.bgSubtle,
         tabBarStyle: {
           backgroundColor: colors.background,
@@ -59,7 +59,7 @@ function HomeTabs() {
               {loggedIn && <LogoutButton />}
             </View>
           ),
-          tabBarIcon: () => <Icon name="home" color={Style.textColor(isDarkColorScheme).color} />,
+          tabBarIcon: () => <Icon name="home" color={colors.text} />,
         }}
       />
       {loggedIn ? (
@@ -69,9 +69,7 @@ function HomeTabs() {
           options={{
             title: 'Profile',
             headerRight: () => <ThemeToggle />,
-            tabBarIcon: () => (
-              <Icon name="person" color={Style.textColor(isDarkColorScheme).color} />
-            ),
+            tabBarIcon: () => <Icon name="person" color={colors.text} />,
           }}
           initialParams={{ userId: userId }}
         />
@@ -83,11 +81,7 @@ function HomeTabs() {
             options={{
               headerRight: () => <ThemeToggle />,
               tabBarIcon: () => (
-                <FontAwesome
-                  name="sign-in"
-                  style={{ fontSize: 24 }}
-                  color={Style.textColor(isDarkColorScheme).color}
-                />
+                <FontAwesome name="sign-in" style={{ fontSize: 24 }} color={colors.text} />
               ),
             }}
           />
@@ -97,11 +91,7 @@ function HomeTabs() {
             options={{
               headerRight: () => <ThemeToggle />,
               tabBarIcon: () => (
-                <FontAwesome
-                  name="check-circle"
-                  style={{ fontSize: 24 }}
-                  color={Style.textColor(isDarkColorScheme).color}
-                />
+                <FontAwesome name="check-circle" style={{ fontSize: 24 }} color={colors.text} />
               ),
             }}
           />
@@ -113,7 +103,7 @@ function HomeTabs() {
         component={ControlsScreen}
         options={{
           headerRight: () => <ThemeToggle />,
-          tabBarIcon: () => <Icon name="cog" color={Style.textColor(isDarkColorScheme).color} />,
+          tabBarIcon: () => <Icon name="cog" color={colors.text} />,
         }}
       />
     </Tab.Navigator>

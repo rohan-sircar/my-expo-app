@@ -1,6 +1,10 @@
-import { AccentColorSet } from '~/theme/colors';
+import { AccentColorSet, SystemColors } from '~/theme/colors';
 
-export function cardStyle(isDarkColorScheme: boolean, colors: any, accentSet: AccentColorSet) {
+export function cardStyle(
+  isDarkColorScheme: boolean,
+  colors: SystemColors,
+  accentSet: AccentColorSet
+) {
   return {
     padding: 16,
     borderRadius: 8,
@@ -30,12 +34,6 @@ export function inputStyle(isDarkColorScheme: boolean, accentSet: AccentColorSet
     borderColor: accentSet.border, // border-zinc-700 or border-gray-200 with accent
     backgroundColor: isDarkColorScheme ? '#27272a' : '#ffffff', // bg-zinc-800 or bg-white
     color: isDarkColorScheme ? '#f4f4f5' : '#27272a', // text-zinc-100 or text-zinc-800
-  };
-}
-
-export function textColor(isDarkColorScheme: boolean) {
-  return {
-    color: isDarkColorScheme ? '#E4E4E7' : '#333',
   };
 }
 

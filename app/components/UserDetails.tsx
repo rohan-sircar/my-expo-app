@@ -4,7 +4,7 @@ import { ActivityIndicator, View } from 'react-native';
 import { ApiUser, fetchUser, useUserStore } from '../stores/UserStore';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native';
-import { cardStyle, subCardStyle, textColor } from '../styles/Styles';
+import { cardStyle, subCardStyle } from '../styles/Styles';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 
@@ -24,17 +24,15 @@ const UserDetails = () => {
 
   return (
     <View style={[styles.section, cardStyle(isDarkColorScheme, colors, accentSet)]}>
-      <Text style={[styles.header, textColor(isDarkColorScheme)]}>
-        User Details for ID: {userId}
-      </Text>
+      <Text style={[styles.header, { color: colors.text }]}>User Details for ID: {userId}</Text>
       {isLoading && <ActivityIndicator size="large" color={colors.primary} />}
       {isError && (
         <Text style={styles.errorText}>{'Error fetching user data: ' + error?.message}</Text>
       )}
       {data && (
         <View style={subCardStyle(isDarkColorScheme, accentSet)}>
-          <Text style={[styles.userText, textColor(isDarkColorScheme)]}>Name: {data.name}</Text>
-          <Text style={[styles.userText, textColor(isDarkColorScheme)]}>Email: {data.email}</Text>
+          <Text style={[styles.userText, { color: colors.text }]}>Name: {data.name}</Text>
+          <Text style={[styles.userText, { color: colors.text }]}>Email: {data.email}</Text>
         </View>
       )}
     </View>

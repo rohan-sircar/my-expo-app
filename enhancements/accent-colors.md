@@ -193,7 +193,7 @@ Updates needed in Styles.tsx:
 - [x] Update Button.tsx (all variants)
 - [x] Update nativewindui/Button.tsx
 - [x] Add form input handling (Login/Register screens)
-- [ ] app/\_layout.tsx (Navigation container styling)
+- [x ] app/\_layout.tsx (Navigation container styling)
 - [ ] Update TabBarIcon.tsx (navigation indicators)
 - [ ] Implement ProgressIndicator.tsx accents
 - [ ] Add Slider.tsx color handling

@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 
 import { useColorScheme } from '~/lib/useColorScheme';
 import { COLORS } from '~/theme/colors';
+import React from 'react';
 
 function Slider({
   thumbTintColor,

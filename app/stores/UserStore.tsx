@@ -6,13 +6,13 @@ export interface ApiUser {
   readonly email: string;
 }
 
-export interface UserStore {
-  userId: number;
-  loggedIn: boolean;
+export type UserStore = {
+  readonly userId: number;
+  readonly loggedIn: boolean;
   setUserId: (newUserId: number) => void;
   increment: () => void;
   decrement: () => void;
-}
+};
 
 // --- Setup zustand for local state (counter representing userId) ---
 export const useUserStore = create<UserStore>((set, get) => ({

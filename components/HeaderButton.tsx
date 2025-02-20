@@ -1,4 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import React from 'react';
 import { forwardRef } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 

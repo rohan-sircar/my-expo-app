@@ -21,7 +21,7 @@ export default function ProfileScreen() {
   const route = useRoute<RouteProp<{ ProfileRoute: ProfileRouteParams }, 'ProfileRoute'>>();
 
   const { userId } = route.params;
-  const { isDarkColorScheme } = useColorScheme();
+  const { colors, isDarkColorScheme } = useColorScheme();
 
   const userIdNumber = parseInt(userId, 10);
   const userPosts = POSTS.filter((post: Post) => post.userId === userIdNumber);
@@ -37,10 +37,10 @@ export default function ProfileScreen() {
         <View className="mb-1 flex-row items-center">
           <Avatar userId={userIdNumber} style={styles.avatarContainer} size={64} />
           <View>
-            <Text className="mb-1 text-lg font-semibold" style={Style.textColor(isDarkColorScheme)}>
+            <Text className="mb-1 text-lg font-semibold" style={{ color: colors.text }}>
               {user.name}
             </Text>
-            <Text style={Style.textColor(isDarkColorScheme)}>@{user.handle}</Text>
+            <Text style={{ color: colors.text }}>@{user.handle}</Text>
           </View>
         </View>
 
@@ -53,7 +53,7 @@ export default function ProfileScreen() {
           </Pressable>
         </View>
 
-        <Text className="mb-2 font-medium" style={Style.textColor(isDarkColorScheme)}>
+        <Text className="mb-2 font-medium" style={{ color: colors.text }}>
           About me
         </Text>
         <Text className="pr-3 text-gray-500">{user.about}</Text>
@@ -65,7 +65,7 @@ export default function ProfileScreen() {
         </View>
 
         <View className="flex-row justify-between border-b border-gray-200 px-4 py-4 dark:border-gray-700">
-          <Text className="self-center font-medium" style={Style.textColor(isDarkColorScheme)}>
+          <Text className="self-center font-medium" style={{ color: colors.text }}>
             Posts
           </Text>
           <View className="flex-row">
