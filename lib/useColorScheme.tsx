@@ -29,7 +29,7 @@ function useColorScheme(): ColorSchemeHook {
 
   const setColorScheme = (colorScheme: 'light' | 'dark') => {
     setNativeWindColorScheme(colorScheme);
-    if (Platform.OS !== 'android') {
+    if (Platform.OS === 'android') {
       setNavigationBar(colorScheme, accentSet);
     }
   };
