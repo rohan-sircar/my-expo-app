@@ -9,8 +9,6 @@ import { Button } from '~/components/nativewindui/Button';
 import * as Style from '../styles/Styles';
 import { accentColorTypeKeys, getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 import AccentColorButton from '~/components/AccentColorButton';
-import { BaseAccentColors } from '~/theme/colors';
-import { AccentColorType } from '~/lib/useAccentColor';
 
 // --- Component to manage the counter using zustand ---
 const CounterControls = () => {
@@ -26,7 +24,6 @@ const CounterControls = () => {
       <Text style={[styles.header, textColor(isDarkColorScheme)]}>Manage User ID</Text>
       <Text style={[styles.counter, textColor(isDarkColorScheme)]}>Current User ID: {userId}</Text>
       <View style={styles.buttonContainer}>
-        {/* <Button title="Decrement" onPress={decrement} /> */}
         <Button
           className="h-12"
           style={Style.formButton(isDarkColorScheme, accentSet)}
@@ -34,14 +31,12 @@ const CounterControls = () => {
           <Text style={Style.formButtonText(isDarkColorScheme, accentSet)}>Decrement</Text>
         </Button>
         <View style={styles.buttonSpacer} />
-        {/* <Button title="Increment" onPress={increment} /> */}
         <Button
           className="h-12"
           style={Style.formButton(isDarkColorScheme, accentSet)}
           onPress={increment}>
           <Text style={Style.formButtonText(isDarkColorScheme, accentSet)}>Increment</Text>
         </Button>
-        {/* <AccentColorButton color="blue" /> */}
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           {accentColorTypeKeys.map((colorKey) => (
             <AccentColorButton key={colorKey} color={colorKey} />

@@ -2,7 +2,7 @@ import React from 'react';
 import { Pressable, View } from 'react-native';
 import { useAccentColor } from '~/lib/useAccentColor';
 import { BaseAccentColors } from '~/theme/colors';
-import { AccentColorType } from '~/lib/useAccentColor';
+import { AccentColorType } from '~/theme/colors';
 
 interface AccentColorButtonProps {
   color: AccentColorType;

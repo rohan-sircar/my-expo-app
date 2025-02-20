@@ -16,6 +16,7 @@ import '../global.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ThemeToggle from '~/components/ThemeToggle';
 import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
+import { useAccentColor, getAccentSet } from '~/lib/useAccentColor';
 import { NAV_THEME } from '~/theme';
 import { RootStackParamList } from '~/types/navigation';
 
@@ -27,14 +28,26 @@ import RegisterScreen from './screens/RegisterScreen';
 import ControlsScreen from './screens/ControlsScreen';
 import { useUserStore } from './stores/UserStore';
 import { LogoutButton } from '~/components/LogoutButton';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import * as Style from './styles/Styles';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 function HomeTabs() {
   const { userId, loggedIn } = useUserStore();
+  const { colors, isDarkColorScheme } = useColorScheme();
+  const { accentColor } = useAccentColor();
+  const accentSet = getAccentSet(accentColor);
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: Style.textColor(isDarkColorScheme).color,
+        tabBarActiveBackgroundColor: accentSet.bgSubtle,
+        tabBarStyle: {
+          backgroundColor: colors.background,
+        },
+      }}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -43,11 +56,10 @@ function HomeTabs() {
             <View className="flex flex-row items-center gap-3 pr-2">
               <ThemeToggle />
               {loggedIn && <SettingsIcon />}
-              {/* Placeholder for third button - add icon component here later */}
-              {/* <View className="h-8 w-8 rounded-full bg-gray-300/20" /> */}
               {loggedIn && <LogoutButton />}
             </View>
           ),
+          tabBarIcon: () => <Icon name="home" color={Style.textColor(isDarkColorScheme).color} />,
         }}
       />
       {loggedIn ? (
@@ -57,6 +69,9 @@ function HomeTabs() {
           options={{
             title: 'Profile',
             headerRight: () => <ThemeToggle />,
+            tabBarIcon: () => (
+              <Icon name="person" color={Style.textColor(isDarkColorScheme).color} />
+            ),
           }}
           initialParams={{ userId: userId }}
         />
@@ -67,6 +82,13 @@ function HomeTabs() {
             component={LoginScreen}
             options={{
               headerRight: () => <ThemeToggle />,
+              tabBarIcon: () => (
+                <FontAwesome
+                  name="sign-in"
+                  style={{ fontSize: 24 }}
+                  color={Style.textColor(isDarkColorScheme).color}
+                />
+              ),
             }}
           />
           <Tab.Screen
@@ -74,6 +96,13 @@ function HomeTabs() {
             component={RegisterScreen}
             options={{
               headerRight: () => <ThemeToggle />,
+              tabBarIcon: () => (
+                <FontAwesome
+                  name="check-circle"
+                  style={{ fontSize: 24 }}
+                  color={Style.textColor(isDarkColorScheme).color}
+                />
+              ),
             }}
           />
         </Tab.Group>
@@ -84,6 +113,7 @@ function HomeTabs() {
         component={ControlsScreen}
         options={{
           headerRight: () => <ThemeToggle />,
+          tabBarIcon: () => <Icon name="cog" color={Style.textColor(isDarkColorScheme).color} />,
         }}
       />
     </Tab.Navigator>
@@ -126,13 +156,6 @@ export default function RootLayout() {
                         component={HomeTabs}
                       />
                     </Stack.Navigator>
-                    {/* screenOptions={{
-                        ...SCREEN_OPTIONS,
-                        headerStyle: {
-                          backgroundColor: colors.background,
-                        },
-                        headerTintColor: colors.foreground,
-                      }}> */}
                   </View>
                 </SafeAreaView>
               </QueryClientProvider>

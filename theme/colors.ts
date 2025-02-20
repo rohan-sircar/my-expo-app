@@ -2,6 +2,26 @@ import { Platform } from 'react-native';
 import Color from 'color';
 import { Map as ImmutableMap } from 'immutable';
 
+export type UIColorValue = string;
+
+export type SystemColors = {
+  // white: UIColorValue;
+  // black: UIColorValue;
+  readonly grey6: UIColorValue;
+  readonly grey5: UIColorValue;
+  readonly grey4: UIColorValue;
+  readonly grey3: UIColorValue;
+  readonly grey2: UIColorValue;
+  readonly grey: UIColorValue;
+  readonly background: UIColorValue;
+  readonly foreground: UIColorValue;
+  readonly root: UIColorValue;
+  readonly card: UIColorValue;
+  readonly destructive: UIColorValue;
+  readonly primary: UIColorValue;
+  readonly text: UIColorValue;
+};
+
 const IOS_SYSTEM_COLORS = {
   white: 'rgb(255, 255, 255)',
   black: 'rgb(0, 0, 0)',
@@ -35,7 +55,7 @@ const IOS_SYSTEM_COLORS = {
     primary: 'rgb(3, 133, 255)',
     text: '#333',
   },
-} as const;
+};
 
 const ANDROID_COLORS = {
   white: 'rgb(255, 255, 255)',
@@ -70,11 +90,11 @@ const ANDROID_COLORS = {
     primary: 'rgb(3, 133, 255)',
     text: '#333',
   },
-} as const;
+};
 
 const COLORS = Platform.OS === 'ios' ? IOS_SYSTEM_COLORS : ANDROID_COLORS;
 
-export interface AccentColorSet {
+export type AccentColorSet = {
   readonly base: string;
   readonly hover: string;
   readonly active: string;
@@ -87,7 +107,9 @@ export interface AccentColorSet {
   readonly bgSubtle: string;
   readonly bgHover: string;
   readonly bgActive: string;
-}
+  readonly iconActive: string;
+  readonly iconMuted: string;
+};
 
 export enum AccentColorType {
   BLUE = 'blue',
@@ -107,14 +129,12 @@ export const BaseAccentColors = {
   purple: 'rgb(37, 13, 62)',
 };
 
-const AccentColors = ImmutableMap<AccentColorType, AccentColorSet>([
-  [AccentColorType.BLUE, generateAccentSet(BaseAccentColors.blue)],
-  [AccentColorType.RED, generateAccentSet(BaseAccentColors.red)],
-  [AccentColorType.ORANGE, generateAccentSet(BaseAccentColors.orange)],
-  [AccentColorType.YELLOW, generateAccentSet(BaseAccentColors.yellow)],
-  [AccentColorType.GREEN, generateAccentSet(BaseAccentColors.green)],
-  [AccentColorType.PURPLE, generateAccentSet(BaseAccentColors.purple)],
-]);
+const AccentColors = ImmutableMap<AccentColorType, AccentColorSet>(
+  Object.values(AccentColorType).map((colorKey) => [
+    colorKey,
+    generateAccentSet(BaseAccentColors[colorKey]),
+  ])
+);
 
 function generateAccentSet(baseColor: string): AccentColorSet {
   const color = new Color(baseColor);
@@ -131,6 +151,8 @@ function generateAccentSet(baseColor: string): AccentColorSet {
     bgSubtle: color.lighten(0.05).hex(),
     bgHover: color.lighten(0.1).hex(),
     bgActive: color.darken(0.15).hex(),
+    iconActive: color.lighten(0.1).hex(),
+    iconMuted: color.lighten(0.5).alpha(0.5).hex(),
   };
 }
 

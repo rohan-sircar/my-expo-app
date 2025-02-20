@@ -2,7 +2,7 @@ import * as NavigationBar from 'expo-navigation-bar';
 import { useColorScheme as useNativewindColorScheme } from 'nativewind';
 import { useState, useEffect } from 'react';
 import { Platform } from 'react-native';
-import { AccentColorSet, COLORS, AccentColors } from '~/theme/colors';
+import { AccentColorSet, COLORS, AccentColors, SystemColors } from '~/theme/colors';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 
 interface ColorSchemeHook {
@@ -10,7 +10,7 @@ interface ColorSchemeHook {
   isDarkColorScheme: boolean;
   setColorScheme: (colorScheme: 'light' | 'dark') => void;
   toggleColorScheme: () => void;
-  colors: any;
+  colors: SystemColors;
 }
 
 function useColorScheme(): ColorSchemeHook {
@@ -38,9 +38,8 @@ function useColorScheme(): ColorSchemeHook {
     setColorScheme(colorScheme === 'light' ? 'dark' : 'light');
   };
 
-  const colors = {
+  const colors: SystemColors = {
     ...COLORS[colorScheme],
-    accent: accentSet,
   };
 
   return {
