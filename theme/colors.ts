@@ -110,6 +110,8 @@ export type AccentColorSet = {
   readonly iconActive: string;
   readonly iconMuted: string;
   readonly bgNavTab: string;
+  readonly gradientStart: string;
+  readonly gradientEnd: string;
 };
 
 export enum AccentColorType {
@@ -128,6 +130,33 @@ export const BaseAccentColors = {
   yellow: 'rgb(217, 183, 0)',
   green: 'rgb(40,167,69)',
   purple: 'rgb(37, 13, 62)',
+};
+
+export const BaseAccentGradients = {
+  blue: {
+    gradientStart: '#00008B', // Darker blue
+    gradientEnd: '#4169E1', // Lighter blue
+  },
+  red: {
+    gradientStart: '#990000', // Darker red
+    gradientEnd: '#FF6666', // Lighter red
+  },
+  orange: {
+    gradientStart: '#C86400', // Darker orange
+    gradientEnd: '#FFB432', // Lighter orange
+  },
+  yellow: {
+    gradientStart: '#AA8C00', // Darker yellow
+    gradientEnd: '#FFDC32', // Lighter yellow
+  },
+  green: {
+    gradientStart: '#1E7832', // Darker green
+    gradientEnd: '#50C864', // Lighter green
+  },
+  purple: {
+    gradientStart: '#190A28', // Darker purple
+    gradientEnd: '#3C1E5A', // Lighter purple
+  },
 };
 
 const AccentColors = ImmutableMap<AccentColorType, AccentColorSet>(
@@ -154,7 +183,9 @@ function generateAccentSet(baseColor: string): AccentColorSet {
     bgActive: color.darken(0.15).hex(),
     iconActive: color.lighten(0.1).hex(),
     iconMuted: color.lighten(0.5).alpha(0.5).hex(),
-    bgNavTab: color.lighten(0.4).hex(),
+    bgNavTab: color.lighten(0.2).hex(),
+    gradientStart: color.darken(0.2).hex(), // Added gradientStart
+    gradientEnd: color.lighten(0.2).hex(), // Added gradientEnd
   };
 }
 

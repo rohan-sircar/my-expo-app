@@ -31,6 +31,8 @@ import { LogoutButton } from '~/components/LogoutButton';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import * as Style from './styles/Styles';
 import { TabButton } from '~/components/TabButton';
+import { LinearGradient } from 'expo-linear-gradient';
+import { BaseAccentGradients } from '~/theme/colors';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -43,8 +45,8 @@ function HomeTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: colors.text,
-        tabBarActiveBackgroundColor: accentSet.bgNavTab,
+        tabBarActiveTintColor: accentSet.active,
+        tabBarActiveBackgroundColor: colors.grey5,
         tabBarStyle: {
           backgroundColor: colors.background,
         },
@@ -124,6 +126,8 @@ export default function RootLayout() {
   const { colorScheme, isDarkColorScheme, colors } = useColorScheme();
   const queryClient = new QueryClient();
   const { userId, loggedIn } = useUserStore();
+  const { accentColor } = useAccentColor();
+  const accentSet = getAccentSet(accentColor);
 
   return (
     <>
@@ -136,27 +140,36 @@ export default function RootLayout() {
           <ActionSheetProvider>
             <NavThemeProvider value={NAV_THEME[colorScheme]}>
               <QueryClientProvider client={queryClient}>
-                <SafeAreaView className="flex-1">
-                  <View className="mx-auto w-full max-w-[800px] flex-1">
-                    <Stack.Navigator>
-                      <Stack.Screen
-                        name="index"
-                        options={{
-                          ...SCREEN_OPTIONS,
-                          ...INDEX_OPTIONS,
-                          headerRight: () => (
-                            <View className="flex flex-row items-center gap-3 pr-2">
-                              <ThemeToggle />
-                              {loggedIn && <SettingsIcon />}
-                              {loggedIn && <LogoutButton />}
-                            </View>
-                          ),
-                        }}
-                        component={HomeTabs}
-                      />
-                    </Stack.Navigator>
-                  </View>
-                </SafeAreaView>
+                <LinearGradient
+                  // colors={['#00008B', '#4169E1']} // Deep Blue gradient
+                  // colors={[accentSet.gradientStart, accentSet.gradientEnd]}
+                  colors={[
+                    BaseAccentGradients[accentColor].gradientStart,
+                    BaseAccentGradients[accentColor].gradientEnd,
+                  ]}
+                  style={{ flex: 1 }}>
+                  <SafeAreaView className="flex-1">
+                    <View className="mx-auto w-full max-w-[800px] flex-1">
+                      <Stack.Navigator>
+                        <Stack.Screen
+                          name="index"
+                          options={{
+                            ...SCREEN_OPTIONS,
+                            ...INDEX_OPTIONS,
+                            headerRight: () => (
+                              <View className="flex flex-row items-center gap-3 pr-2">
+                                <ThemeToggle />
+                                {loggedIn && <SettingsIcon />}
+                                {loggedIn && <LogoutButton />}
+                              </View>
+                            ),
+                          }}
+                          component={HomeTabs}
+                        />
+                      </Stack.Navigator>
+                    </View>
+                  </SafeAreaView>
+                </LinearGradient>
               </QueryClientProvider>
             </NavThemeProvider>
           </ActionSheetProvider>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Pressable, View } from 'react-native';
-import { useAccentColor } from '~/lib/useAccentColor';
+import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
+import { useWebRipple } from '~/lib/useWebRipple';
 import { BaseAccentColors } from '~/theme/colors';
 import { AccentColorType } from '~/theme/colors';
 
@@ -10,6 +11,8 @@ interface AccentColorButtonProps {
 
 const AccentColorButton: React.FC<AccentColorButtonProps> = ({ color }) => {
   const { setAccentColor } = useAccentColor();
+  const accentSet = getAccentSet(color);
+  const webRippleProps = useWebRipple();
 
   return (
     <Pressable
@@ -19,7 +22,7 @@ const AccentColorButton: React.FC<AccentColorButtonProps> = ({ color }) => {
       android_ripple={{ borderless: true }}>
       <View
         className="rounded-full"
-        style={{ width: 30, height: 30, backgroundColor: BaseAccentColors[color] }}></View>
+        style={{ width: 30, height: 30, backgroundColor: accentSet.base }}></View>
     </Pressable>
   );
 };
