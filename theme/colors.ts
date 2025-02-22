@@ -146,16 +146,16 @@ export const BaseAccentGradients = {
     gradientEnd: '#FFB432', // Lighter orange
   },
   yellow: {
-    gradientStart: '#AA8C00', // Darker yellow
-    gradientEnd: '#FFDC32', // Lighter yellow
+    gradientStart: '#F0E68C', // Darker yellow
+    gradientEnd: '#F7DC6F', // Lighter yellow
   },
   green: {
     gradientStart: '#1E7832', // Darker green
     gradientEnd: '#50C864', // Lighter green
   },
   purple: {
-    gradientStart: '#190A28', // Darker purple
-    gradientEnd: '#3C1E5A', // Lighter purple
+    gradientStart: '#6A0DAD', // Darker purple
+    gradientEnd: '#D741D7', // Lighter purple
   },
 };
 
