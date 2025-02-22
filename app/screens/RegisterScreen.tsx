@@ -4,6 +4,9 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import React from 'react';
 import * as Style from '../styles/Styles';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
+import { GoogleButton } from '../components/GoogleButton';
+import { GithubButton } from '../components/GithubButton';
+import { FormButton } from '../components/FormButton';
 
 const RegisterScreen = () => {
   const { colors, isDarkColorScheme } = useColorScheme();
@@ -47,9 +50,7 @@ const RegisterScreen = () => {
         </View>
 
         <View>
-          <Button className="h-12" style={Style.formButton(isDarkColorScheme, accentSet)}>
-            <Text style={Style.formButtonText(isDarkColorScheme, accentSet)}>Register</Text>
-          </Button>
+          <FormButton buttonText="Register"></FormButton>
         </View>
 
         <View className="relative my-6">
@@ -68,15 +69,10 @@ const RegisterScreen = () => {
         </View>
 
         <View className="gap-4">
-          <Button className={Style.getSocialButtonStyles(isDarkColorScheme, accentSet)}>
-            <Text
-              className={`text-base font-medium ${Style.getHeadingTextColor(isDarkColorScheme, accentSet)}`}>
-              Sign in with Google
-            </Text>
-          </Button>
-          <Button className="h-12 w-full flex-row items-center justify-center rounded-lg bg-zinc-900">
-            <Text className="text-base font-medium text-white">Sign in with GitHub</Text>
-          </Button>
+          <View className="gap-4">
+            <GoogleButton></GoogleButton>
+            <GithubButton></GithubButton>
+          </View>
         </View>
       </View>
     </View>

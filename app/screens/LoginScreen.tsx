@@ -6,6 +6,9 @@ import { StyleSheet } from 'react-native';
 import * as Style from '../styles/Styles';
 import { useUserStore } from '../stores/UserStore';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
+import { GithubButton } from '../components/GithubButton';
+import { GoogleButton } from '../components/GoogleButton';
+import { FormButton } from '../components/FormButton';
 
 const LoginScreen = () => {
   const { colors, isDarkColorScheme } = useColorScheme();
@@ -41,13 +44,9 @@ const LoginScreen = () => {
         </View>
 
         <View>
-          <Button className="h-12" style={Style.formButton(isDarkColorScheme, accentSet)}>
-            <Text
-              style={Style.formButtonText(isDarkColorScheme, accentSet)}
-              onPress={() => useUserStore.setState({ loggedIn: true })}>
-              Sign In
-            </Text>
-          </Button>
+          <FormButton
+            buttonText="Submit"
+            onPress={() => useUserStore.setState({ loggedIn: true })}></FormButton>
           <TouchableOpacity>
             <Text
               className={`mt-4 text-center text-sm ${Style.getSecondaryTextColor(isDarkColorScheme, accentSet)}`}>
@@ -70,17 +69,9 @@ const LoginScreen = () => {
             </Text>
           </View>
         </View>
-
         <View className="gap-4">
-          <Button className={Style.getSocialButtonStyles(isDarkColorScheme, accentSet)}>
-            <Text
-              className={`text-base font-medium ${Style.getHeadingTextColor(isDarkColorScheme, accentSet)}`}>
-              Sign in with Google
-            </Text>
-          </Button>
-          <Button className="h-12 w-full flex-row items-center justify-center rounded-lg bg-zinc-900">
-            <Text className="text-base font-medium text-white">Sign in with GitHub</Text>
-          </Button>
+          <GoogleButton></GoogleButton>
+          <GithubButton></GithubButton>
         </View>
       </View>
     </View>

@@ -116,7 +116,10 @@ type AndroidOnlyButtonProps = {
   androidRootClassName?: string;
 };
 
-type ButtonProps = PressableProps &
+type ButtonProps = {
+  hoverColor?: string;
+  defaultColor?: string;
+} & PressableProps &
   ButtonVariantProps &
   AndroidOnlyButtonProps & { style?: StyleProp<ViewStyle> };
 
@@ -131,7 +134,10 @@ const Button = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonProps>
     const webRippleProps = useWebRipple();
     const { accentColor } = useAccentColor();
     const accentSet = getAccentSet(accentColor);
-    const { hoverStyle, hoverProps } = useHover(accentSet.hover, accentSet.base);
+    const { hoverStyle, hoverProps } = useHover(
+      props.hoverColor ?? colors.grey5,
+      props.defaultColor ?? accentSet.base
+    );
 
     return (
       <TextClassContext.Provider value={buttonTextVariants({ variant, size })}>

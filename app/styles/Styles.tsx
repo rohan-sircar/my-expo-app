@@ -39,7 +39,6 @@ export function inputStyle(isDarkColorScheme: boolean, accentSet: AccentColorSet
 
 export function formButton(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
   return {
-    backgroundColor: accentSet.base,
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: 8,
@@ -67,12 +66,8 @@ export function getDividerColor(isDarkColorScheme: boolean, accentSet: AccentCol
   return isDarkColorScheme ? 'bg-zinc-700' : 'bg-gray-200';
 }
 
-export function getSocialButtonStyles(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
-  return `h-12 w-full flex-row items-center justify-center rounded-lg border ${
-    isDarkColorScheme
-      ? `border-${accentSet.border} bg-${accentSet.bgSubtle}`
-      : `border-gray-200 bg-white`
-  }`;
+export function getSocialButtonClasses(isDarkColorScheme: boolean, accentSet: AccentColorSet) {
+  return `h-12 w-full flex-row items-center justify-center rounded-lg border`;
 }
 
 export function getPlaceholderColor(isDarkColorScheme: boolean, accentSet: AccentColorSet) {

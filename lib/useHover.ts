@@ -22,7 +22,9 @@ export const useHover = (hoverColor: string, defaultColor?: string): UseHover =>
     web: {
       backgroundColor: isHovered ? hoverColor : defaultColor,
     },
-    default: {},
+    default: {
+      backgroundColor: defaultColor,
+    },
   });
 
   const hoverProps = Platform.select({
