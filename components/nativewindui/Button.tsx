@@ -1,11 +1,13 @@
 import * as Slot from '@rn-primitives/slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
-import { Platform, Pressable, PressableProps, View, ViewStyle } from 'react-native';
+import { Platform, Pressable, PressableProps, StyleProp, View, ViewStyle } from 'react-native';
 
 import { TextClassContext } from '~/components/nativewindui/Text';
 import { cn } from '~/lib/cn';
+import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 import { useColorScheme } from '~/lib/useColorScheme';
+import { useHover } from '~/lib/useHover';
 import { useWebRipple } from '~/lib/useWebRipple';
 import { COLORS } from '~/theme/colors';
 
@@ -114,7 +116,9 @@ type AndroidOnlyButtonProps = {
   androidRootClassName?: string;
 };
 
-type ButtonProps = PressableProps & ButtonVariantProps & AndroidOnlyButtonProps;
+type ButtonProps = PressableProps &
+  ButtonVariantProps &
+  AndroidOnlyButtonProps & { style?: StyleProp<ViewStyle> };
 
 const Root = Platform.OS === 'android' ? View : Slot.Pressable;
 
@@ -123,8 +127,11 @@ const Button = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonProps>
     { className, variant = 'primary', size, style = BORDER_CURVE, androidRootClassName, ...props },
     ref
   ) => {
-    const { colorScheme } = useColorScheme();
+    const { colors, colorScheme } = useColorScheme();
     const webRippleProps = useWebRipple();
+    const { accentColor } = useAccentColor();
+    const accentSet = getAccentSet(accentColor);
+    const { hoverStyle, hoverProps } = useHover(accentSet.hover, accentSet.base);
 
     return (
       <TextClassContext.Provider value={buttonTextVariants({ variant, size })}>
@@ -142,10 +149,11 @@ const Button = React.forwardRef<React.ElementRef<typeof Pressable>, ButtonProps>
               buttonVariants({ variant, size, className })
             )}
             ref={ref}
-            style={style}
+            style={[style, hoverStyle]}
             android_ripple={ANDROID_RIPPLE[colorScheme][variant]}
             {...webRippleProps}
             {...props}
+            {...hoverProps}
           />
         </Root>
       </TextClassContext.Provider>

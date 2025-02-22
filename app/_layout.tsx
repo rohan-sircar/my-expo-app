@@ -45,8 +45,8 @@ function HomeTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: accentSet.active,
-        tabBarActiveBackgroundColor: colors.grey5,
+        tabBarActiveTintColor: colors.text,
+        tabBarActiveBackgroundColor: colors.grey4,
         tabBarStyle: {
           backgroundColor: colors.background,
         },
@@ -54,7 +54,7 @@ function HomeTabs() {
           <TabButton
             active={props.accessibilityState?.selected}
             onPress={props.onPress}
-            style={props.style}>
+            style={[props.style]}>
             {props.children}
           </TabButton>
         ),
