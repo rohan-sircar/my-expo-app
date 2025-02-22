@@ -4,9 +4,9 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import React from 'react';
 import * as Style from '../styles/Styles';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
-import { GoogleButton } from '../components/GoogleButton';
-import { GithubButton } from '../components/GithubButton';
-import { FormButton } from '../components/FormButton';
+import GithubButton from '../components/GithubButton';
+import GoogleButton from '../components/GoogleButton';
+import FormButton from '../components/FormButton';
 
 const RegisterScreen = () => {
   const { colors, isDarkColorScheme } = useColorScheme();

@@ -5,11 +5,11 @@ import * as Style from '../styles/Styles';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { useAccentColor, getAccentSet } from '~/lib/useAccentColor';
 
-type GoogleButtonProps = {
+export type GoogleButtonProps = {
   onPress?: () => void;
 };
 
-export const GoogleButton = (props: GoogleButtonProps) => {
+const GoogleButton = (props: GoogleButtonProps) => {
   const { colors, isDarkColorScheme } = useColorScheme();
   const { accentColor } = useAccentColor();
   const accentSet = getAccentSet(accentColor);
@@ -28,3 +28,5 @@ export const GoogleButton = (props: GoogleButtonProps) => {
     </View>
   );
 };
+
+export default GoogleButton;

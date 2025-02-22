@@ -5,12 +5,12 @@ import * as Style from '../styles/Styles';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { useAccentColor, getAccentSet } from '~/lib/useAccentColor';
 
-type FormButtonProps = {
+export type FormButtonProps = {
   onPress?: () => void;
   buttonText?: string;
 };
 
-export const FormButton = (props: FormButtonProps) => {
+const FormButton = (props: FormButtonProps) => {
   const { colors, isDarkColorScheme } = useColorScheme();
   const { accentColor } = useAccentColor();
   const accentSet = getAccentSet(accentColor);
@@ -29,3 +29,5 @@ export const FormButton = (props: FormButtonProps) => {
     </View>
   );
 };
+
+export default FormButton;

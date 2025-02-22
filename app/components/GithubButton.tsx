@@ -6,7 +6,7 @@ type GithubButtonProps = {
   onPress?: () => void;
 };
 
-export const GithubButton = (props: GithubButtonProps) => {
+const GithubButton = (props: GithubButtonProps) => {
   return (
     <Button
       className="h-12 w-full flex-row items-center justify-center rounded-lg"
@@ -17,3 +17,5 @@ export const GithubButton = (props: GithubButtonProps) => {
     </Button>
   );
 };
+
+export default GithubButton;

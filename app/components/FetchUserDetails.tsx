@@ -5,6 +5,7 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import { Button } from '~/components/nativewindui/Button';
 import * as Style from '../styles/Styles';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
+import FormButton from '../components/FormButton';
 
 const FetchUserDetails = () => {
   const { colors, isDarkColorScheme } = useColorScheme();
@@ -44,13 +45,8 @@ const FetchUserDetails = () => {
         value={inputValue}
         onChangeText={handleInputChange}
       />
-      <View>
-        <Button
-          className="h-12"
-          style={Style.formButton(isDarkColorScheme, accentSet)}
-          onPress={handleSubmit}>
-          <Text style={Style.formButtonText(isDarkColorScheme, accentSet)}>Fetch user</Text>
-        </Button>
+      <View className="gap-4">
+        <FormButton buttonText="Fetch User" onPress={handleSubmit}></FormButton>
       </View>
     </View>
   );

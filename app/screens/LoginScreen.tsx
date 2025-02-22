@@ -6,9 +6,9 @@ import { StyleSheet } from 'react-native';
 import * as Style from '../styles/Styles';
 import { useUserStore } from '../stores/UserStore';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
-import { GithubButton } from '../components/GithubButton';
-import { GoogleButton } from '../components/GoogleButton';
-import { FormButton } from '../components/FormButton';
+import GithubButton from '../components/GithubButton';
+import GoogleButton from '../components/GoogleButton';
+import FormButton from '../components/FormButton';
 
 const LoginScreen = () => {
   const { colors, isDarkColorScheme } = useColorScheme();
