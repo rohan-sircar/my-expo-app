@@ -57,6 +57,7 @@ function HomeTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
+        headerShown: false,
         tabBarActiveTintColor: colors.text,
         tabBarActiveBackgroundColor: colors.grey4,
         tabBarStyle: {
@@ -173,23 +174,41 @@ export default function RootLayout() {
                           <Drawer.Screen name="Auth" component={AuthStack} />
                         </Drawer.Navigator>
                       ) : (
-                        <Stack.Navigator>
-                          <Stack.Screen
-                            name="index"
-                            options={{
-                              ...SCREEN_OPTIONS,
-                              ...INDEX_OPTIONS,
-                              headerRight: () => (
-                                <View className="flex flex-row items-center gap-3 pr-2">
-                                  <ThemeToggle />
-                                  {loggedIn && <SettingsIcon />}
-                                  {loggedIn && <LogoutButton />}
-                                </View>
-                              ),
-                            }}
+                        <Drawer.Navigator
+                          drawerContent={(props) => <DrawerContent {...props} />}
+                          screenOptions={({ navigation }) => ({
+                            // headerShown: false,
+                            headerLeft: () => (
+                              <Pressable onPress={() => navigation.toggleDrawer()} className="ml-4">
+                                <FontAwesome name="bars" size={24} color={colors.text} />
+                              </Pressable>
+                            ),
+                            headerRight: () => (
+                              <View className="flex flex-row items-center gap-3 pr-2">
+                                <ThemeToggle />
+                                {loggedIn && <SettingsIcon />}
+                                {loggedIn && <LogoutButton />}
+                              </View>
+                            ),
+                            drawerType: 'front',
+                            drawerStyle: {
+                              backgroundColor: colors.background,
+                              width: 240,
+                            },
+                            ...SCREEN_OPTIONS,
+                          })}>
+                          <Drawer.Screen
+                            name="Main"
                             component={HomeTabs}
+                            options={
+                              {
+                                // headerTitle: 'Home',
+                                // headerShown: false,
+                              }
+                            }
                           />
-                        </Stack.Navigator>
+                          <Drawer.Screen name="Auth" component={AuthStack} />
+                        </Drawer.Navigator>
                       )}
                     </View>
                   </SafeAreaView>
