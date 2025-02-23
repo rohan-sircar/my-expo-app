@@ -1,8 +1,7 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { ThemeProvider as NavThemeProvider, useNavigation } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Dimensions } from 'react-native';
+import { ThemeProvider as NavThemeProvider, useNavigation } from '@react-navigation/native';
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
@@ -10,33 +9,32 @@ import {
 import { Icon } from '@roninoss/icons';
 import 'expo-dev-client';
 import { StatusBar } from 'expo-status-bar';
-import React, { useLayoutEffect, useState } from 'react';
+import React from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import '../global.css';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ThemeToggle from '~/components/ThemeToggle';
+import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
-import { useAccentColor, getAccentSet } from '~/lib/useAccentColor';
 import { useResponsiveLayout } from '~/lib/useResponsiveLayout';
 import { NAV_THEME } from '~/theme';
 import { RootStackParamList } from '~/types/navigation';
 
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ProfileScreen from './screens/ProfileScreen';
+import { LinearGradient } from 'expo-linear-gradient';
+import { LogoutButton } from '~/components/LogoutButton';
+import { TabButton } from '~/components/TabButton';
+import { BaseAccentGradients } from '~/theme/colors';
+import DrawerContent from './components/DrawerContent';
+import ControlsScreen from './screens/ControlsScreen';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
+import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import ControlsScreen from './screens/ControlsScreen';
 import { useUserStore } from './stores/UserStore';
-import { LogoutButton } from '~/components/LogoutButton';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import * as Style from './styles/Styles';
-import { TabButton } from '~/components/TabButton';
-import { LinearGradient } from 'expo-linear-gradient';
-import { BaseAccentGradients } from '~/theme/colors';
-import CustomDrawerContent from './components/CustomDrawerContent';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -79,7 +77,6 @@ function HomeTabs() {
         options={{
           headerRight: () => (
             <View className="flex flex-row items-center gap-3 pr-2">
-              <ThemeToggle />
               {loggedIn && <SettingsIcon />}
               {loggedIn && <LogoutButton />}
             </View>
@@ -93,7 +90,6 @@ function HomeTabs() {
           component={ProfileScreen}
           options={{
             title: 'Profile',
-            headerRight: () => <ThemeToggle />,
             tabBarIcon: () => <Icon name="person" color={colors.text} />,
           }}
           initialParams={{ userId: userId }}
@@ -104,7 +100,6 @@ function HomeTabs() {
             name="Login"
             component={LoginScreen}
             options={{
-              headerRight: () => <ThemeToggle />,
               tabBarIcon: () => (
                 <FontAwesome name="sign-in" style={{ fontSize: 24 }} color={colors.text} />
               ),
@@ -114,7 +109,6 @@ function HomeTabs() {
             name="Register"
             component={RegisterScreen}
             options={{
-              headerRight: () => <ThemeToggle />,
               tabBarIcon: () => (
                 <FontAwesome name="check-circle" style={{ fontSize: 24 }} color={colors.text} />
               ),
@@ -127,7 +121,6 @@ function HomeTabs() {
         name="Controls"
         component={ControlsScreen}
         options={{
-          headerRight: () => <ThemeToggle />,
           tabBarIcon: () => <Icon name="cog" color={colors.text} />,
         }}
       />
@@ -167,7 +160,7 @@ export default function RootLayout() {
                     <View className="mx-auto w-full max-w-[800px] flex-1">
                       {isDesktop ? (
                         <Drawer.Navigator
-                          drawerContent={(props) => <CustomDrawerContent {...props} />}
+                          drawerContent={(props) => <DrawerContent {...props} />}
                           screenOptions={{
                             headerShown: false,
                             drawerType: 'permanent',

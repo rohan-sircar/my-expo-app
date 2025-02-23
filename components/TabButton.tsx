@@ -5,7 +5,7 @@ import { cn } from '../lib/cn';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { useHover } from '~/lib/useHover';
 
-type TabButtonProps = {
+export type TabButtonProps = {
   children: React.ReactNode;
   active?: boolean;
   onPress?: (e: GestureResponderEvent) => void;
