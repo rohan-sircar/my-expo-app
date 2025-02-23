@@ -1,6 +1,8 @@
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider as NavThemeProvider, useNavigation } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Dimensions } from 'react-native';
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
@@ -8,7 +10,7 @@ import {
 import { Icon } from '@roninoss/icons';
 import 'expo-dev-client';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import '../global.css';
@@ -17,6 +19,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ThemeToggle from '~/components/ThemeToggle';
 import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
 import { useAccentColor, getAccentSet } from '~/lib/useAccentColor';
+import { useResponsiveLayout } from '~/lib/useResponsiveLayout';
 import { NAV_THEME } from '~/theme';
 import { RootStackParamList } from '~/types/navigation';
 
@@ -33,9 +36,20 @@ import * as Style from './styles/Styles';
 import { TabButton } from '~/components/TabButton';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BaseAccentGradients } from '~/theme/colors';
+import CustomDrawerContent from './components/CustomDrawerContent';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const AuthStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+    </Stack.Navigator>
+  );
+};
 
 function HomeTabs() {
   const { userId, loggedIn } = useUserStore();
@@ -128,6 +142,7 @@ export default function RootLayout() {
   const { userId, loggedIn } = useUserStore();
   const { accentColor } = useAccentColor();
   const accentSet = getAccentSet(accentColor);
+  const { isDesktop } = useResponsiveLayout();
 
   return (
     <>
@@ -150,23 +165,39 @@ export default function RootLayout() {
                   style={{ flex: 1 }}>
                   <SafeAreaView className="flex-1">
                     <View className="mx-auto w-full max-w-[800px] flex-1">
-                      <Stack.Navigator>
-                        <Stack.Screen
-                          name="index"
-                          options={{
-                            ...SCREEN_OPTIONS,
-                            ...INDEX_OPTIONS,
-                            headerRight: () => (
-                              <View className="flex flex-row items-center gap-3 pr-2">
-                                <ThemeToggle />
-                                {loggedIn && <SettingsIcon />}
-                                {loggedIn && <LogoutButton />}
-                              </View>
-                            ),
-                          }}
-                          component={HomeTabs}
-                        />
-                      </Stack.Navigator>
+                      {isDesktop ? (
+                        <Drawer.Navigator
+                          drawerContent={(props) => <CustomDrawerContent {...props} />}
+                          screenOptions={{
+                            headerShown: false,
+                            drawerType: 'permanent',
+                            drawerStyle: {
+                              width: 240,
+                              backgroundColor: colors.background,
+                            },
+                          }}>
+                          <Drawer.Screen name="Main" component={HomeTabs} />
+                          <Drawer.Screen name="Auth" component={AuthStack} />
+                        </Drawer.Navigator>
+                      ) : (
+                        <Stack.Navigator>
+                          <Stack.Screen
+                            name="index"
+                            options={{
+                              ...SCREEN_OPTIONS,
+                              ...INDEX_OPTIONS,
+                              headerRight: () => (
+                                <View className="flex flex-row items-center gap-3 pr-2">
+                                  <ThemeToggle />
+                                  {loggedIn && <SettingsIcon />}
+                                  {loggedIn && <LogoutButton />}
+                                </View>
+                              ),
+                            }}
+                            component={HomeTabs}
+                          />
+                        </Stack.Navigator>
+                      )}
                     </View>
                   </SafeAreaView>
                 </LinearGradient>
