@@ -23,75 +23,30 @@ const UserDetails = () => {
   });
 
   return (
-    <View style={[styles.section, cardStyle(isDarkColorScheme, colors, accentSet)]}>
-      <Text style={[styles.header, { color: colors.text }]}>User Details for ID: {userId}</Text>
+    <View style={[cardStyle(isDarkColorScheme, colors, accentSet)]}>
+      <Text
+        className="tracking-moderate mb-4 text-2xl font-semibold"
+        style={{ color: colors.text }}>
+        User Details for ID: {userId}
+      </Text>
       {isLoading && <ActivityIndicator size="large" color={colors.primary} />}
       {isError && (
-        <Text style={styles.errorText}>{'Error fetching user data: ' + error?.message}</Text>
+        <Text className="mt-2.5 rounded-lg bg-red-50 p-3 text-center text-base text-red-600">
+          {'Error fetching user data: ' + error?.message}
+        </Text>
       )}
       {data && (
         <View style={subCardStyle(isDarkColorScheme, accentSet)}>
-          <Text style={[styles.userText, { color: colors.text }]}>Name: {data.name}</Text>
-          <Text style={[styles.userText, { color: colors.text }]}>Email: {data.email}</Text>
+          <Text className="my-1 text-lg tracking-tight" style={{ color: colors.text }}>
+            Name: {data.name}
+          </Text>
+          <Text className="my-1 text-lg tracking-tight" style={{ color: colors.text }}>
+            Email: {data.email}
+          </Text>
         </View>
       )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 50,
-    paddingHorizontal: 20,
-    backgroundColor: '#f5fcff',
-  },
-  appTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  section: {
-    marginVertical: 15,
-    padding: 20,
-    backgroundColor: '#ffffff',
-    borderRadius: 12,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
-  },
-  header: {
-    fontSize: 22,
-    fontWeight: '600',
-    marginBottom: 15,
-    letterSpacing: 0.5,
-  },
-  counter: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  userText: {
-    fontSize: 17,
-    marginVertical: 4,
-    letterSpacing: 0.3,
-  },
-  errorText: {
-    color: '#dc2626',
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 10,
-    padding: 12,
-    backgroundColor: '#fef2f2',
-    borderRadius: 8,
-  },
-});
 
 export default UserDetails;
