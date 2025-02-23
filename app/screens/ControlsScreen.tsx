@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import POSTS from '~/data/posts';
 import Message from '~/app/components/Message';
@@ -11,11 +11,14 @@ import ShowLogin from '~/app/components/ShowLogin';
 
 const Controls = () => {
   return (
-    <View className="flex-1 px-4 md:px-8">
+    <ScrollView
+      className="flex-1 px-4 md:px-8"
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled">
       <CounterControls />
       <FetchUserDetails />
       <UserDetails />
-    </View>
+    </ScrollView>
   );
 };
 
