@@ -2,17 +2,17 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 
 export const NAVIGATION_CONFIG = {
   Home: {
-    name: 'HomeNav',
+    name: 'Home',
     title: 'Home',
     icon: 'home',
   },
   Account: {
-    name: 'AccountNav',
+    name: 'Account',
     title: 'Account',
     icon: 'person',
   },
   Settings: {
-    name: 'SettingsNav',
+    name: 'Settings',
     title: 'Settings',
     icon: 'cog',
   },
@@ -43,6 +43,7 @@ export type AuthStackParamList = {
 export type DrawerParamList = {
   [NAVIGATION_CONFIG.Home.name]: NavigatorScreenParams<TabParamList>;
   [NAVIGATION_CONFIG.Account.name]: NavigatorScreenParams<AuthStackParamList>;
+  [NAVIGATION_CONFIG.Settings.name]: undefined;
 };
 
 export type RootStackParamList = {

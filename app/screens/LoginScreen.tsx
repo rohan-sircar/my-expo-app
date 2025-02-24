@@ -1,19 +1,22 @@
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { Button } from '~/components/nativewindui/Button';
-import { useColorScheme } from '~/lib/useColorScheme';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import * as Style from '../styles/Styles';
-import { useUserStore } from '../stores/UserStore';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
+import { useColorScheme } from '~/lib/useColorScheme';
+import { DrawerParamList } from '~/types/navigation';
+import FormButton from '../components/FormButton';
 import GithubButton from '../components/GithubButton';
 import GoogleButton from '../components/GoogleButton';
-import FormButton from '../components/FormButton';
+import { useUserStore } from '../stores/UserStore';
+import * as Style from '../styles/Styles';
 
 const LoginScreen = () => {
   const { colors, isDarkColorScheme } = useColorScheme();
+  const { userId } = useUserStore();
   const { accentColor } = useAccentColor();
   const accentSet = getAccentSet(accentColor);
+  const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
 
   return (
     <View className={`flex-1 items-center justify-center px-4`}>
@@ -46,7 +49,13 @@ const LoginScreen = () => {
         <View>
           <FormButton
             buttonText="Submit"
-            onPress={() => useUserStore.setState({ loggedIn: true })}></FormButton>
+            onPress={() => {
+              useUserStore.setState({ loggedIn: true });
+              navigation.navigate('Home', {
+                screen: 'Profile',
+                params: { userId: userId?.toString() },
+              });
+            }}></FormButton>
           <TouchableOpacity>
             <Text
               className={`mt-4 text-center text-sm ${Style.getSecondaryTextColor(isDarkColorScheme, accentSet)}`}>

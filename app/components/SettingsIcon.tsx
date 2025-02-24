@@ -16,12 +16,10 @@ export const SettingsIcon = () => {
     <Pressable
       className="opacity-80"
       onPress={() => {
-        if (userId) {
-          navigation.navigate('Profile', { userId: userId.toString() });
-        }
+        navigation.navigate('Settings');
       }}>
       <View className="opacity-90">
-        <Icon name="person-outline" color={colors.foreground} />
+        <Icon name="cog" color={colors.foreground} />
       </View>
     </Pressable>
   );

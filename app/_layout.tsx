@@ -26,6 +26,9 @@ import HomeTabs from './components/HomeTabs';
 import { SettingsIcon } from './components/SettingsIcon';
 import { useUserStore } from './stores/UserStore';
 import { NAVIGATION_CONFIG } from '~/types/navigation';
+import ControlsScreen from './screens/ControlsScreen';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -92,6 +95,14 @@ export default function RootLayout() {
                               title: NAVIGATION_CONFIG.Account.title,
                             }}
                           />
+                          <Drawer.Screen
+                            name={NAVIGATION_CONFIG.Settings.name}
+                            component={ControlsScreen}
+                            options={{
+                              title: NAVIGATION_CONFIG.Settings.title,
+                              // headerShown: true,
+                            }}
+                          />
                         </Drawer.Navigator>
                       ) : (
                         <Drawer.Navigator
@@ -129,6 +140,14 @@ export default function RootLayout() {
                             component={AuthStack}
                             options={{
                               title: NAVIGATION_CONFIG.Account.title,
+                            }}
+                          />
+                          <Drawer.Screen
+                            name={NAVIGATION_CONFIG.Settings.name}
+                            component={ControlsScreen}
+                            options={{
+                              title: NAVIGATION_CONFIG.Settings.title,
+                              headerShown: true,
                             }}
                           />
                         </Drawer.Navigator>

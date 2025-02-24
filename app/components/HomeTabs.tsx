@@ -2,7 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
 import { Icon } from '@roninoss/icons';
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { View } from 'react-native';
 import { LogoutButton } from '~/components/LogoutButton';
 import { TabButton } from '~/components/TabButton';
@@ -24,14 +24,15 @@ export const HomeTabs = () => {
   const navigation = useNavigation();
   const state = useNavigationState((state) => state);
 
-  // Update drawer title based on current tab
-  useLayoutEffect(() => {
-    if (!state?.routes || !state.index) return;
-    const currentRoute = state.routes[state.index];
-    const title =
-      TAB_ROUTE_TITLES[currentRoute.name as keyof TabParamList] || TAB_ROUTE_TITLES.Home;
-    navigation.setOptions({ title });
-  }, [state?.index, navigation]);
+  // // Update drawer title based on current tab
+  // useEffect(() => {
+  //   if (!state?.routes || !state.index) return;
+  //   const currentRoute = state.routes[state.index];
+  //   // if (currentRoute.name === 'Settings') return; // Don't update title for Settings route
+  //   const title =
+  //     TAB_ROUTE_TITLES[currentRoute.name as keyof TabParamList] || TAB_ROUTE_TITLES.Home;
+  //   navigation.setOptions({ title });
+  // }, [state?.index, navigation]);
 
   return (
     <Tab.Navigator
@@ -67,8 +68,7 @@ export const HomeTabs = () => {
           title: TAB_ROUTE_TITLES.Home,
         }}
       />
-
-      {loggedIn ? (
+      {loggedIn && (
         <Tab.Screen
           name="Profile"
           component={ProfileScreen}
@@ -78,42 +78,7 @@ export const HomeTabs = () => {
           }}
           initialParams={{ userId: userId?.toString() }}
         />
-      ) : (
-        <Tab.Group>
-          <Tab.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{
-              title: TAB_ROUTE_TITLES.Login,
-              tabBarIcon: () => (
-                <FontAwesome name="sign-in" style={{ fontSize: 24 }} color={colors.text} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Register"
-            component={RegisterScreen}
-            options={{
-              title: TAB_ROUTE_TITLES.Register,
-              tabBarIcon: () => (
-                <FontAwesome name="check-circle" style={{ fontSize: 24 }} color={colors.text} />
-              ),
-            }}
-          />
-        </Tab.Group>
       )}
-
-      <Tab.Screen
-        name="Controls"
-        component={ControlsScreen}
-        options={{
-          title: TAB_ROUTE_TITLES.Controls,
-          //   headerShown: true,
-          tabBarIcon: () => (
-            <Icon name={NAVIGATION_CONFIG.Settings.icon || 'cog'} color={colors.text} />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 };

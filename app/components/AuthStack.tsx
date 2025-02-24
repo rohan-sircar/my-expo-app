@@ -11,7 +11,8 @@ export const AuthStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerTitle: NAVIGATION_CONFIG.Account.title,
-        headerLargeTitle: true,
+        // headerLargeTitle: true,
+        headerShown: false,
       }}>
       <Stack.Screen
         name="SignIn"

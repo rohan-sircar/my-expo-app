@@ -14,8 +14,8 @@ import MenuButton from './MenuButton';
 
 interface NavigationActions {
   home: () => void;
-  profile: () => void;
-  auth: () => void;
+  signIn: () => void;
+  register: () => void;
   controls: () => void;
 }
 
@@ -29,19 +29,15 @@ export const DrawerContent = (props: DrawerContentComponentProps) => {
 
   const navigateTo: NavigationActions = {
     home: () => navigation.navigate(NAVIGATION_CONFIG.Home.name, { screen: 'Home' }),
-    profile: () =>
-      navigation.navigate(NAVIGATION_CONFIG.Home.name, {
-        screen: 'Profile',
-        params: { userId: userId?.toString() },
-      }),
-    auth: () =>
+    signIn: () =>
       navigation.navigate(NAVIGATION_CONFIG.Account.name, {
         screen: 'SignIn',
       }),
-    controls: () =>
-      navigation.navigate(NAVIGATION_CONFIG.Home.name, {
-        screen: 'Controls',
+    register: () =>
+      navigation.navigate(NAVIGATION_CONFIG.Account.name, {
+        screen: 'Register',
       }),
+    controls: () => navigation.navigate(NAVIGATION_CONFIG.Settings.name),
   };
 
   return (
@@ -72,18 +68,19 @@ export const DrawerContent = (props: DrawerContentComponentProps) => {
         label={NAVIGATION_CONFIG.Home.title}
       />
 
-      {loggedIn ? (
-        <MenuButton
-          onPress={navigateTo.profile}
-          icon={<Icon name="person" color={colors.foreground} size={14} />}
-          label="Profile"
-        />
-      ) : (
-        <MenuButton
-          onPress={navigateTo.auth}
-          icon={<FontAwesome name="sign-in" size={14} color={colors.foreground} />}
-          label="Sign In"
-        />
+      {!loggedIn && (
+        <View>
+          <MenuButton
+            onPress={navigateTo.register}
+            icon={<FontAwesome name="chevron-up" size={14} color={colors.foreground} />}
+            label="Register"
+          />
+          <MenuButton
+            onPress={navigateTo.signIn}
+            icon={<FontAwesome name="sign-in" size={14} color={colors.foreground} />}
+            label="Sign In"
+          />
+        </View>
       )}
 
       <MenuButton
