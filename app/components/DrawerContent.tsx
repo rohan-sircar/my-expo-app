@@ -1,16 +1,21 @@
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import { View, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 import { useUserStore } from '../stores/UserStore';
 import { Icon } from '@roninoss/icons';
 import ThemeToggle from '~/components/ThemeToggle';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import type { DrawerNavigationProp } from '@react-navigation/drawer';
-import { DrawerParamList, NAVIGATION_CONFIG } from '~/types/navigation';
 import { FontAwesome } from '@expo/vector-icons';
 import MenuButton from './MenuButton';
+import {
+  NAVIGATION_CONFIG,
+  TabParamList,
+  TAB_ROUTE_TITLES,
+  DrawerParamList,
+} from '~/types/navigation';
 
 interface NavigationActions {
   home: () => void;
@@ -19,13 +24,27 @@ interface NavigationActions {
   controls: () => void;
 }
 
-export const DrawerContent = (props: DrawerContentComponentProps) => {
+export const DrawerContent = (_props: DrawerContentComponentProps) => {
   const { colors } = useColorScheme();
   const { accentColor } = useAccentColor();
   const accentSet = getAccentSet(accentColor);
   const { loggedIn } = useUserStore();
   const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
   const { userId } = useUserStore();
+  const state = useNavigationState((state) => state);
+
+  // useLayoutEffect(() => {
+  //   if (!state?.routes || !state.index) return;
+  //   const currentRoute = state.routes[state.index];
+  //   // console.log(currentRoute);
+  //   if (currentRoute.name === NAVIGATION_CONFIG.Account.name) {
+  //     // Don't set title for Account route as it will be handled by AuthStack
+  //     return;
+  //   }
+  //   const config = NAVIGATION_CONFIG[currentRoute.name as keyof typeof NAVIGATION_CONFIG];
+  //   // console.log(config?.title);
+  //   document.title = config?.title || 'My App';
+  // }, [state?.index, navigation]);
 
   const navigateTo: NavigationActions = {
     home: () => navigation.navigate(NAVIGATION_CONFIG.Home.name, { screen: 'Home' }),

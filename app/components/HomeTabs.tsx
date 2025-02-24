@@ -24,14 +24,22 @@ export const HomeTabs = () => {
   const navigation = useNavigation();
   const state = useNavigationState((state) => state);
 
-  // // Update drawer title based on current tab
-  // useEffect(() => {
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     title: 'Dashboard',
+  //   });
+  //   document.title = 'Dashboard | My App'; // Sets browser tab title
+  // }, [navigation]);
+
+  // Update drawer title based on current tab
+  // useLayoutEffect(() => {
   //   if (!state?.routes || !state.index) return;
   //   const currentRoute = state.routes[state.index];
   //   // if (currentRoute.name === 'Settings') return; // Don't update title for Settings route
   //   const title =
   //     TAB_ROUTE_TITLES[currentRoute.name as keyof TabParamList] || TAB_ROUTE_TITLES.Home;
   //   navigation.setOptions({ title });
+  //   document.title = title;
   // }, [state?.index, navigation]);
 
   return (

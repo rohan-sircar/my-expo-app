@@ -18,6 +18,19 @@ export const NAVIGATION_CONFIG = {
   },
 } as const;
 
+export const AUTH_NAVIGATION_CONFIG = {
+  SignIn: {
+    name: 'Login',
+    title: 'Login',
+    icon: 'sign-in',
+  },
+  Register: {
+    name: 'Register',
+    title: 'Register',
+    icon: 'chevron-up',
+  },
+} as const;
+
 export type NavigationConfigKey = keyof typeof NAVIGATION_CONFIG;
 
 export type NavigationConfig = {

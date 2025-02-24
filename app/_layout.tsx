@@ -5,7 +5,7 @@ import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
 import 'expo-dev-client';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Pressable, SafeAreaView, View } from 'react-native';
+import { Platform, Pressable, SafeAreaView, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import '../global.css';
 
@@ -29,6 +29,14 @@ import { NAVIGATION_CONFIG } from '~/types/navigation';
 import ControlsScreen from './screens/ControlsScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import { NavigationContainer } from '@react-navigation/native';
+
+const title = (text: string) => {
+  const newTitle = `My Web App | ${text}`;
+  console.log(newTitle);
+  document.title = newTitle;
+  return Platform.select({ web: newTitle, default: text });
+};
 
 const Drawer = createDrawerNavigator();
 
@@ -65,6 +73,10 @@ export default function RootLayout() {
                     <View className="mx-auto w-full max-w-[800px] flex-1">
                       {isDesktop ? (
                         <Drawer.Navigator
+                          // documentTitle={{
+                          //   formatter: (options: { title: any }, route: { name: any }) =>
+                          //     `MyAppName - ${options?.title ?? route?.name}`,
+                          // }}
                           drawerContent={(props) => <DrawerContent {...props} />}
                           screenOptions={{
                             headerLeft: () => null, // Hide hamburger menu in desktop
@@ -85,21 +97,21 @@ export default function RootLayout() {
                             name={NAVIGATION_CONFIG.Home.name}
                             component={HomeTabs}
                             options={{
-                              title: NAVIGATION_CONFIG.Home.title,
+                              title: title(NAVIGATION_CONFIG.Home.title),
                             }}
                           />
                           <Drawer.Screen
                             name={NAVIGATION_CONFIG.Account.name}
                             component={AuthStack}
                             options={{
-                              title: NAVIGATION_CONFIG.Account.title,
+                              title: title(NAVIGATION_CONFIG.Account.title),
                             }}
                           />
                           <Drawer.Screen
                             name={NAVIGATION_CONFIG.Settings.name}
                             component={ControlsScreen}
                             options={{
-                              title: NAVIGATION_CONFIG.Settings.title,
+                              title: title(NAVIGATION_CONFIG.Settings.title),
                               // headerShown: true,
                             }}
                           />
@@ -139,14 +151,14 @@ export default function RootLayout() {
                             name={NAVIGATION_CONFIG.Account.name}
                             component={AuthStack}
                             options={{
-                              title: NAVIGATION_CONFIG.Account.title,
+                              title: title(NAVIGATION_CONFIG.Account.title),
                             }}
                           />
                           <Drawer.Screen
                             name={NAVIGATION_CONFIG.Settings.name}
                             component={ControlsScreen}
                             options={{
-                              title: NAVIGATION_CONFIG.Settings.title,
+                              title: title(NAVIGATION_CONFIG.Settings.title),
                               headerShown: true,
                             }}
                           />
