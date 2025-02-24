@@ -8,9 +8,16 @@ import { Icon } from '@roninoss/icons';
 import ThemeToggle from '~/components/ThemeToggle';
 import React from 'react';
 import type { DrawerNavigationProp } from '@react-navigation/drawer';
-import { DrawerParamList } from '~/types/navigation';
+import { DrawerParamList, NAVIGATION_CONFIG } from '~/types/navigation';
 import { FontAwesome } from '@expo/vector-icons';
 import MenuButton from './MenuButton';
+
+interface NavigationActions {
+  home: () => void;
+  profile: () => void;
+  auth: () => void;
+  controls: () => void;
+}
 
 export const DrawerContent = (props: DrawerContentComponentProps) => {
   const { colors } = useColorScheme();
@@ -20,12 +27,23 @@ export const DrawerContent = (props: DrawerContentComponentProps) => {
   const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
   const { userId } = useUserStore();
 
-  const navigateTo = {
-    home: () => navigation.navigate('Main', { screen: 'Home' }),
-    profile: () => navigation.navigate('Main', { screen: 'Profile', params: { userId } }),
-    auth: () => navigation.navigate('Auth', { screen: 'Login' }),
-    controls: () => navigation.navigate('Main', { screen: 'Controls' }),
+  const navigateTo: NavigationActions = {
+    home: () => navigation.navigate(NAVIGATION_CONFIG.Home.name, { screen: 'Home' }),
+    profile: () =>
+      navigation.navigate(NAVIGATION_CONFIG.Home.name, {
+        screen: 'Profile',
+        params: { userId: userId?.toString() },
+      }),
+    auth: () =>
+      navigation.navigate(NAVIGATION_CONFIG.Account.name, {
+        screen: 'SignIn',
+      }),
+    controls: () =>
+      navigation.navigate(NAVIGATION_CONFIG.Home.name, {
+        screen: 'Controls',
+      }),
   };
+
   return (
     <View
       style={{
@@ -47,20 +65,22 @@ export const DrawerContent = (props: DrawerContentComponentProps) => {
       </View>
 
       <MenuButton
-        onPress={() => navigateTo.home()}
-        icon={<Icon name="home" color={colors.foreground} size={14} />}
-        label="Home"
+        onPress={navigateTo.home}
+        icon={
+          <Icon name={NAVIGATION_CONFIG.Home.icon || 'home'} color={colors.foreground} size={14} />
+        }
+        label={NAVIGATION_CONFIG.Home.title}
       />
 
       {loggedIn ? (
         <MenuButton
-          onPress={() => navigateTo.profile()}
+          onPress={navigateTo.profile}
           icon={<Icon name="person" color={colors.foreground} size={14} />}
           label="Profile"
         />
       ) : (
         <MenuButton
-          onPress={() => navigateTo.auth()}
+          onPress={navigateTo.auth}
           icon={<FontAwesome name="sign-in" size={14} color={colors.foreground} />}
           label="Sign In"
         />
@@ -69,7 +89,7 @@ export const DrawerContent = (props: DrawerContentComponentProps) => {
       <MenuButton
         onPress={navigateTo.controls}
         icon={<FontAwesome name="gear" size={14} color={colors.foreground} />}
-        label="Controls"
+        label={NAVIGATION_CONFIG.Settings.title}
       />
     </View>
   );
