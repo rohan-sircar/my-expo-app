@@ -24,18 +24,6 @@ export const HomeTabs = () => {
   const navigation = useNavigation();
   const state = useNavigationState((state) => state);
 
-  // Update drawer title based on current tab
-  // useEffect(() => {
-  //   if (!state?.routes || !state.index) return;
-  //   const currentRoute = state.routes[state.index];
-  //   console.log(state);
-  //   console.log(currentRoute);
-  //   if (currentRoute.name !== 'Home') return; // Don't update title for not Home
-  //   const title = currentRoute.name;
-  //   // navigation.setOptions({ title });
-  //   document.title = title;
-  // }, [state?.index, navigation]);
-
   return (
     <Tab.Navigator
       screenOptions={{
