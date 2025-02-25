@@ -1,3 +1,5 @@
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NavigatorScreenParams } from '@react-navigation/native';
 
 export const NAVIGATION_CONFIG = {
@@ -41,11 +43,11 @@ export type NavigationConfig = {
 
 // Route param types
 export type TabParamList = {
-  Home: undefined;
+  Feed: undefined;
   Profile: { userId: string } | undefined;
-  Controls: undefined;
-  Login: undefined;
-  Register: undefined;
+  // Controls: undefined;
+  // Login: undefined;
+  // Register: undefined;
 };
 
 export type AuthStackParamList = {
@@ -76,11 +78,8 @@ export function getScreenTitle(route: string): string {
   return config?.title || route;
 }
 
-// Helper to get tab route title
-export const TAB_ROUTE_TITLES: Record<keyof TabParamList, string> = {
-  Home: NAVIGATION_CONFIG.Home.title,
-  Profile: 'Profile',
-  Controls: NAVIGATION_CONFIG.Settings.title,
-  Login: 'Sign In',
-  Register: 'Create Account',
-};
+// Navigation helper that handles both navigation and title updates
+export function navigateWithTitle(navigate: () => void, title?: string) {
+  document.title = title ? `My Web App | ${title}` : 'My App';
+  navigate();
+}

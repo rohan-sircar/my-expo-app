@@ -6,7 +6,6 @@ import {
   AUTH_NAVIGATION_CONFIG,
   NAVIGATION_CONFIG,
   TabParamList,
-  TAB_ROUTE_TITLES,
   DrawerParamList,
   AuthStackParamList,
 } from '~/types/navigation';

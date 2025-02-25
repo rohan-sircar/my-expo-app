@@ -13,7 +13,7 @@ import LoginScreen from '../screens/LoginScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import { useUserStore } from '../stores/UserStore';
-import { NAVIGATION_CONFIG, TabParamList, TAB_ROUTE_TITLES } from '~/types/navigation';
+import { NAVIGATION_CONFIG, TabParamList } from '~/types/navigation';
 import { SettingsIcon } from './SettingsIcon';
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -24,21 +24,15 @@ export const HomeTabs = () => {
   const navigation = useNavigation();
   const state = useNavigationState((state) => state);
 
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     title: 'Dashboard',
-  //   });
-  //   document.title = 'Dashboard | My App'; // Sets browser tab title
-  // }, [navigation]);
-
   // Update drawer title based on current tab
-  // useLayoutEffect(() => {
+  // useEffect(() => {
   //   if (!state?.routes || !state.index) return;
   //   const currentRoute = state.routes[state.index];
-  //   // if (currentRoute.name === 'Settings') return; // Don't update title for Settings route
-  //   const title =
-  //     TAB_ROUTE_TITLES[currentRoute.name as keyof TabParamList] || TAB_ROUTE_TITLES.Home;
-  //   navigation.setOptions({ title });
+  //   console.log(state);
+  //   console.log(currentRoute);
+  //   if (currentRoute.name !== 'Home') return; // Don't update title for not Home
+  //   const title = currentRoute.name;
+  //   // navigation.setOptions({ title });
   //   document.title = title;
   // }, [state?.index, navigation]);
 
@@ -61,7 +55,7 @@ export const HomeTabs = () => {
         ),
       }}>
       <Tab.Screen
-        name="Home"
+        name="Feed"
         component={HomeScreen}
         options={{
           headerRight: () => (
@@ -70,10 +64,8 @@ export const HomeTabs = () => {
               {loggedIn && <LogoutButton />}
             </View>
           ),
-          tabBarIcon: () => (
-            <Icon name={NAVIGATION_CONFIG.Home.icon || 'home'} color={colors.text} />
-          ),
-          title: TAB_ROUTE_TITLES.Home,
+          tabBarIcon: () => <Icon name={'home'} color={colors.text} />,
+          title: 'Feed',
         }}
       />
       {loggedIn && (
@@ -81,7 +73,7 @@ export const HomeTabs = () => {
           name="Profile"
           component={ProfileScreen}
           options={{
-            title: TAB_ROUTE_TITLES.Profile,
+            title: 'Profile',
             tabBarIcon: () => <Icon name="person" color={colors.text} />,
           }}
           initialParams={{ userId: userId?.toString() }}

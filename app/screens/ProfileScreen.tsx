@@ -27,7 +27,7 @@ export default function ProfileScreen() {
   const userPosts = POSTS.filter((post: Post) => post.userId === userIdNumber);
   const user = USERS.find((user) => user.userId === userIdNumber);
 
-  console.log('user', user);
+  // console.log('user', user);
 
   if (!user) return null;
 

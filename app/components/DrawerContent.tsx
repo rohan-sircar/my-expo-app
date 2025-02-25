@@ -13,8 +13,9 @@ import MenuButton from './MenuButton';
 import {
   NAVIGATION_CONFIG,
   TabParamList,
-  TAB_ROUTE_TITLES,
   DrawerParamList,
+  navigateWithTitle,
+  AUTH_NAVIGATION_CONFIG,
 } from '~/types/navigation';
 
 interface NavigationActions {
@@ -33,30 +34,27 @@ export const DrawerContent = (_props: DrawerContentComponentProps) => {
   const { userId } = useUserStore();
   const state = useNavigationState((state) => state);
 
-  // useLayoutEffect(() => {
-  //   if (!state?.routes || !state.index) return;
-  //   const currentRoute = state.routes[state.index];
-  //   // console.log(currentRoute);
-  //   if (currentRoute.name === NAVIGATION_CONFIG.Account.name) {
-  //     // Don't set title for Account route as it will be handled by AuthStack
-  //     return;
-  //   }
-  //   const config = NAVIGATION_CONFIG[currentRoute.name as keyof typeof NAVIGATION_CONFIG];
-  //   // console.log(config?.title);
-  //   document.title = config?.title || 'My App';
-  // }, [state?.index, navigation]);
-
   const navigateTo: NavigationActions = {
-    home: () => navigation.navigate(NAVIGATION_CONFIG.Home.name, { screen: 'Home' }),
+    home: () =>
+      navigateWithTitle(
+        () => navigation.navigate(NAVIGATION_CONFIG.Home.name, { screen: 'Feed' }),
+        NAVIGATION_CONFIG.Home.title
+      ),
     signIn: () =>
-      navigation.navigate(NAVIGATION_CONFIG.Account.name, {
-        screen: 'SignIn',
-      }),
+      navigateWithTitle(
+        () => navigation.navigate(NAVIGATION_CONFIG.Account.name, { screen: 'SignIn' }),
+        AUTH_NAVIGATION_CONFIG.SignIn.title
+      ),
     register: () =>
-      navigation.navigate(NAVIGATION_CONFIG.Account.name, {
-        screen: 'Register',
-      }),
-    controls: () => navigation.navigate(NAVIGATION_CONFIG.Settings.name),
+      navigateWithTitle(
+        () => navigation.navigate(NAVIGATION_CONFIG.Account.name, { screen: 'Register' }),
+        AUTH_NAVIGATION_CONFIG.Register.title
+      ),
+    controls: () =>
+      navigateWithTitle(
+        () => navigation.navigate(NAVIGATION_CONFIG.Settings.name),
+        NAVIGATION_CONFIG.Settings.title
+      ),
   };
 
   return (

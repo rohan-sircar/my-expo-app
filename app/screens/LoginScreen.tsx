@@ -4,7 +4,7 @@ import React from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 import { useColorScheme } from '~/lib/useColorScheme';
-import { DrawerParamList } from '~/types/navigation';
+import { DrawerParamList, navigateWithTitle } from '~/types/navigation';
 import FormButton from '../components/FormButton';
 import GithubButton from '../components/GithubButton';
 import GoogleButton from '../components/GoogleButton';
@@ -51,10 +51,14 @@ const LoginScreen = () => {
             buttonText="Submit"
             onPress={() => {
               useUserStore.setState({ loggedIn: true });
-              navigation.navigate('Home', {
-                screen: 'Profile',
-                params: { userId: userId?.toString() },
-              });
+              navigateWithTitle(
+                () =>
+                  navigation.navigate('Home', {
+                    screen: 'Profile',
+                    params: { userId: userId?.toString() },
+                  }),
+                'Home'
+              );
             }}></FormButton>
           <TouchableOpacity>
             <Text
