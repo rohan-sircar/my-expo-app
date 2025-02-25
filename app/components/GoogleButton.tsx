@@ -14,18 +14,16 @@ const GoogleButton = (props: GoogleButtonProps) => {
   const { accentColor } = useAccentColor();
   const accentSet = getAccentSet(accentColor);
   return (
-    <View className="gap-4">
-      <Button
-        className={Style.getSocialButtonClasses(isDarkColorScheme, accentSet)}
-        hoverColor={colors.grey6}
-        defaultColor={colors.card}
-        onPress={props.onPress}>
-        <Text
-          className={`text-base font-medium ${Style.getHeadingTextColor(isDarkColorScheme, accentSet)}`}>
-          Sign in with Google
-        </Text>
-      </Button>
-    </View>
+    <Button
+      className={Style.getSocialButtonClasses(isDarkColorScheme, accentSet)}
+      hoverColor={colors.grey6}
+      defaultColor={colors.card}
+      onPress={props.onPress}>
+      <Text
+        className={`text-base font-medium ${Style.getHeadingTextColor(isDarkColorScheme, accentSet)}`}>
+        Sign in with Google
+      </Text>
+    </Button>
   );
 };
 

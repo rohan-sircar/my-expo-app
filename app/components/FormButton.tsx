@@ -15,18 +15,16 @@ const FormButton = (props: FormButtonProps) => {
   const { accentColor } = useAccentColor();
   const accentSet = getAccentSet(accentColor);
   return (
-    <View className="gap-4">
-      <Button
-        className="h-12"
-        style={Style.formButton(isDarkColorScheme, accentSet)}
-        defaultColor={accentSet.base}
-        hoverColor={accentSet.hover}
-        onPress={props.onPress}>
-        <Text style={Style.formButtonText(isDarkColorScheme, accentSet)}>
-          {props.buttonText ?? 'Submit'}
-        </Text>
-      </Button>
-    </View>
+    <Button
+      className="h-12"
+      style={Style.formButton(isDarkColorScheme, accentSet)}
+      defaultColor={accentSet.base}
+      hoverColor={accentSet.hover}
+      onPress={props.onPress}>
+      <Text style={Style.formButtonText(isDarkColorScheme, accentSet)}>
+        {props.buttonText ?? 'Submit'}
+      </Text>
+    </Button>
   );
 };
 
