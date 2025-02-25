@@ -57,7 +57,7 @@ const LoginScreen = () => {
                     screen: 'Profile',
                     params: { userId: userId?.toString() },
                   }),
-                'Home'
+                'Profile'
               );
             }}></FormButton>
           <TouchableOpacity>
