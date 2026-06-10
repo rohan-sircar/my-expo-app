@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from '~/components/nativewindui/Button';
-import { View, Text } from 'react-native';
 import * as Style from '../styles/Styles';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { useAccentColor, getAccentSet } from '~/lib/useAccentColor';

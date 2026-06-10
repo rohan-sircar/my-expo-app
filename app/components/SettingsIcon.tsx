@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import { Icon } from '@roninoss/icons';
 import React from 'react';
 import { Pressable, View } from 'react-native';
@@ -10,7 +10,7 @@ import { DrawerParamList } from '~/types/navigation';
 export const SettingsIcon = () => {
   const { userId } = useUserStore();
   const { colors } = useColorScheme();
-  const navigation = useNavigation<NativeStackNavigationProp<DrawerParamList>>();
+  const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
 
   return (
     <Pressable

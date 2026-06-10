@@ -1,29 +1,25 @@
 import { useEffect } from 'react';
+import { Platform } from 'react-native';
 import { useNavigationState } from '@react-navigation/native';
 
-type ScreenParam = {
-  screen?: string;
-};
-
+// Browser-only hook — only works in react-native-web builds.
+// Commented out in _layout.tsx since it doesn't work in native.
 function useRouteTitle() {
-  const currentRoute = useNavigationState((state) => state.routes[state.index]);
+  if (Platform.OS !== 'web') return null;
 
-  console.log('current route', currentRoute);
+  const currentRoute = useNavigationState((state) => state.routes[state.index]);
 
   useEffect(() => {
     const updateTitle = (routeName: string) => {
-      let params = currentRoute.params as ScreenParam | undefined;
+      let params = currentRoute?.params as { screen?: string } | undefined;
       const title = params?.screen || 'Home';
-      console.log('screen title', title);
       document.title = title ? `My Web App | ${title}` : 'My App';
     };
 
-    // Update title on initial render
     if (currentRoute?.name) {
       updateTitle(currentRoute.name);
     }
 
-    // Add popstate event listener for browser history navigation
     window.addEventListener('popstate', () => {
       const path = window.location.pathname;
       const routeName = path.split('/').pop();
@@ -32,15 +28,8 @@ function useRouteTitle() {
       }
     });
 
-    // Cleanup event listener on unmount
     return () => {
-      window.removeEventListener('popstate', () => {
-        const path = window.location.pathname;
-        const routeName = path.split('/').pop();
-        if (routeName) {
-          updateTitle(routeName);
-        }
-      });
+      window.removeEventListener('popstate', () => {});
     };
   }, [currentRoute]);
 

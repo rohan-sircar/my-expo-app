@@ -1,4 +1,5 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
+import { Platform } from 'react-native';
 
 // Route param types
 export type TabParamList = {
@@ -20,8 +21,10 @@ export type DrawerParamList = {
   Settings: undefined;
 };
 
-// Navigation helper that handles both navigation and title updates
+// Navigation helper that handles both navigation and title updates (web only)
 export function navigateWithTitle(navigate: () => void, title?: string) {
-  document.title = title ? `My Web App | ${title}` : 'My App';
+  if (Platform.OS === 'web') {
+    document.title = title ? `My Web App | ${title}` : 'My App';
+  }
   navigate();
 }

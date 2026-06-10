@@ -31,7 +31,7 @@ export const DrawerContent = (_props: DrawerContentComponentProps) => {
   const navigateTo: NavigationActions = {
     home: () => navigateWithTitle(() => navigation.navigate('Home', { screen: 'Feed' }), 'Home'),
     signIn: () =>
-      navigateWithTitle(() => navigation.navigate('Account', { screen: 'SignIn' }), 'Loogin'),
+      navigateWithTitle(() => navigation.navigate('Account', { screen: 'SignIn' }), 'Sign In'),
     register: () =>
       navigateWithTitle(() => navigation.navigate('Account', { screen: 'Register' }), 'Register'),
     controls: () => navigateWithTitle(() => navigation.navigate('Settings'), 'Settings'),
