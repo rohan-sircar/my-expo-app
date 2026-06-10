@@ -5,12 +5,12 @@ import React from 'react';
 import { Pressable, View } from 'react-native';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { useUserStore } from '../stores/UserStore';
-import { RootStackParamList } from '~/types/navigation';
+import { DrawerParamList } from '~/types/navigation';
 
 export const SettingsIcon = () => {
   const { userId } = useUserStore();
   const { colors } = useColorScheme();
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<DrawerParamList>>();
 
   return (
     <Pressable

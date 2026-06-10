@@ -24,7 +24,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { LinearGradient } from 'expo-linear-gradient';
 import { LogoutButton } from '~/components/LogoutButton';
 import { BaseAccentGradients, SystemColors } from '~/theme/colors';
-import { NAVIGATION_CONFIG } from '~/types/navigation';
 import AuthStack from './components/AuthStack';
 import DrawerContent from './components/DrawerContent';
 import HomeTabs from './components/HomeTabs';
@@ -81,25 +80,25 @@ export default function RootLayout() {
                             : mobileDrawerProperties(colors, navigation)),
                         })}>
                         <Drawer.Screen
-                          name={NAVIGATION_CONFIG.Home.name}
+                          name={'Home'}
                           component={HomeTabs}
                           options={{
-                            title: NAVIGATION_CONFIG.Home.title,
+                            title: 'Home',
                           }}
                         />
                         <Drawer.Screen
-                          name={NAVIGATION_CONFIG.Account.name}
+                          name={'Account'}
                           component={AuthStack}
                           options={{
-                            title: NAVIGATION_CONFIG.Account.title,
+                            title: 'Account',
                           }}
                         />
                         <Drawer.Screen
-                          name={NAVIGATION_CONFIG.Settings.name}
+                          name={'Settings'}
                           component={ControlsScreen}
                           options={{
-                            title: NAVIGATION_CONFIG.Settings.title,
-                            headerShown: isDesktop ? false : true,
+                            title: 'Settings',
+                            // headerShown: !isDesktop ? false : true,
                           }}
                         />
                       </Drawer.Navigator>
@@ -116,6 +115,7 @@ export default function RootLayout() {
 }
 
 const desktopDrawerProperties = (colors: SystemColors): DrawerNavigationOptions => ({
+  headerLeft: () => <View></View>,
   drawerType: 'permanent',
   drawerStyle: {
     width: 240,
@@ -125,11 +125,11 @@ const desktopDrawerProperties = (colors: SystemColors): DrawerNavigationOptions 
 
 const mobileDrawerProperties = (
   colors: SystemColors,
-  navigation?: DrawerNavigationProp<any>
+  navigation: DrawerNavigationProp<any>
 ): DrawerNavigationOptions => ({
   headerTitle: '',
   headerLeft: () => (
-    <Pressable onPress={() => navigation?.toggleDrawer()} className="ml-4">
+    <Pressable onPress={() => navigation.toggleDrawer()} className="ml-4">
       <FontAwesome name="bars" size={24} color={colors.text} />
     </Pressable>
   ),

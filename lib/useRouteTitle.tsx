@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useNavigationState } from '@react-navigation/native';
-import { getScreenTitle } from '../types/navigation';
 
 type ScreenParam = {
   screen?: string;
@@ -14,7 +13,7 @@ function useRouteTitle() {
   useEffect(() => {
     const updateTitle = (routeName: string) => {
       let params = currentRoute.params as ScreenParam | undefined;
-      const title = params?.screen || getScreenTitle(routeName);
+      const title = params?.screen || 'Home';
       console.log('screen title', title);
       document.title = title ? `My Web App | ${title}` : 'My App';
     };

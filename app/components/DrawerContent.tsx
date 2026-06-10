@@ -10,13 +10,7 @@ import React, { useLayoutEffect } from 'react';
 import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import { FontAwesome } from '@expo/vector-icons';
 import MenuButton from './MenuButton';
-import {
-  NAVIGATION_CONFIG,
-  TabParamList,
-  DrawerParamList,
-  navigateWithTitle,
-  AUTH_NAVIGATION_CONFIG,
-} from '~/types/navigation';
+import { TabParamList, DrawerParamList, navigateWithTitle } from '~/types/navigation';
 
 interface NavigationActions {
   home: () => void;
@@ -35,26 +29,12 @@ export const DrawerContent = (_props: DrawerContentComponentProps) => {
   const state = useNavigationState((state) => state);
 
   const navigateTo: NavigationActions = {
-    home: () =>
-      navigateWithTitle(
-        () => navigation.navigate(NAVIGATION_CONFIG.Home.name, { screen: 'Feed' }),
-        NAVIGATION_CONFIG.Home.title
-      ),
+    home: () => navigateWithTitle(() => navigation.navigate('Home', { screen: 'Feed' }), 'Home'),
     signIn: () =>
-      navigateWithTitle(
-        () => navigation.navigate(NAVIGATION_CONFIG.Account.name, { screen: 'SignIn' }),
-        AUTH_NAVIGATION_CONFIG.SignIn.title
-      ),
+      navigateWithTitle(() => navigation.navigate('Account', { screen: 'SignIn' }), 'Loogin'),
     register: () =>
-      navigateWithTitle(
-        () => navigation.navigate(NAVIGATION_CONFIG.Account.name, { screen: 'Register' }),
-        AUTH_NAVIGATION_CONFIG.Register.title
-      ),
-    controls: () =>
-      navigateWithTitle(
-        () => navigation.navigate(NAVIGATION_CONFIG.Settings.name),
-        NAVIGATION_CONFIG.Settings.title
-      ),
+      navigateWithTitle(() => navigation.navigate('Account', { screen: 'Register' }), 'Register'),
+    controls: () => navigateWithTitle(() => navigation.navigate('Settings'), 'Settings'),
   };
 
   return (
@@ -79,10 +59,8 @@ export const DrawerContent = (_props: DrawerContentComponentProps) => {
 
       <MenuButton
         onPress={navigateTo.home}
-        icon={
-          <Icon name={NAVIGATION_CONFIG.Home.icon || 'home'} color={colors.foreground} size={14} />
-        }
-        label={NAVIGATION_CONFIG.Home.title}
+        icon={<Icon name={'home'} color={colors.foreground} size={14} />}
+        label={'Home'}
       />
 
       {!loggedIn && (
@@ -103,7 +81,7 @@ export const DrawerContent = (_props: DrawerContentComponentProps) => {
       <MenuButton
         onPress={navigateTo.controls}
         icon={<FontAwesome name="gear" size={14} color={colors.foreground} />}
-        label={NAVIGATION_CONFIG.Settings.title}
+        label="Settings"
       />
     </View>
   );

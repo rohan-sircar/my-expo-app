@@ -7,7 +7,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Avatar from './Avatar';
 import USERS from '../../data/users';
 import { useColorScheme } from '../../lib/useColorScheme';
-import { RootStackParamList } from '../../types/navigation';
+import { DrawerParamList, navigateWithTitle } from '~/types/navigation';
 
 type MessageProps = {
   message: string;
@@ -19,7 +19,7 @@ type MessageProps = {
 };
 
 const MessageComponent: React.FC<MessageProps> = (props: MessageProps) => {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<DrawerParamList>>();
   const { isDarkColorScheme } = useColorScheme();
 
   return (
@@ -28,7 +28,8 @@ const MessageComponent: React.FC<MessageProps> = (props: MessageProps) => {
         <TouchableOpacity
           activeOpacity={0.75}
           onPress={() => {
-            navigation.navigate('Profile', { userId: props.userId });
+            // navigation.navigate('Profile', { userId: props.userId });
+            navigateWithTitle(() => navigation.navigate('Account', { screen: 'SignIn' }), 'SignIn');
           }}
           style={styles.profileLayout}>
           <Avatar userId={props.userId} style={styles.avatar} />

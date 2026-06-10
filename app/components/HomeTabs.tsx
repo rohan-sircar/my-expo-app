@@ -13,7 +13,7 @@ import LoginScreen from '../screens/LoginScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import { useUserStore } from '../stores/UserStore';
-import { NAVIGATION_CONFIG, TabParamList } from '~/types/navigation';
+import { TabParamList } from '~/types/navigation';
 import { SettingsIcon } from './SettingsIcon';
 
 const Tab = createBottomTabNavigator<TabParamList>();

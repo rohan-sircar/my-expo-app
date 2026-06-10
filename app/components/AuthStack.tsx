@@ -2,13 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useLayoutEffect } from 'react';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
-import {
-  AUTH_NAVIGATION_CONFIG,
-  NAVIGATION_CONFIG,
-  TabParamList,
-  DrawerParamList,
-  AuthStackParamList,
-} from '~/types/navigation';
+import { TabParamList, DrawerParamList, AuthStackParamList } from '~/types/navigation';
 import { useNavigationState } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 
@@ -21,7 +15,7 @@ export const AuthStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTitle: NAVIGATION_CONFIG.Account.title,
+        headerTitle: 'Account',
         // headerLargeTitle: true,
         headerShown: false,
       }}>
