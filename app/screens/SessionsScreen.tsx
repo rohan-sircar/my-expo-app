@@ -30,6 +30,7 @@ export default function SessionsScreen() {
     queryKey: ['sessions'],
     queryFn: async () => {
       const res = await api.get<SessionsResponse>('/sessions');
+      console.log('sessions response:', res.data);
       return res.data;
     },
   });
@@ -48,7 +49,12 @@ export default function SessionsScreen() {
   const revokeOthersMutation = useMutation({
     mutationFn: () => api.post('/sessions/revoke-others'),
     onSuccess: () => {
+      console.log('revoke-others success');
       queryClient.invalidateQueries({ queryKey: ['sessions'] });
+    },
+    onError: (err: any) => {
+      console.error('revoke-others error:', err);
+      Alert.alert('Error', 'Failed to revoke sessions');
     },
   });
 
