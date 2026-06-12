@@ -1,6 +1,9 @@
 import { create } from 'zustand';
+import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import api from '~/app/lib/api';
+
+const isNative = Platform.OS !== 'web';
 
 export interface AuthUser {
   id: number;
@@ -44,7 +47,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   isLoading: true,
 
   setCredentials: (token, user) => {
-    SecureStore.setItemAsync('auth_token', token);
+    if (isNative) {
+      SecureStore.setItemAsync('auth_token', token);
+    }
     set({ token, user, isAuthenticated: true, isLoading: false });
   },
 
@@ -53,7 +58,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   clearCredentials: async () => {
-    await SecureStore.deleteItemAsync('auth_token');
+    if (isNative) {
+      await SecureStore.deleteItemAsync('auth_token');
+    }
     set({
       token: null,
       user: null,
@@ -66,7 +73,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   hydrate: async () => {
     set({ isLoading: true });
     try {
-      const token = await SecureStore.getItemAsync('auth_token');
+      const token = isNative ? await SecureStore.getItemAsync('auth_token') : null;
       if (token) {
         const res = await api.get<UserResponse>('/user');
         set({
@@ -80,7 +87,9 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         set({ isLoading: false });
       }
     } catch {
-      await SecureStore.deleteItemAsync('auth_token');
+      if (isNative) {
+        await SecureStore.deleteItemAsync('auth_token');
+      }
       set({
         token: null,
         user: null,
