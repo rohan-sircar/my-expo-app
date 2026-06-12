@@ -4,6 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 import api from '~/app/lib/api';
 
 const isNative = Platform.OS !== 'web';
+const isWeb = Platform.OS === 'web';
 
 export interface AuthUser {
   id: number;
@@ -73,18 +74,29 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   hydrate: async () => {
     set({ isLoading: true });
     try {
-      const token = isNative ? await SecureStore.getItemAsync('auth_token') : null;
-      if (token) {
+      if (isWeb) {
         const res = await api.get<UserResponse>('/user');
         set({
-          token,
+          token: null,
           user: res.data,
           profile: res.data.profile || null,
           isAuthenticated: true,
           isLoading: false,
         });
       } else {
-        set({ isLoading: false });
+        const token = await SecureStore.getItemAsync('auth_token');
+        if (token) {
+          const res = await api.get<UserResponse>('/user');
+          set({
+            token,
+            user: res.data,
+            profile: res.data.profile || null,
+            isAuthenticated: true,
+            isLoading: false,
+          });
+        } else {
+          set({ isLoading: false });
+        }
       }
     } catch {
       if (isNative) {

@@ -1,12 +1,12 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, Alert, Platform } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, LoginFormData } from '~/app/lib/schemas';
 import api from '~/app/lib/api';
-import { useAuthStore } from '~/app/stores/AuthStore';
+import { useAuthStore, AuthUser, UserResponse } from '~/app/stores/AuthStore';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { DrawerParamList, navigateWithTitle } from '~/types/navigation';
@@ -14,6 +14,8 @@ import FormButton from '../components/FormButton';
 import GithubButton from '../components/GithubButton';
 import GoogleButton from '../components/GoogleButton';
 import * as Style from '../styles/Styles';
+
+const isWeb = Platform.OS === 'web';
 
 const LoginScreen = () => {
   const { colors, isDarkColorScheme } = useColorScheme();
@@ -37,11 +39,20 @@ const LoginScreen = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await api.post('/auth/exchange', {
-        ...data,
-        device_name: 'Mobile',
-      });
-      setCredentials(res.data.token, res.data.user);
+      if (isWeb) {
+        await api.post('/login', {
+          ...data,
+          device_name: 'Web',
+        });
+        const userRes = await api.get<UserResponse>('/user');
+        setCredentials('', userRes.data);
+      } else {
+        const res = await api.post('/auth/exchange', {
+          ...data,
+          device_name: 'Mobile',
+        });
+        setCredentials(res.data.token, res.data.user);
+      }
       navigateWithTitle(() => navigation.navigate('Home', { screen: 'Feed' }), 'Home');
     } catch (err: any) {
       if (err.response?.status === 401) {

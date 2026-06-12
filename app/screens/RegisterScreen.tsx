@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { Button } from '~/components/nativewindui/Button';
 import { useColorScheme } from '~/lib/useColorScheme';
 import React, { useState } from 'react';
@@ -6,12 +6,14 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, RegisterFormData } from '~/app/lib/schemas';
 import api from '~/app/lib/api';
-import { useAuthStore } from '~/app/stores/AuthStore';
+import { useAuthStore, UserResponse } from '~/app/stores/AuthStore';
 import * as Style from '../styles/Styles';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 import GithubButton from '../components/GithubButton';
 import GoogleButton from '../components/GithubButton';
 import FormButton from '../components/FormButton';
+
+const isWeb = Platform.OS === 'web';
 
 const RegisterScreen = () => {
   const { colors, isDarkColorScheme } = useColorScheme();
@@ -41,12 +43,22 @@ const RegisterScreen = () => {
         password: data.password,
       });
       try {
-        const res = await api.post('/auth/exchange', {
-          username: data.username,
-          password: data.password,
-          device_name: 'Mobile',
-        });
-        setCredentials(res.data.token, res.data.user);
+        if (isWeb) {
+          await api.post('/login', {
+            username: data.username,
+            password: data.password,
+            device_name: 'Web',
+          });
+          const userRes = await api.get<UserResponse>('/user');
+          setCredentials('', userRes.data);
+        } else {
+          const res = await api.post('/auth/exchange', {
+            username: data.username,
+            password: data.password,
+            device_name: 'Mobile',
+          });
+          setCredentials(res.data.token, res.data.user);
+        }
         setSuccess(true);
       } catch {
         setError('Registration successful but login failed. Please sign in manually.');
