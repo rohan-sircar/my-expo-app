@@ -59,12 +59,14 @@ export default function SessionsScreen() {
   });
 
   const handleRevoke = (sessionId: string) => {
+    console.log('handleRevoke called for:', sessionId);
     Alert.alert('Revoke Session', 'Are you sure you want to revoke this session?', [
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Revoke',
         style: 'destructive',
         onPress: () => {
+          console.log('confirming revoke for:', sessionId);
           setRevoking(sessionId);
           revokeMutation.mutate(sessionId, {
             onSettled: () => setRevoking(null),
@@ -123,7 +125,10 @@ export default function SessionsScreen() {
             className="rounded bg-rose-500 px-3 py-1.5"
             defaultColor="#e11d48"
             hoverColor="#be123c"
-            onPress={() => handleRevoke(item.session_id)}>
+            onPress={() => {
+              console.log('BUTTON PRESSED for:', item.session_id);
+              handleRevoke(item.session_id);
+            }}>
             <Text className="text-xs text-white">Revoke</Text>
           </Button>
         )}
