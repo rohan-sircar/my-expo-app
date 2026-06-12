@@ -10,7 +10,7 @@ import { useAuthStore, UserResponse } from '~/app/stores/AuthStore';
 import * as Style from '../styles/Styles';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 import GithubButton from '../components/GithubButton';
-import GoogleButton from '../components/GithubButton';
+import GoogleButton from '../components/GoogleButton';
 import FormButton from '../components/FormButton';
 
 const isWeb = Platform.OS === 'web';
@@ -49,7 +49,7 @@ const RegisterScreen = () => {
             password: data.password,
             device_name: 'Web',
           });
-          const userRes = await api.get<UserResponse>('/user');
+          const userRes = await api.get<UserResponse>('/api/v1/user');
           setCredentials('', userRes.data);
         } else {
           const res = await api.post('/auth/exchange', {

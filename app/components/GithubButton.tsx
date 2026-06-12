@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Alert, Text } from 'react-native';
+import { Alert, Text, Platform } from 'react-native';
 import { Button } from '~/components/nativewindui/Button';
 import * as WebBrowser from 'expo-web-browser';
-import { useAuthStore } from '~/app/stores/AuthStore';
+import { useAuthStore, UserResponse } from '~/app/stores/AuthStore';
 import { Ionicons } from '@expo/vector-icons';
+import { api } from '~/app/lib/api';
 
 WebBrowser.maybeCompleteAuthSession();
 
-const API_BASE = process.env.EXPO_PUBLIC_API_URL || 'http://192.168.1.x:7800';
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:7800';
 const SCHEME = 'my-expo-app';
 
 const GithubButton = () => {
@@ -19,33 +20,31 @@ const GithubButton = () => {
     setLoading(true);
 
     try {
-      const authorizeUrl = `${API_BASE}/api/v1/auth/oauth/github/login`;
-      const redirectUrl = `${SCHEME}://oauth/github/callback`;
+      if (Platform.OS === 'web') {
+        const loginUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login?redirect_uri=${encodeURIComponent(`${API_BASE_URL}/api/v1/auth/oauth/github/callback`)}`;
+        await WebBrowser.openAuthSessionAsync(loginUrl, loginUrl);
 
-      const result = await WebBrowser.openAuthSessionAsync(authorizeUrl, redirectUrl);
+        const userRes = await api.get<UserResponse>('/api/v1/user');
+        setCredentials('', userRes.data);
+      } else {
+        const authorizeUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login`;
+        const redirectUrl = `${SCHEME}://oauth/github/callback`;
 
-      if (result.type === 'success' && result.url) {
-        const url = new URL(result.url);
-        const code = url.searchParams.get('code');
+        const result = await WebBrowser.openAuthSessionAsync(authorizeUrl, redirectUrl);
 
-        if (code) {
-          const exchangeResponse = await fetch(`${API_BASE}/api/v1/auth/oauth/github/exchange`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code }),
-          });
+        if (result.type === 'success' && result.url) {
+          const url = new URL(result.url);
+          const code = url.searchParams.get('code');
 
-          if (!exchangeResponse.ok) {
-            Alert.alert('Error', 'GitHub authentication failed');
-            return;
+          if (code) {
+            const res = await api.post('/auth/oauth/github/exchange', { code });
+            setCredentials(res.data.token, res.data.user);
           }
-
-          const data = await exchangeResponse.json();
-          setCredentials(data.token, data.user);
         }
       }
-    } catch (err) {
-      Alert.alert('Error', 'GitHub login failed');
+    } catch (err: any) {
+      const message = err?.response?.data?.message || 'GitHub login failed';
+      Alert.alert('Error', message);
     } finally {
       setLoading(false);
     }

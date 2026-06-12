@@ -40,11 +40,11 @@ const LoginScreen = () => {
     setError('');
     try {
       if (isWeb) {
-        await api.post('/login', {
+        await api.post('/api/v1/login', {
           ...data,
           device_name: 'Web',
         });
-        const userRes = await api.get<UserResponse>('/user');
+        const userRes = await api.get<UserResponse>('/api/v1/user');
         setCredentials('', userRes.data);
       } else {
         const res = await api.post('/auth/exchange', {

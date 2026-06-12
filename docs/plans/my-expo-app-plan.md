@@ -15,41 +15,40 @@
 - [x] CORS configured on backend (specific origin + supports_credentials)
 - [x] Debug log for CORS config: `tracing::info!(cors_origins = %cors_origins, "CORS config loaded");`
 
-### Phase 2 — Profile & Sessions ⚠️ MOSTLY COMPLETE (needs cleanup)
+### Phase 2 — Profile & Sessions ✅ COMPLETE
 - [x] ProfileScreen wired to GET /user + PATCH /user/profile (via react-query)
 - [x] SessionsScreen wired to GET /sessions + DELETE /sessions/{id} + POST /sessions/revoke-others
 - [x] LogoutButton wired to POST /logout + clearCredentials
-- [ ] **Cleanup SessionsScreen:** remove raw HTML `<button>` element (line 118-134), remove debug console.log statements
-- [ ] **Fix RegisterScreen:** wrong import path — `GoogleButton` imported from `'../components/GithubButton'` instead of proper GoogleButton module
+- [x] **SessionsScreen cleaned up:** removed raw HTML `<button>` (replaced with TouchableOpacity), removed debug console.log statements
+- [x] **RegisterScreen fixed:** corrected GoogleButton import path from `'../components/GithubButton'` to `'../components/GoogleButton'`
 - [x] Auth wrapper in _layout.tsx — hydrates on mount, shows loading while auth state resolves
 - [x] Drawer navigation with Home/Account/Settings
 
-### Phase 3 — OAuth 🔲 NOT STARTED
-- [ ] GithubButton wired to OAuth flow (expo-web-browser → /public/oauth/github → callback → /auth/oauth/github/exchange)
-- [ ] GoogleButton wired to OAuth flow (expo-web-browser → /public/oauth/google → callback → /auth/oauth/google/exchange)
-- [ ] Fix hardcoded fallback IPs in OAuth buttons (currently `192.168.1.x`)
-- [ ] Handle OAuth callback deep link routing
+### Phase 3 — OAuth ✅ COMPLETE
+- [x] GithubButton wired to OAuth flow (web: redirect with cookie; native: code exchange via expo-web-browser)
+- [x] GoogleButton wired to OAuth flow (web: redirect with cookie; native: code exchange via expo-web-browser)
+- [x] Fixed hardcoded fallback IPs — now uses `API_BASE_URL` from env with `http://localhost:7800` fallback
+- [x] Platform-specific OAuth: web uses cookie-based redirect, native uses code exchange via api.post
 
-### Phase 4 — Pet Cards 🔲 NOT STARTED
-- [ ] Pet listing on dashboard (connect to GET /user/pets)
-- [ ] Pet card component
-- [ ] Pet creation/edit flow (POST /user/pets, PATCH /user/pets/{id})
+### Phase 4 — Pet Cards ✅ COMPLETE (basic)
+- [x] Pet listing on dashboard (connect to GET /user/pets via react-query)
+- [x] PetCard component with species icon, age/gender/weight badges, traits display
+- [ ] Pet creation/edit flow (POST /user/pets, PATCH /user/pets/{id}) — TODO
 
 ---
 
 ## Known Issues & Artifacts
 
 ### Critical
-1. **SessionsScreen.tsx** — contains a raw HTML `<button>` element (line 118-134) instead of React Native component; will crash on native
-2. **SessionsScreen.tsx** — extensive debug `console.log` statements scattered throughout
-3. **RegisterScreen.tsx** — imports `GoogleButton` from `'../components/GithubButton'` (wrong path)
+1. ~~**SessionsScreen.tsx** — contains a raw HTML `<button>` element~~ ✅ FIXED (replaced with TouchableOpacity)
+2. ~~**SessionsScreen.tsx** — extensive debug `console.log` statements~~ ✅ FIXED (all removed)
+3. ~~**RegisterScreen.tsx** — wrong GoogleButton import path~~ ✅ FIXED
 
 ### Minor
 4. **components/Button.tsx** — entirely commented out placeholder
-5. **OAuth buttons** — hardcoded fallback IPs (`192.168.1.x`) instead of using `API_BASE` from api.ts
-6. **No `.env` file** — API URL defaults to `localhost:7800`; should add `.env` for dev/staging/prod configs
-7. **HomeScreen** — uses mock data (`data/posts.ts`); should eventually connect to real pet API
-8. **ProfileScreen** — "Pets: 0" stat is hardcoded
+5. **ProfileScreen** — "Pets: 0" stat is hardcoded (should fetch from API or count from pets list)
+6. **HomeScreen** — needs pet creation flow (add pet button → create form)
+7. **OAuth buttons** — web flow uses `openAuthSessionAsync` with same URL for both authorize and redirect; may need deep link scheme for production
 
 ---
 
@@ -182,7 +181,10 @@ Drawer (top-level)
 
 ## Implementation Order (Recommended)
 
-1. **Cleanup Phase 2 artifacts** — fix SessionsScreen HTML button, remove console.logs, fix RegisterScreen import
-2. **Phase 3 — OAuth** — wire GithubButton/GoogleButton to OAuth exchange flow
-3. **Add `.env`** — configure API URL for dev/staging/prod
-4. **Phase 4 — Pet cards** — connect HomeScreen to pet API
+1. ~~**Cleanup Phase 2 artifacts**~~ ✅ DONE
+2. ~~**Phase 3 — OAuth**~~ ✅ DONE
+3. ~~**Add `.env`**~~ ✅ DONE
+4. ~~**Phase 4 — Pet cards**~~ ✅ DONE (basic listing)
+5. **Pet creation flow** — add pet form (POST /user/pets) in Settings/ControlsScreen
+6. **ProfileScreen** — fix "Pets: 0" stat to count from pets list
+7. **OAuth production** — configure deep link scheme for OAuth callbacks

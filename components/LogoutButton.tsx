@@ -12,7 +12,7 @@ export function LogoutButton() {
     <Pressable
       onPress={async () => {
         try {
-          await api.post('/logout');
+          await api.post('/api/v1/logout');
         } catch {
           // ignore logout errors - still clear local state
         }
