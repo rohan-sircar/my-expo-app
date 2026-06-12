@@ -40,9 +40,18 @@ export default function SessionsScreen() {
   );
 
   const revokeMutation = useMutation({
-    mutationFn: (sessionId: string) => api.delete(`/sessions/${sessionId}`),
+    mutationFn: async (sessionId: string) => {
+      console.log('mutationFn called for:', sessionId);
+      const res = await api.delete(`/sessions/${sessionId}`);
+      console.log('mutationFn response:', res.status);
+      return res;
+    },
     onSuccess: () => {
+      console.log('mutation onSuccess');
       queryClient.invalidateQueries({ queryKey: ['sessions'] });
+    },
+    onError: (err: any) => {
+      console.error('mutation onError:', err);
     },
   });
 
@@ -60,20 +69,15 @@ export default function SessionsScreen() {
 
   const handleRevoke = (sessionId: string) => {
     console.log('handleRevoke called for:', sessionId);
-    Alert.alert('Revoke Session', 'Are you sure you want to revoke this session?', [
-      { text: 'Cancel', style: 'cancel' },
-      {
-        text: 'Revoke',
-        style: 'destructive',
-        onPress: () => {
-          console.log('confirming revoke for:', sessionId);
-          setRevoking(sessionId);
-          revokeMutation.mutate(sessionId, {
-            onSettled: () => setRevoking(null),
-          });
-        },
+    console.log('revokeMutation is:', revokeMutation);
+    console.log('calling mutate...');
+    setRevoking(sessionId);
+    revokeMutation.mutate(sessionId, {
+      onSettled: () => {
+        console.log('mutate onSettled');
+        setRevoking(null);
       },
-    ]);
+    });
   };
 
   const handleRevokeOthers = () => {
@@ -121,16 +125,23 @@ export default function SessionsScreen() {
           <Text className="mt-1 text-xs text-gray-400">ID: {item.session_id.slice(0, 8)}</Text>
         </View>
         {!isCurrentSession(item, index) && revoking !== item.session_id && (
-          <Button
-            className="rounded bg-rose-500 px-3 py-1.5"
-            defaultColor="#e11d48"
-            hoverColor="#be123c"
-            onPress={() => {
-              console.log('BUTTON PRESSED for:', item.session_id);
+          <button
+            type="button"
+            onClick={() => {
+              console.log('HTML BUTTON CLICKED for:', item.session_id);
               handleRevoke(item.session_id);
+            }}
+            style={{
+              backgroundColor: '#e11d48',
+              color: '#fff',
+              padding: '6px 12px',
+              borderRadius: '6px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '12px',
             }}>
-            <Text className="text-xs text-white">Revoke</Text>
-          </Button>
+            Revoke
+          </button>
         )}
         {revoking === item.session_id && <Text className="text-xs text-gray-400">Revoking...</Text>}
       </View>
