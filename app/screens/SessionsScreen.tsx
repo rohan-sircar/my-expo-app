@@ -81,18 +81,8 @@ export default function SessionsScreen() {
   };
 
   const handleRevokeOthers = () => {
-    Alert.alert(
-      'Revoke All Other Sessions',
-      'This will log you out of all other devices. Are you sure?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Revoke All',
-          style: 'destructive',
-          onPress: () => revokeOthersMutation.mutate(),
-        },
-      ]
-    );
+    console.log('handleRevokeOthers called');
+    revokeOthersMutation.mutate();
   };
 
   const formatDate = (dateStr: string) => {
