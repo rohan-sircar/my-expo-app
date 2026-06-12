@@ -17,7 +17,7 @@ interface SessionInfo {
   ttl_remaining?: number;
 }
 
-type SessionsResponse = SessionInfo[];
+type SessionsResponse = Record<string, SessionInfo>;
 
 export default function SessionsScreen() {
   const queryClient = useQueryClient();
@@ -26,13 +26,17 @@ export default function SessionsScreen() {
   const accentSet = getAccentSet(accentColor);
   const [revoking, setRevoking] = useState<string | null>(null);
 
-  const { data: sessions, isLoading } = useQuery({
+  const { data: sessionsMap, isLoading } = useQuery({
     queryKey: ['sessions'],
     queryFn: async () => {
       const res = await api.get<SessionsResponse>('/sessions');
       return res.data;
     },
   });
+
+  const sessions = Object.values(sessionsMap || {}).sort(
+    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
 
   const revokeMutation = useMutation({
     mutationFn: (sessionId: string) => api.delete(`/sessions/${sessionId}`),
