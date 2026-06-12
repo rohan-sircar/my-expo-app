@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, FlatList, Alert } from 'react-native';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '~/app/lib/api';
 import { useColorScheme } from '~/lib/useColorScheme';
@@ -119,11 +119,13 @@ export default function SessionsScreen() {
           <Text className="mt-1 text-xs text-gray-400">ID: {item.session_id.slice(0, 8)}</Text>
         </View>
         {!isCurrentSession(item, index) && revoking !== item.session_id && (
-          <TouchableOpacity
-            onPress={() => handleRevoke(item.session_id)}
-            className="rounded bg-rose-500 px-3 py-1.5">
+          <Button
+            className="rounded bg-rose-500 px-3 py-1.5"
+            defaultColor="#e11d48"
+            hoverColor="#be123c"
+            onPress={() => handleRevoke(item.session_id)}>
             <Text className="text-xs text-white">Revoke</Text>
-          </TouchableOpacity>
+          </Button>
         )}
         {revoking === item.session_id && <Text className="text-xs text-gray-400">Revoking...</Text>}
       </View>
