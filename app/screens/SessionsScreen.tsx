@@ -29,20 +29,20 @@ export default function SessionsScreen() {
   const { data: sessions, isLoading } = useQuery({
     queryKey: ['sessions'],
     queryFn: async () => {
-      const res = await api.get<SessionsResponse>('/user/sessions');
+      const res = await api.get<SessionsResponse>('/sessions');
       return res.data;
     },
   });
 
   const revokeMutation = useMutation({
-    mutationFn: (sessionId: string) => api.delete(`/user/sessions/${sessionId}`),
+    mutationFn: (sessionId: string) => api.delete(`/sessions/${sessionId}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sessions'] });
     },
   });
 
   const revokeOthersMutation = useMutation({
-    mutationFn: () => api.post('/user/sessions/revoke-others'),
+    mutationFn: () => api.post('/sessions/revoke-others'),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sessions'] });
     },
