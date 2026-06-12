@@ -65,6 +65,16 @@ export const HomeTabs = () => {
           }}
         />
       )}
+      {isAuthenticated && (
+        <Tab.Screen
+          name="Sessions"
+          component={SessionsScreen}
+          options={{
+            title: 'Sessions',
+            tabBarIcon: () => <Icon name="monitor" color={colors.text} />,
+          }}
+        />
+      )}
     </Tab.Navigator>
   );
 };
