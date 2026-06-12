@@ -44,15 +44,15 @@ export type NavigationConfig = {
 // Route param types
 export type TabParamList = {
   Feed: undefined;
-  Profile: { userId: string } | undefined;
-  // Controls: undefined;
-  // Login: undefined;
-  // Register: undefined;
+  Profile: undefined;
+  Sessions: undefined;
 };
 
 export type AuthStackParamList = {
   SignIn: undefined;
   Register: undefined;
+  ForgotPassword: undefined;
+  ResetPassword: { token?: string };
 };
 
 export type DrawerParamList = {

@@ -28,15 +28,15 @@ const MessageComponent: React.FC<MessageProps> = (props: MessageProps) => {
         <TouchableOpacity
           activeOpacity={0.75}
           onPress={() => {
-            navigation.navigate('Profile', { userId: props.userId });
+            navigation.navigate('Profile', { userId: props.userId.toString() });
           }}
           style={styles.profileLayout}>
           <Avatar userId={props.userId} style={styles.avatar} />
           <View>
             <Text style={[styles.name, { color: isDarkColorScheme ? '#E4E4E7' : '#333' }]}>
-              {USERS[props.userId].name}
+              {USERS[props.userId]?.name || 'Unknown'}
             </Text>
-            <Text style={styles.secondary}>@{USERS[props.userId].handle}</Text>
+            <Text style={styles.secondary}>@{USERS[props.userId]?.handle || 'unknown'}</Text>
           </View>
         </TouchableOpacity>
       )}

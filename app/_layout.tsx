@@ -8,7 +8,7 @@ import {
 import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
 import 'expo-dev-client';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import '../global.css';
@@ -30,7 +30,7 @@ import DrawerContent from './components/DrawerContent';
 import HomeTabs from './components/HomeTabs';
 import { SettingsIcon } from './components/SettingsIcon';
 import ControlsScreen from './screens/ControlsScreen';
-import { useUserStore } from './stores/UserStore';
+import { useAuthStore } from './stores/AuthStore';
 
 const Drawer = createDrawerNavigator();
 
@@ -39,13 +39,24 @@ const SCREEN_OPTIONS = {
 } as const;
 
 export default function RootLayout() {
-  // useRouteTitle();
   useInitialAndroidBarSync();
   const { colorScheme, isDarkColorScheme, colors } = useColorScheme();
   const queryClient = new QueryClient();
-  const { loggedIn } = useUserStore();
+  const { isAuthenticated, isLoading, hydrate } = useAuthStore();
   const { accentColor } = useAccentColor();
   const { isDesktop } = useResponsiveLayout();
+
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
+
+  if (isLoading) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <StatusBar style="light" />
+      </View>
+    );
+  }
 
   return (
     <>
@@ -72,8 +83,8 @@ export default function RootLayout() {
                           headerRight: () => (
                             <View className="flex flex-row items-center gap-3 pr-2">
                               <ThemeToggle />
-                              {loggedIn && <SettingsIcon />}
-                              {loggedIn && <LogoutButton />}
+                              {isAuthenticated && <SettingsIcon />}
+                              {isAuthenticated && <LogoutButton />}
                             </View>
                           ),
                           ...(isDesktop
