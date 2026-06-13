@@ -21,13 +21,18 @@ const GithubButton = () => {
 
     try {
       if (Platform.OS === 'web') {
-        const loginUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login?redirect=${encodeURIComponent(`${API_BASE_URL}/api/v1/auth/oauth/github/callback`)}`;
-        await WebBrowser.openAuthSessionAsync(loginUrl, loginUrl);
+        const frontendUrl = `${window.location.protocol}//${window.location.host}`;
+        const loginUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login?redirect=${encodeURIComponent(frontendUrl)}`;
+        await WebBrowser.openAuthSessionAsync(loginUrl, frontendUrl);
 
-        const userRes = await api.get<UserResponse>('/api/v1/user');
-        setCredentials('', userRes.data);
+        try {
+          const userRes = await api.get<UserResponse>('/api/v1/user');
+          setCredentials('', userRes.data);
+        } catch {
+          Alert.alert('Error', 'Authentication failed. Please try again.');
+        }
       } else {
-        const authorizeUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login?redirect=${encodeURIComponent(`${SCHEME}://oauth/github/callback`)}`;
+       const authorizeUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login?redirect=${encodeURIComponent(`${SCHEME}://oauth/github/callback`)}`;
         const redirectUrl = `${SCHEME}://oauth/github/callback`;
 
         const result = await WebBrowser.openAuthSessionAsync(authorizeUrl, redirectUrl);
@@ -40,8 +45,7 @@ const GithubButton = () => {
             const res = await api.post('/auth/oauth/github/exchange', { code, state: url.searchParams.get('state') });
             setCredentials(res.data.token, res.data.user);
           }
-        }
-      }
+        }      }
     } catch (err: any) {
       const message = err?.response?.data?.message || 'GitHub login failed';
       Alert.alert('Error', message);
