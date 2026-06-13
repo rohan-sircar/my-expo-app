@@ -52,7 +52,7 @@ export default function SessionsScreen() {
   });
 
   const revokeOthersMutation = useMutation({
-    mutationFn: () => api.post('/api/v1/revoke-others'),
+    mutationFn: () => api.post('/api/v1/sessions/revoke-others'),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sessions'] });
     },

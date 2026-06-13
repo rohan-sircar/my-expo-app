@@ -21,7 +21,7 @@ const GithubButton = () => {
 
     try {
       if (Platform.OS === 'web') {
-        const loginUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login?redirect_uri=${encodeURIComponent(`${API_BASE_URL}/api/v1/auth/oauth/github/callback`)}`;
+        const loginUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login?redirect=${encodeURIComponent(`${API_BASE_URL}/api/v1/auth/oauth/github/callback`)}`;
         await WebBrowser.openAuthSessionAsync(loginUrl, loginUrl);
 
         const userRes = await api.get<UserResponse>('/api/v1/user');

@@ -8,6 +8,9 @@ import { useColorScheme } from '~/lib/useColorScheme';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
 import FormButton from '../components/FormButton';
 import * as Style from '../styles/Styles';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
+import { DrawerParamList, navigateWithTitle } from '~/types/navigation';
 
 type ResetPasswordScreenProps = {
   route: {
@@ -18,6 +21,7 @@ type ResetPasswordScreenProps = {
 };
 
 const ResetPasswordScreen = ({ route }: ResetPasswordScreenProps) => {
+  const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
   const { colors, isDarkColorScheme } = useColorScheme();
   const { accentColor } = useAccentColor();
   const accentSet = getAccentSet(accentColor);
@@ -136,7 +140,7 @@ const ResetPasswordScreen = ({ route }: ResetPasswordScreenProps) => {
           </View>
         ) : null}
 
-        <TouchableOpacity onPress={() => {}} className="mt-2 self-center">
+        <TouchableOpacity onPress={() => navigateWithTitle(() => navigation.navigate('Account', { screen: 'SignIn' }), 'Sign In')} className="mt-2 self-center">
           <Text className={`text-sm ${Style.getSecondaryTextColor(isDarkColorScheme, accentSet)}`}>
             Back to Sign In
           </Text>
