@@ -27,7 +27,7 @@ const GithubButton = () => {
         const userRes = await api.get<UserResponse>('/api/v1/user');
         setCredentials('', userRes.data);
       } else {
-        const authorizeUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login`;
+        const authorizeUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login?redirect=${encodeURIComponent(`${SCHEME}://oauth/github/callback`)}`;
         const redirectUrl = `${SCHEME}://oauth/github/callback`;
 
         const result = await WebBrowser.openAuthSessionAsync(authorizeUrl, redirectUrl);
@@ -37,7 +37,7 @@ const GithubButton = () => {
           const code = url.searchParams.get('code');
 
           if (code) {
-            const res = await api.post('/auth/oauth/github/exchange', { code });
+            const res = await api.post('/auth/oauth/github/exchange', { code, state: url.searchParams.get('state') });
             setCredentials(res.data.token, res.data.user);
           }
         }
