@@ -32,7 +32,7 @@ const GithubButton = () => {
           Alert.alert('Error', 'Authentication failed. Please try again.');
         }
       } else {
-       const authorizeUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login?redirect=${encodeURIComponent(`${SCHEME}://oauth/github/callback`)}`;
+        const authorizeUrl = `${API_BASE_URL}/api/v1/auth/oauth/github/login?redirect=${encodeURIComponent(`${SCHEME}://oauth/github/callback`)}`;
         const redirectUrl = `${SCHEME}://oauth/github/callback`;
 
         const result = await WebBrowser.openAuthSessionAsync(authorizeUrl, redirectUrl);
@@ -42,10 +42,14 @@ const GithubButton = () => {
           const code = url.searchParams.get('code');
 
           if (code) {
-            const res = await api.post('/auth/oauth/github/exchange', { code, state: url.searchParams.get('state') });
+            const res = await api.post('/auth/oauth/github/exchange', {
+              code,
+              state: url.searchParams.get('state'),
+            });
             setCredentials(res.data.token, res.data.user);
           }
-        }      }
+        }
+      }
     } catch (err: any) {
       const message = err?.response?.data?.message || 'GitHub login failed';
       Alert.alert('Error', message);
