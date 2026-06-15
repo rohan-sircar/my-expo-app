@@ -12,15 +12,12 @@
     },
     "experiments": {
       "typedRoutes": true,
-
       "tsconfigPaths": true
     },
     "jsEngine": "hermes",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
     "userInterfaceStyle": "automatic",
-
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -29,7 +26,8 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "jsEngine": "jsc"
+      "jsEngine": "jsc",
+      "bundleIdentifier": "com.myexpoapp.petapp"
     },
     "android": {
       "adaptiveIcon": {
@@ -37,7 +35,9 @@
         "backgroundColor": "#ffffff"
       },
       "jsEngine": "hermes",
-      "userInterfaceStyle": "dark"
-    }
+      "userInterfaceStyle": "dark",
+      "package": "com.myexpoapp.petapp"
+    },
+    "plugins": ["expo-secure-store"]
   }
 }

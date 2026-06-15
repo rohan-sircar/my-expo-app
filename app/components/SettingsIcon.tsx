@@ -4,11 +4,11 @@ import { Icon } from '@roninoss/icons';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 import { useColorScheme } from '~/lib/useColorScheme';
-import { useUserStore } from '../stores/UserStore';
+import { useAuthStore } from '../stores/AuthStore';
 import { RootStackParamList } from '~/types/navigation';
 
 export const SettingsIcon = () => {
-  const { userId } = useUserStore();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const { colors } = useColorScheme();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 

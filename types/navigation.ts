@@ -1,6 +1,7 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { NavigatorScreenParams } from '@react-navigation/native';
+import { Platform } from 'react-native';
 
 export const NAVIGATION_CONFIG = {
   Home: {
@@ -44,15 +45,15 @@ export type NavigationConfig = {
 // Route param types
 export type TabParamList = {
   Feed: undefined;
-  Profile: { userId: string } | undefined;
-  // Controls: undefined;
-  // Login: undefined;
-  // Register: undefined;
+  Profile: undefined;
+  Sessions: undefined;
 };
 
 export type AuthStackParamList = {
   SignIn: undefined;
   Register: undefined;
+  ForgotPassword: undefined;
+  ResetPassword: { token?: string };
 };
 
 export type DrawerParamList = {
@@ -80,6 +81,6 @@ export function getScreenTitle(route: string): string {
 
 // Navigation helper that handles both navigation and title updates
 export function navigateWithTitle(navigate: () => void, title?: string) {
-  document.title = title ? `My Web App | ${title}` : 'My App';
+  if (Platform.OS == 'web') { document.title = title ? `My Web App | ${title}` : 'My App'; }
   navigate();
 }

@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { getAccentSet, useAccentColor } from '~/lib/useAccentColor';
-import { useUserStore } from '../stores/UserStore';
+import { useAuthStore } from '../stores/AuthStore';
 import { Icon } from '@roninoss/icons';
 import ThemeToggle from '~/components/ThemeToggle';
 import React, { useLayoutEffect } from 'react';
@@ -22,6 +22,8 @@ interface NavigationActions {
   home: () => void;
   signIn: () => void;
   register: () => void;
+  profile: () => void;
+  sessions: () => void;
   controls: () => void;
 }
 
@@ -29,9 +31,8 @@ export const DrawerContent = (_props: DrawerContentComponentProps) => {
   const { colors } = useColorScheme();
   const { accentColor } = useAccentColor();
   const accentSet = getAccentSet(accentColor);
-  const { loggedIn } = useUserStore();
+  const { isAuthenticated, user } = useAuthStore();
   const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
-  const { userId } = useUserStore();
   const state = useNavigationState((state) => state);
 
   const navigateTo: NavigationActions = {
@@ -50,6 +51,10 @@ export const DrawerContent = (_props: DrawerContentComponentProps) => {
         () => navigation.navigate(NAVIGATION_CONFIG.Account.name, { screen: 'Register' }),
         AUTH_NAVIGATION_CONFIG.Register.title
       ),
+    profile: () =>
+      navigateWithTitle(() => navigation.navigate('Home', { screen: 'Profile' }), 'Profile'),
+    sessions: () =>
+      navigateWithTitle(() => navigation.navigate('Home', { screen: 'Sessions' }), 'Sessions'),
     controls: () =>
       navigateWithTitle(
         () => navigation.navigate(NAVIGATION_CONFIG.Settings.name),
@@ -85,7 +90,22 @@ export const DrawerContent = (_props: DrawerContentComponentProps) => {
         label={NAVIGATION_CONFIG.Home.title}
       />
 
-      {!loggedIn && (
+      {isAuthenticated && user && (
+        <View>
+          <MenuButton
+            onPress={navigateTo.profile}
+            icon={<Icon name="person" color={colors.foreground} size={14} />}
+            label="Profile"
+          />
+          <MenuButton
+            onPress={navigateTo.sessions}
+            icon={<FontAwesome name="desktop" size={14} color={colors.foreground} />}
+            label="Sessions"
+          />
+        </View>
+      )}
+
+      {!isAuthenticated && (
         <View>
           <MenuButton
             onPress={navigateTo.register}

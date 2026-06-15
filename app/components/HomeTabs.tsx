@@ -9,17 +9,16 @@ import { TabButton } from '~/components/TabButton';
 import { useColorScheme } from '~/lib/useColorScheme';
 import ControlsScreen from '../screens/ControlsScreen';
 import HomeScreen from '../screens/HomeScreen';
-import LoginScreen from '../screens/LoginScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import RegisterScreen from '../screens/RegisterScreen';
-import { useUserStore } from '../stores/UserStore';
+import SessionsScreen from '../screens/SessionsScreen';
+import { useAuthStore } from '../stores/AuthStore';
 import { NAVIGATION_CONFIG, TabParamList } from '~/types/navigation';
 import { SettingsIcon } from './SettingsIcon';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
 export const HomeTabs = () => {
-  const { userId, loggedIn } = useUserStore();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const { colors } = useColorScheme();
   const navigation = useNavigation();
   const state = useNavigationState((state) => state);
@@ -48,15 +47,15 @@ export const HomeTabs = () => {
         options={{
           headerRight: () => (
             <View className="flex flex-row items-center gap-3 pr-2">
-              {loggedIn && <SettingsIcon />}
-              {loggedIn && <LogoutButton />}
+              {isAuthenticated && <SettingsIcon />}
+              {isAuthenticated && <LogoutButton />}
             </View>
           ),
           tabBarIcon: () => <Icon name={'home'} color={colors.text} />,
           title: 'Feed',
         }}
       />
-      {loggedIn && (
+      {isAuthenticated && (
         <Tab.Screen
           name="Profile"
           component={ProfileScreen}
@@ -64,7 +63,16 @@ export const HomeTabs = () => {
             title: 'Profile',
             tabBarIcon: () => <Icon name="person" color={colors.text} />,
           }}
-          initialParams={{ userId: userId?.toString() }}
+        />
+      )}
+      {isAuthenticated && (
+        <Tab.Screen
+          name="Sessions"
+          component={SessionsScreen}
+          options={{
+            title: 'Sessions',
+            tabBarIcon: () => <Icon name="monitor" color={colors.text} />,
+          }}
         />
       )}
     </Tab.Navigator>

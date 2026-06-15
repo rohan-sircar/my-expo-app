@@ -2,6 +2,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useLayoutEffect } from 'react';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
+import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 import {
   AUTH_NAVIGATION_CONFIG,
   NAVIGATION_CONFIG,
@@ -22,7 +24,6 @@ export const AuthStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerTitle: NAVIGATION_CONFIG.Account.title,
-        // headerLargeTitle: true,
         headerShown: false,
       }}>
       <Stack.Screen
@@ -38,6 +39,22 @@ export const AuthStack = () => {
         component={RegisterScreen}
         options={{
           headerTitle: 'Create Account',
+          animation: 'slide_from_right',
+        }}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
+        options={{
+          headerTitle: 'Forgot Password',
+          animation: 'slide_from_right',
+        }}
+      />
+      <Stack.Screen
+        name="ResetPassword"
+        component={ResetPasswordScreen}
+        options={{
+          headerTitle: 'Reset Password',
           animation: 'slide_from_right',
         }}
       />
