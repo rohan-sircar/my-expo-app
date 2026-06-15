@@ -6,7 +6,7 @@ import {
   DrawerNavigationProp,
 } from '@react-navigation/drawer';
 import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
-import { Slot, useSegments } from 'expo-router';
+import { Slot, usePathname, useSegments } from 'expo-router';
 import 'expo-dev-client';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
@@ -40,7 +40,7 @@ const SCREEN_OPTIONS = {
 } as const;
 
 // Routes that render standalone (outside the drawer)
-const STANDALONE_ROUTES = ['verify'];
+const STANDALONE_ROUTES = ['verify', 'resend-verification'];
 
 export default function RootLayout() {
   useInitialAndroidBarSync();
@@ -49,8 +49,10 @@ export default function RootLayout() {
   const { isAuthenticated, isLoading, hydrate } = useAuthStore();
   const { accentColor } = useAccentColor();
   const { isDesktop } = useResponsiveLayout();
-  const segments = useSegments();
-  const isStandaloneRoute = STANDALONE_ROUTES.includes(segments[0]);
+  const pathname = usePathname();
+  const isStandaloneRoute = STANDALONE_ROUTES.some(
+    (route) => pathname === `/${route}` || pathname.startsWith(`/${route}/`)
+  );
 
   useEffect(() => {
     hydrate();

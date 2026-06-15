@@ -1,12 +1,16 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 import api from '~/app/lib/api';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { getAccentSet } from '~/lib/useAccentColor';
 import * as Style from '~/app/styles/Styles';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { DrawerParamList, navigateWithTitle } from '~/types/navigation';
 
 const VerifyWebScreen = () => {
+  const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
   const router = useRouter();
   const { colors, isDarkColorScheme } = useColorScheme();
   const accentColor = (useColorScheme() as any).accentColor || 'ocean';
@@ -71,7 +75,13 @@ const VerifyWebScreen = () => {
         {status !== 'verifying' ? (
           <View className="mt-4 gap-3">
             <TouchableOpacity
-              onPress={() => router.back()}
+              onPress={() => {
+                if (status === 'success') {
+                  navigateWithTitle(() => navigation.navigate('Account', { screen: 'SignIn' }), 'Sign In');
+                } else {
+                  router.push('/resend-verification');
+                }
+              }}
               className={`rounded-lg px-4 py-3 items-center ${
                 status === 'success'
                   ? 'bg-emerald-500'
