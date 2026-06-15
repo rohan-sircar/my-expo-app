@@ -11,7 +11,7 @@ import { api } from '~/app/lib/api';
 
 WebBrowser.maybeCompleteAuthSession();
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:7800';
+const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8800';
 const SCHEME = 'my-expo-app';
 
 const GoogleButton = () => {

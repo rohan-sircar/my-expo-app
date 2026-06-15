@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Platform } from 'react-native';
 import { useAuthStore } from '~/app/stores/AuthStore';
 
-const API_BASE = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:7800/api/v1';
+const API_BASE = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8800/api/v1';
 const isWeb = Platform.OS === 'web';
 
 export const api = axios.create({
