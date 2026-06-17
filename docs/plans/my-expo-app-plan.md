@@ -27,7 +27,7 @@
 ### Phase 3 — OAuth ✅ COMPLETE
 - [x] GithubButton wired to OAuth flow (web: redirect with cookie; native: code exchange via expo-web-browser)
 - [x] GoogleButton wired to OAuth flow (web: redirect with cookie; native: code exchange via expo-web-browser)
-- [x] Fixed hardcoded fallback IPs — now uses `API_BASE_URL` from env with `http://localhost:7800` fallback
+- [x] Fixed hardcoded fallback IPs — now uses `API_BASE_URL` from env with `http://localhost:8800` fallback
 - [x] Platform-specific OAuth: web uses cookie-based redirect, native uses code exchange via api.post
 
 ### Phase 4 — Pet Cards ✅ COMPLETE (basic)

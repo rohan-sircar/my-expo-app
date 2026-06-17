@@ -6,6 +6,7 @@ import {
   DrawerNavigationProp,
 } from '@react-navigation/drawer';
 import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
+import { Slot, usePathname, useSegments } from 'expo-router';
 import 'expo-dev-client';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
@@ -38,6 +39,9 @@ const SCREEN_OPTIONS = {
   animation: 'ios_from_right',
 } as const;
 
+// Routes that render standalone (outside the drawer)
+const STANDALONE_ROUTES = ['verify', 'resend-verification'];
+
 export default function RootLayout() {
   useInitialAndroidBarSync();
   const { colorScheme, isDarkColorScheme, colors } = useColorScheme();
@@ -45,6 +49,10 @@ export default function RootLayout() {
   const { isAuthenticated, isLoading, hydrate } = useAuthStore();
   const { accentColor } = useAccentColor();
   const { isDesktop } = useResponsiveLayout();
+  const pathname = usePathname();
+  const isStandaloneRoute = STANDALONE_ROUTES.some(
+    (route) => pathname === `/${route}` || pathname.startsWith(`/${route}/`)
+  );
 
   useEffect(() => {
     hydrate();
@@ -64,64 +72,89 @@ export default function RootLayout() {
         key={`root-status-bar-${isDarkColorScheme ? 'light' : 'dark'}`}
         style={isDarkColorScheme ? 'light' : 'dark'}
       />
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <BottomSheetModalProvider>
-          <ActionSheetProvider>
-            <NavThemeProvider value={NAV_THEME[colorScheme]}>
-              <QueryClientProvider client={queryClient}>
-                <LinearGradient
-                  colors={[
-                    BaseAccentGradients[accentColor].gradientStart,
-                    BaseAccentGradients[accentColor].gradientEnd,
-                  ]}
-                  style={{ flex: 1 }}>
-                  <SafeAreaView className="flex-1">
-                    <View className="mx-auto w-full max-w-[800px] flex-1">
-                      <Drawer.Navigator
-                        drawerContent={(props) => <DrawerContent {...props} />}
-                        screenOptions={({ navigation }) => ({
-                          headerRight: () => (
-                            <View className="flex flex-row items-center gap-3 pr-2">
-                              <ThemeToggle />
-                              {isAuthenticated && <SettingsIcon />}
-                              {isAuthenticated && <LogoutButton />}
-                            </View>
-                          ),
-                          ...(isDesktop
-                            ? desktopDrawerProperties(colors)
-                            : mobileDrawerProperties(colors, navigation)),
-                        })}>
-                        <Drawer.Screen
-                          name={NAVIGATION_CONFIG.Home.name}
-                          component={HomeTabs}
-                          options={{
-                            title: NAVIGATION_CONFIG.Home.title,
-                          }}
-                        />
-                        <Drawer.Screen
-                          name={NAVIGATION_CONFIG.Account.name}
-                          component={AuthStack}
-                          options={{
-                            title: NAVIGATION_CONFIG.Account.title,
-                          }}
-                        />
-                        <Drawer.Screen
-                          name={NAVIGATION_CONFIG.Settings.name}
-                          component={ControlsScreen}
-                          options={{
-                            title: NAVIGATION_CONFIG.Settings.title,
-                            headerShown: isDesktop ? false : true,
-                          }}
-                        />
-                      </Drawer.Navigator>
-                    </View>
-                  </SafeAreaView>
-                </LinearGradient>
-              </QueryClientProvider>
-            </NavThemeProvider>
-          </ActionSheetProvider>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
+      {!isStandaloneRoute ? (
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BottomSheetModalProvider>
+            <ActionSheetProvider>
+              <NavThemeProvider value={NAV_THEME[colorScheme]}>
+                <QueryClientProvider client={queryClient}>
+                  <LinearGradient
+                    colors={[
+                      BaseAccentGradients[accentColor].gradientStart,
+                      BaseAccentGradients[accentColor].gradientEnd,
+                    ]}
+                    style={{ flex: 1 }}>
+                    <SafeAreaView className="flex-1">
+                      <View className="mx-auto w-full max-w-[800px] flex-1">
+                        <Drawer.Navigator
+                          drawerContent={(props) => <DrawerContent {...props} />}
+                          screenOptions={({ navigation }) => ({
+                            headerRight: () => (
+                              <View className="flex flex-row items-center gap-3 pr-2">
+                                <ThemeToggle />
+                                {isAuthenticated && <SettingsIcon />}
+                                {isAuthenticated && <LogoutButton />}
+                              </View>
+                            ),
+                            ...(isDesktop
+                              ? desktopDrawerProperties(colors)
+                              : mobileDrawerProperties(colors, navigation)),
+                          })}>
+                          <Drawer.Screen
+                            name={NAVIGATION_CONFIG.Home.name}
+                            component={HomeTabs}
+                            options={{
+                              title: NAVIGATION_CONFIG.Home.title,
+                            }}
+                          />
+                          <Drawer.Screen
+                            name={NAVIGATION_CONFIG.Account.name}
+                            component={AuthStack}
+                            options={{
+                              title: NAVIGATION_CONFIG.Account.title,
+                            }}
+                          />
+                          <Drawer.Screen
+                            name={NAVIGATION_CONFIG.Settings.name}
+                            component={ControlsScreen}
+                            options={{
+                              title: NAVIGATION_CONFIG.Settings.title,
+                              headerShown: isDesktop ? false : true,
+                            }}
+                          />
+                        </Drawer.Navigator>
+                      </View>
+                    </SafeAreaView>
+                  </LinearGradient>
+                </QueryClientProvider>
+              </NavThemeProvider>
+            </ActionSheetProvider>
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
+      ) : (
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BottomSheetModalProvider>
+            <ActionSheetProvider>
+              <NavThemeProvider value={NAV_THEME[colorScheme]}>
+                <QueryClientProvider client={queryClient}>
+                  <LinearGradient
+                    colors={[
+                      BaseAccentGradients[accentColor].gradientStart,
+                      BaseAccentGradients[accentColor].gradientEnd,
+                    ]}
+                    style={{ flex: 1 }}>
+                    <SafeAreaView className="flex-1">
+                      <View className="mx-auto w-full max-w-[800px] flex-1">
+                        <Slot />
+                      </View>
+                    </SafeAreaView>
+                  </LinearGradient>
+                </QueryClientProvider>
+              </NavThemeProvider>
+            </ActionSheetProvider>
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
+      )}
     </>
   );
 }

@@ -35,7 +35,7 @@ Wire the existing mock auth screens (Login, Register) to the real actix-demo API
 ### Step 1: API Client (`lib/api.ts`)
 
 Create an axios instance with:
-- Base URL from env (default `http://192.168.1.x:7800` for local dev)
+- Base URL from env (default `http://192.168.1.x:8800` for local dev)
 - `withCredentials: true` for cookie-based auth
 - Request interceptor: nothing needed (cookies are automatic)
 - Response interceptor: on 401, clear secure store and dispatch a `clearAuth` action
@@ -150,7 +150,7 @@ Changes needed:
 
 ## Dev Setup
 
-- API URL via `.env` or `expo-constants`: `EXPO_PUBLIC_API_URL=http://<VPS_IP>:7800`
+- API URL via `.env` or `expo-constants`: `EXPO_PUBLIC_API_URL=http://<VPS_IP>:8800`
 - For local testing: run actix-demo on the VPS, use the VPS LAN IP
 - `expo-secure-store` requires a dev client for physical device testing
 
